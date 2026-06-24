@@ -1,0 +1,76 @@
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { Timer, Flame, Tag } from "lucide-react";
+import { SplitTextReveal, TiltCard, HandUnderline } from "@/components/site/motion";
+import laptopImg from "@/assets/product-laptop.jpg";
+import headphonesImg from "@/assets/product-headphones.jpg";
+import watchImg from "@/assets/product-watch.jpg";
+import phoneImg from "@/assets/product-phone.jpg";
+
+export const Route = createFileRoute("/deals")({
+  head: () => ({
+    meta: [
+      { title: "Deals & Offers — AETHER" },
+      { name: "description", content: "Hand-vetted deals on premium tech. Editor-approved discounts you'll actually want." },
+      { property: "og:title", content: "Deals & Offers — AETHER" },
+      { property: "og:description", content: "Hand-vetted deals on premium tech." },
+    ],
+  }),
+  component: DealsPage,
+});
+
+const deals = [
+  { name: "Aether Laptop Air", img: laptopImg, was: 1199, now: 999, off: 17, end: "12:48:09" },
+  { name: "Aether Buds Pro", img: headphonesImg, was: 159, now: 129, off: 19, end: "06:22:14" },
+  { name: "Aether Watch X", img: watchImg, was: 249, now: 199, off: 20, end: "23:14:00" },
+  { name: "Aether Phone 15", img: phoneImg, was: 899, now: 799, off: 11, end: "04:51:33" },
+  { name: "Aether Pad Pro", img: laptopImg, was: 749, now: 649, off: 13, end: "18:09:21" },
+  { name: "Aether Lens X", img: phoneImg, was: 1499, now: 1299, off: 13, end: "09:00:00" },
+];
+
+function DealsPage() {
+  return (
+    <>
+      <section className="relative pt-40 pb-16 px-6 lg:px-10 overflow-hidden">
+        <div className="absolute inset-0 bg-radial-glow opacity-70" />
+        <div className="relative max-w-6xl mx-auto">
+          <div className="flex items-center gap-3 mb-6">
+            <Flame className="size-4 text-[var(--emerald-accent)]" />
+            <span className="font-mono-tech text-[10px] uppercase tracking-[0.3em] text-[var(--emerald-accent)]">Limited Drops</span>
+          </div>
+          <SplitTextReveal text="Editor-vetted deals" className="font-display text-5xl lg:text-7xl font-bold tracking-tight" />
+          <p className="mt-6 text-muted-foreground max-w-xl">
+            We don't list every discount — only the ones <HandUnderline>worth your inbox.</HandUnderline>
+          </p>
+        </div>
+      </section>
+
+      <section className="px-6 lg:px-10 py-16">
+        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {deals.map((d) => (
+            <TiltCard key={d.name} className="surface-card overflow-hidden group" max={5}>
+              <div className="relative aspect-[5/4] overflow-hidden bg-[var(--surface-2)]">
+                <img src={d.img} alt={d.name} loading="lazy" className="size-full object-cover transition-transform duration-700 group-hover:scale-[1.06]" />
+                <span className="absolute top-3 left-3 rounded-full px-3 py-1 text-[10px] font-bold font-mono-tech text-background" style={{ background: "var(--gradient-accent)" }}>
+                  -{d.off}%
+                </span>
+                <span className="absolute top-3 right-3 flex items-center gap-1 rounded-full bg-background/70 backdrop-blur px-2.5 py-1 text-[10px] font-mono-tech text-[var(--cyan-accent)]">
+                  <Timer className="size-3" /> {d.end}
+                </span>
+              </div>
+              <div className="p-5 space-y-2">
+                <h3 className="font-display text-lg font-semibold">{d.name}</h3>
+                <div className="flex items-baseline gap-3">
+                  <span className="font-display text-2xl font-bold text-accent-gradient">${d.now}</span>
+                  <span className="text-sm text-muted-foreground line-through">${d.was}</span>
+                </div>
+                <Link to="/products/laptop-air" className="btn-ghost-glow w-full rounded-full py-2 text-xs font-semibold inline-flex items-center justify-center gap-2 mt-2">
+                  <Tag className="size-3" /> Grab deal
+                </Link>
+              </div>
+            </TiltCard>
+          ))}
+        </div>
+      </section>
+    </>
+  );
+}
