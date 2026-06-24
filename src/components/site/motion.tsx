@@ -1,16 +1,18 @@
-import { useEffect, useRef, type ReactNode } from "react";
+import { createElement, useEffect, useRef, type ElementType, type ReactNode } from "react";
+
+
 
 /** Word-by-word reveal driven by GSAP ScrollTrigger when in view */
 export function SplitTextReveal({
   text,
   className = "",
-  as: Tag = "h1" as const,
+  as = "h1",
   delay = 0,
   stagger = 0.08,
 }: {
   text: string;
   className?: string;
-  as?: keyof JSX.IntrinsicElements;
+  as?: ElementType;
   delay?: number;
   stagger?: number;
 }) {
@@ -42,21 +44,19 @@ export function SplitTextReveal({
   }, [delay, stagger]);
 
   const words = text.split(" ");
-  const TagAny = Tag as keyof JSX.IntrinsicElements;
-  return (
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    <TagAny ref={ref as any} className={className}>
-      {words.map((w, i) => (
-        <span
-          key={i}
-          data-word
-          className="inline-block overflow-hidden align-bottom mr-[0.25em]"
-          style={{ verticalAlign: "bottom" }}
-        >
-          <span className="inline-block">{w}</span>
-        </span>
-      ))}
-    </TagAny>
+  return createElement(
+    as,
+    { ref, className },
+    words.map((w, i) => (
+      <span
+        key={i}
+        data-word
+        className="inline-block overflow-hidden align-bottom mr-[0.25em]"
+        style={{ verticalAlign: "bottom" }}
+      >
+        <span className="inline-block">{w}</span>
+      </span>
+    )),
   );
 }
 
