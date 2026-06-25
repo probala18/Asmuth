@@ -71,7 +71,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { title: "AETHER — Future Commerce" },
       { name: "description", content: "Curated premium tech. Editorial reviews, in-depth buying guides, and signal-grade product picks." },
       { name: "author", content: "AETHER" },
-      { name: "theme-color", content: "#050816" },
+      { name: "theme-color", content: "#FAFBFC" },
       { property: "og:title", content: "AETHER — Future Commerce" },
       { property: "og:description", content: "Curated premium tech. Editorial reviews, in-depth buying guides, and signal-grade product picks." },
       { property: "og:type", content: "website" },
