@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "@tanstack/react-router";
 import { ArrowUpRight, Laptop, Headphones, Gamepad2, Home as HomeIcon, ChevronDown } from "lucide-react";
+import { ThemeToggle } from "./ThemeToggle";
 
 const megaCategories = [
   { icon: Laptop, label: "Laptops", desc: "Pro & ultraportable", href: "/categories" },
