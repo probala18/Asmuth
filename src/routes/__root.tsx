@@ -115,15 +115,20 @@ function RootComponent() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <SmoothScroll>
-        <Navbar />
-        <PageTransition>
-          <main className="relative">
-            <Outlet />
-          </main>
-        </PageTransition>
-        <Footer />
-      </SmoothScroll>
+      <ThemeProvider>
+        <SmoothScroll>
+          <div className="cine-progress" aria-hidden />
+          <Navbar />
+          <ScrollChoreography>
+            <PageTransition>
+              <main className="relative">
+                <Outlet />
+              </main>
+            </PageTransition>
+          </ScrollChoreography>
+          <Footer />
+        </SmoothScroll>
+      </ThemeProvider>
     </QueryClientProvider>
   );
 }
