@@ -2,11 +2,12 @@
 @source "../src";
 @import "tw-animate-css";
 
-@custom-variant dark (&:is(.dark *));
+@custom-variant dark (&:is(.dark, .dark *));
 
 /*
- * AETHER — Futuristic dark palette
- * Deep space navy + emerald + cyan. Apple/Linear/Tesla register.
+ * AETHER — Dual theme
+ * Light: warm editorial ivory + ink + indigo/amber accents
+ * Dark : deep-space navy + emerald + cyan (preserved from prior build)
  */
 
 @theme inline {
@@ -51,71 +52,118 @@
   --font-mono: "JetBrains Mono", ui-monospace, monospace;
 }
 
+/* =========================
+   LIGHT THEME — refreshed
+   Editorial ivory + ink + indigo / amber
+   ========================= */
 :root {
   --radius: 0.75rem;
+  color-scheme: light;
 
-  /* Base — light */
-  --background: oklch(0.99 0.005 250);     /* near #FAFBFC */
-  --foreground: oklch(0.18 0.02 265);      /* near #0F172A */
-  --surface: oklch(1 0 0);                  /* #FFFFFF */
-  --surface-2: oklch(0.97 0.006 250);       /* #F3F5F8 */
-  --surface-3: oklch(0.93 0.008 250);
+  --background: oklch(0.985 0.006 85);       /* warm ivory #FBF9F4 */
+  --foreground: oklch(0.18 0.025 265);       /* deep ink */
+  --surface:   oklch(1 0 0);
+  --surface-2: oklch(0.965 0.008 85);        /* parchment */
+  --surface-3: oklch(0.93 0.012 85);
 
   --card: var(--surface);
   --card-foreground: var(--foreground);
   --popover: var(--surface);
   --popover-foreground: var(--foreground);
 
-  /* Accents — emerald + cyan (slightly deeper for contrast on light) */
-  --emerald-accent: oklch(0.64 0.16 162);  /* #059669-ish */
-  --emerald-glow: oklch(0.74 0.17 162);
-  --cyan-accent: oklch(0.68 0.13 210);     /* deeper cyan for light bg */
-  --cyan-glow: oklch(0.8 0.12 200);
+  /* Accents — indigo (primary) + amber (accent) */
+  --emerald-accent: oklch(0.52 0.20 270);    /* deep indigo, alias kept for compat */
+  --emerald-glow:   oklch(0.66 0.20 270);
+  --cyan-accent:    oklch(0.74 0.17 65);     /* warm amber */
+  --cyan-glow:      oklch(0.82 0.15 70);
 
   --primary: var(--emerald-accent);
-  --primary-foreground: oklch(0.99 0.005 250);
+  --primary-foreground: oklch(0.99 0 0);
   --secondary: var(--surface-2);
   --secondary-foreground: var(--foreground);
   --muted: var(--surface-2);
-  --muted-foreground: oklch(0.5 0.02 260);
+  --muted-foreground: oklch(0.46 0.025 265);
   --accent: var(--cyan-accent);
-  --accent-foreground: oklch(0.99 0.005 250);
+  --accent-foreground: oklch(0.18 0.025 265);
   --destructive: oklch(0.6 0.22 25);
   --destructive-foreground: oklch(0.99 0 0);
 
-  --hairline: oklch(0.18 0.02 265 / 0.10);
-  --border: oklch(0.18 0.02 265 / 0.10);
-  --input: oklch(0.18 0.02 265 / 0.15);
+  --hairline: oklch(0.18 0.025 265 / 0.10);
+  --border:   oklch(0.18 0.025 265 / 0.10);
+  --input:    oklch(0.18 0.025 265 / 0.18);
   --ring: var(--emerald-accent);
 
-  /* Gradients & shadows */
   --gradient-accent: linear-gradient(135deg, var(--emerald-accent), var(--cyan-accent));
   --gradient-radial-glow:
-    radial-gradient(ellipse at 70% 30%, color-mix(in oklab, var(--emerald-accent) 14%, transparent) 0%, transparent 55%),
-    radial-gradient(ellipse at 20% 80%, color-mix(in oklab, var(--cyan-accent) 12%, transparent) 0%, transparent 45%);
-  --shadow-glow: 0 0 40px color-mix(in oklab, var(--emerald-accent) 25%, transparent);
-  --shadow-soft: 0 20px 60px -20px color-mix(in oklab, var(--emerald-accent) 20%, transparent);
-  --shadow-elegant: 0 30px 80px -30px oklch(0.18 0.02 265 / 0.25);
+    radial-gradient(ellipse at 70% 30%, color-mix(in oklab, var(--emerald-accent) 12%, transparent) 0%, transparent 55%),
+    radial-gradient(ellipse at 20% 80%, color-mix(in oklab, var(--cyan-accent) 14%, transparent) 0%, transparent 45%);
+  --shadow-glow: 0 0 40px color-mix(in oklab, var(--emerald-accent) 22%, transparent);
+  --shadow-soft: 0 20px 60px -20px color-mix(in oklab, var(--emerald-accent) 18%, transparent);
+  --shadow-elegant: 0 30px 80px -30px oklch(0.18 0.025 265 / 0.28);
 }
 
-.dark { color-scheme: light; }
+/* =========================
+   DARK THEME — preserved
+   Deep-space navy + emerald + cyan
+   ========================= */
+.dark {
+  color-scheme: dark;
+
+  --background: oklch(0.13 0.03 270);        /* #050816 */
+  --foreground: oklch(0.96 0.005 250);
+  --surface:   oklch(0.17 0.03 265);         /* #0B1120 */
+  --surface-2: oklch(0.22 0.025 265);        /* #111827 */
+  --surface-3: oklch(0.28 0.022 265);
+
+  --card: var(--surface);
+  --card-foreground: var(--foreground);
+  --popover: var(--surface);
+  --popover-foreground: var(--foreground);
+
+  --emerald-accent: oklch(0.74 0.16 162);    /* #10B981 */
+  --emerald-glow:   oklch(0.82 0.18 162);
+  --cyan-accent:    oklch(0.82 0.13 200);    /* #22D3EE */
+  --cyan-glow:      oklch(0.88 0.13 200);
+
+  --primary: var(--emerald-accent);
+  --primary-foreground: oklch(0.13 0.03 270);
+  --secondary: var(--surface-2);
+  --secondary-foreground: var(--foreground);
+  --muted: var(--surface-2);
+  --muted-foreground: oklch(0.7 0.02 260);
+  --accent: var(--cyan-accent);
+  --accent-foreground: oklch(0.13 0.03 270);
+  --destructive: oklch(0.62 0.22 25);
+  --destructive-foreground: oklch(0.99 0 0);
+
+  --hairline: oklch(0.96 0.005 250 / 0.10);
+  --border:   oklch(0.96 0.005 250 / 0.10);
+  --input:    oklch(0.96 0.005 250 / 0.15);
+  --ring: var(--emerald-accent);
+
+  --gradient-accent: linear-gradient(135deg, var(--emerald-accent), var(--cyan-accent));
+  --gradient-radial-glow:
+    radial-gradient(ellipse at 70% 30%, color-mix(in oklab, var(--emerald-accent) 18%, transparent) 0%, transparent 55%),
+    radial-gradient(ellipse at 20% 80%, color-mix(in oklab, var(--cyan-accent) 16%, transparent) 0%, transparent 45%);
+  --shadow-glow: 0 0 40px color-mix(in oklab, var(--emerald-accent) 35%, transparent);
+  --shadow-soft: 0 20px 60px -20px color-mix(in oklab, var(--emerald-accent) 30%, transparent);
+  --shadow-elegant: 0 30px 80px -30px oklch(0 0 0 / 0.6);
+}
 
 @layer base {
   * { border-color: var(--color-border); }
   html, body { background-color: var(--color-background); color: var(--color-foreground); }
   body { font-family: var(--font-sans); -webkit-font-smoothing: antialiased; }
-  html { scroll-behavior: auto; } /* Lenis handles smooth scroll */
+  html { scroll-behavior: auto; }
   ::selection { background: color-mix(in oklab, var(--emerald-accent) 40%, transparent); color: var(--foreground); }
   ::-webkit-scrollbar { width: 8px; height: 8px; }
   ::-webkit-scrollbar-track { background: var(--background); }
   ::-webkit-scrollbar-thumb { background: color-mix(in oklab, var(--emerald-accent) 60%, transparent); border-radius: 4px; }
 }
 
-/* Display heading */
 .font-display { font-family: var(--font-display); letter-spacing: -0.02em; }
 .font-mono-tech { font-family: var(--font-mono); }
 
-/* Gradient text */
 .text-accent-gradient {
   background: linear-gradient(135deg, var(--emerald-accent) 0%, var(--cyan-accent) 100%);
   -webkit-background-clip: text;
@@ -124,11 +172,9 @@
   color: transparent;
 }
 
-/* Subtle hairline divider */
 .hairline-top { box-shadow: inset 0 1px 0 var(--hairline); }
 .hairline-x { background-image: linear-gradient(90deg, transparent, var(--emerald-accent), transparent); }
 
-/* Surfaces */
 .surface-card {
   background: var(--surface);
   border: 1px solid var(--hairline);
@@ -140,7 +186,6 @@
   border-radius: var(--radius-2xl);
 }
 
-/* Glow utilities */
 .glow-emerald { box-shadow: var(--shadow-glow); }
 .ring-emerald { box-shadow: 0 0 0 1px color-mix(in oklab, var(--emerald-accent) 50%, transparent); }
 .bg-grid {
@@ -152,10 +197,9 @@
 }
 .bg-radial-glow { background-image: var(--gradient-radial-glow); }
 
-/* Btn — accent */
 @utility btn-accent {
   background: var(--gradient-accent);
-  color: oklch(0.13 0.03 270);
+  color: var(--primary-foreground);
   position: relative;
   overflow: hidden;
   transition: transform .3s ease, box-shadow .3s ease;
@@ -184,14 +228,12 @@
   }
 }
 
-/* Card tilt setup */
 @utility tilt-card {
   transform-style: preserve-3d;
   transition: transform .25s cubic-bezier(.2,.8,.2,1), box-shadow .25s ease;
   will-change: transform;
 }
 
-/* Hand-drawn underline */
 @utility hand-underline {
   position: relative;
   display: inline-block;
@@ -203,7 +245,6 @@
   }
 }
 
-/* Nav link */
 @utility nav-link {
   position: relative;
   color: var(--muted-foreground);
@@ -219,22 +260,32 @@
   &:hover::after { width: 100%; }
 }
 
-/* Marquee */
 @keyframes marquee {
   from { transform: translateX(0); }
   to   { transform: translateX(-50%); }
 }
 .animate-marquee { animation: marquee 30s linear infinite; }
 
-/* Fade in up */
 @keyframes fadeInUp { from { opacity:0; transform: translateY(24px);} to { opacity:1; transform:none; } }
 .fade-in-up { animation: fadeInUp .8s cubic-bezier(.2,.8,.2,1) both; }
 
-/* Page transition root */
 .page-enter { opacity: 0; transform: translateY(12px); }
 .page-enter-active { opacity: 1; transform: none; transition: opacity .4s ease, transform .5s cubic-bezier(.2,.8,.2,1); }
 
-/* Reduce motion */
+/* Cinematic scroll progress bar */
+.cine-progress {
+  position: fixed; top: 0; left: 0; right: 0;
+  height: 2px; z-index: 60;
+  transform-origin: 0 50%;
+  background: var(--gradient-accent);
+  transform: scaleX(0);
+  pointer-events: none;
+}
+
+/* Cinematic initial state — JS animates into view via GSAP */
+[data-cine] { will-change: transform, opacity; }
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: .001ms !important; transition-duration: .001ms !important; }
+  [data-cine] { opacity: 1 !important; transform: none !important; }
 }

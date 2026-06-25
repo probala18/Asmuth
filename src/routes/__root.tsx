@@ -15,6 +15,8 @@ import { SmoothScroll } from "../components/site/SmoothScroll";
 import { Navbar } from "../components/site/Navbar";
 import { Footer } from "../components/site/Footer";
 import { PageTransition } from "../components/site/PageTransition";
+import { ThemeProvider } from "../components/site/ThemeProvider";
+import { ScrollChoreography } from "../components/site/ScrollChoreography";
 
 function NotFoundComponent() {
   return (
@@ -113,15 +115,20 @@ function RootComponent() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <SmoothScroll>
-        <Navbar />
-        <PageTransition>
-          <main className="relative">
-            <Outlet />
-          </main>
-        </PageTransition>
-        <Footer />
-      </SmoothScroll>
+      <ThemeProvider>
+        <SmoothScroll>
+          <div className="cine-progress" aria-hidden />
+          <Navbar />
+          <ScrollChoreography>
+            <PageTransition>
+              <main className="relative">
+                <Outlet />
+              </main>
+            </PageTransition>
+          </ScrollChoreography>
+          <Footer />
+        </SmoothScroll>
+      </ThemeProvider>
     </QueryClientProvider>
   );
 }
