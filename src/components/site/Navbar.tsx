@@ -70,13 +70,16 @@ export function Navbar() {
           )}
         </nav>
 
-        <Link
-          to="/collections"
-          className="btn-accent inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-semibold"
-        >
-          Shop Now
-          <ArrowUpRight className="size-4" />
-        </Link>
+        <div className="flex items-center gap-3">
+          <ThemeToggle />
+          <Link
+            to="/collections"
+            className="btn-accent inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-semibold"
+          >
+            Shop Now
+            <ArrowUpRight className="size-4" />
+          </Link>
+        </div>
       </div>
 
       {/* Mega menu */}
