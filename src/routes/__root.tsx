@@ -15,6 +15,8 @@ import { SmoothScroll } from "../components/site/SmoothScroll";
 import { Navbar } from "../components/site/Navbar";
 import { Footer } from "../components/site/Footer";
 import { PageTransition } from "../components/site/PageTransition";
+import { ThemeProvider } from "../components/site/ThemeProvider";
+import { ScrollChoreography } from "../components/site/ScrollChoreography";
 
 function NotFoundComponent() {
   return (
