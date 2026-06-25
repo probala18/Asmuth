@@ -79,26 +79,26 @@
   --muted: var(--surface-2);
   --muted-foreground: oklch(0.5 0.02 260);
   --accent: var(--cyan-accent);
-  --accent-foreground: oklch(0.13 0.03 270);
-  --destructive: oklch(0.65 0.22 25);
-  --destructive-foreground: oklch(0.98 0 0);
+  --accent-foreground: oklch(0.99 0.005 250);
+  --destructive: oklch(0.6 0.22 25);
+  --destructive-foreground: oklch(0.99 0 0);
 
-  --hairline: oklch(1 0 0 / 0.08);
-  --border: oklch(1 0 0 / 0.08);
-  --input: oklch(1 0 0 / 0.12);
+  --hairline: oklch(0.18 0.02 265 / 0.10);
+  --border: oklch(0.18 0.02 265 / 0.10);
+  --input: oklch(0.18 0.02 265 / 0.15);
   --ring: var(--emerald-accent);
 
   /* Gradients & shadows */
   --gradient-accent: linear-gradient(135deg, var(--emerald-accent), var(--cyan-accent));
   --gradient-radial-glow:
-    radial-gradient(ellipse at 70% 30%, color-mix(in oklab, var(--emerald-accent) 18%, transparent) 0%, transparent 55%),
+    radial-gradient(ellipse at 70% 30%, color-mix(in oklab, var(--emerald-accent) 14%, transparent) 0%, transparent 55%),
     radial-gradient(ellipse at 20% 80%, color-mix(in oklab, var(--cyan-accent) 12%, transparent) 0%, transparent 45%);
-  --shadow-glow: 0 0 40px color-mix(in oklab, var(--emerald-accent) 35%, transparent);
-  --shadow-soft: 0 20px 60px -20px color-mix(in oklab, var(--emerald-accent) 25%, transparent);
-  --shadow-elegant: 0 30px 80px -30px oklch(0 0 0 / 0.6);
+  --shadow-glow: 0 0 40px color-mix(in oklab, var(--emerald-accent) 25%, transparent);
+  --shadow-soft: 0 20px 60px -20px color-mix(in oklab, var(--emerald-accent) 20%, transparent);
+  --shadow-elegant: 0 30px 80px -30px oklch(0.18 0.02 265 / 0.25);
 }
 
-.dark { color-scheme: dark; }
+.dark { color-scheme: light; }
 
 @layer base {
   * { border-color: var(--color-border); }
