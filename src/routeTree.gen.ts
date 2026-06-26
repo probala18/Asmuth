@@ -10,10 +10,13 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as WishlistRouteImport } from './routes/wishlist'
+import { Route as TrendingRouteImport } from './routes/trending'
 import { Route as TermsRouteImport } from './routes/terms'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as SearchRouteImport } from './routes/search'
+import { Route as RecentlyViewedRouteImport } from './routes/recently-viewed'
 import { Route as PrivacyPolicyRouteImport } from './routes/privacy-policy'
+import { Route as NewArrivalsRouteImport } from './routes/new-arrivals'
 import { Route as HowWeReviewRouteImport } from './routes/how-we-review'
 import { Route as FaqRouteImport } from './routes/faq'
 import { Route as EditorialPolicyRouteImport } from './routes/editorial-policy'
@@ -46,6 +49,11 @@ const WishlistRoute = WishlistRouteImport.update({
   path: '/wishlist',
   getParentRoute: () => rootRouteImport,
 } as any)
+const TrendingRoute = TrendingRouteImport.update({
+  id: '/trending',
+  path: '/trending',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const TermsRoute = TermsRouteImport.update({
   id: '/terms',
   path: '/terms',
@@ -61,9 +69,19 @@ const SearchRoute = SearchRouteImport.update({
   path: '/search',
   getParentRoute: () => rootRouteImport,
 } as any)
+const RecentlyViewedRoute = RecentlyViewedRouteImport.update({
+  id: '/recently-viewed',
+  path: '/recently-viewed',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const PrivacyPolicyRoute = PrivacyPolicyRouteImport.update({
   id: '/privacy-policy',
   path: '/privacy-policy',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const NewArrivalsRoute = NewArrivalsRouteImport.update({
+  id: '/new-arrivals',
+  path: '/new-arrivals',
   getParentRoute: () => rootRouteImport,
 } as any)
 const HowWeReviewRoute = HowWeReviewRouteImport.update({
@@ -211,10 +229,13 @@ export interface FileRoutesByFullPath {
   '/editorial-policy': typeof EditorialPolicyRoute
   '/faq': typeof FaqRoute
   '/how-we-review': typeof HowWeReviewRoute
+  '/new-arrivals': typeof NewArrivalsRoute
   '/privacy-policy': typeof PrivacyPolicyRoute
+  '/recently-viewed': typeof RecentlyViewedRoute
   '/search': typeof SearchRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/terms': typeof TermsRoute
+  '/trending': typeof TrendingRoute
   '/wishlist': typeof WishlistRoute
   '/best/$category': typeof BestCategoryRoute
   '/brand/$slug': typeof BrandSlugRoute
@@ -244,10 +265,13 @@ export interface FileRoutesByTo {
   '/editorial-policy': typeof EditorialPolicyRoute
   '/faq': typeof FaqRoute
   '/how-we-review': typeof HowWeReviewRoute
+  '/new-arrivals': typeof NewArrivalsRoute
   '/privacy-policy': typeof PrivacyPolicyRoute
+  '/recently-viewed': typeof RecentlyViewedRoute
   '/search': typeof SearchRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/terms': typeof TermsRoute
+  '/trending': typeof TrendingRoute
   '/wishlist': typeof WishlistRoute
   '/best/$category': typeof BestCategoryRoute
   '/brand/$slug': typeof BrandSlugRoute
@@ -278,10 +302,13 @@ export interface FileRoutesById {
   '/editorial-policy': typeof EditorialPolicyRoute
   '/faq': typeof FaqRoute
   '/how-we-review': typeof HowWeReviewRoute
+  '/new-arrivals': typeof NewArrivalsRoute
   '/privacy-policy': typeof PrivacyPolicyRoute
+  '/recently-viewed': typeof RecentlyViewedRoute
   '/search': typeof SearchRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/terms': typeof TermsRoute
+  '/trending': typeof TrendingRoute
   '/wishlist': typeof WishlistRoute
   '/best/$category': typeof BestCategoryRoute
   '/brand/$slug': typeof BrandSlugRoute
@@ -313,10 +340,13 @@ export interface FileRouteTypes {
     | '/editorial-policy'
     | '/faq'
     | '/how-we-review'
+    | '/new-arrivals'
     | '/privacy-policy'
+    | '/recently-viewed'
     | '/search'
     | '/sitemap.xml'
     | '/terms'
+    | '/trending'
     | '/wishlist'
     | '/best/$category'
     | '/brand/$slug'
@@ -346,10 +376,13 @@ export interface FileRouteTypes {
     | '/editorial-policy'
     | '/faq'
     | '/how-we-review'
+    | '/new-arrivals'
     | '/privacy-policy'
+    | '/recently-viewed'
     | '/search'
     | '/sitemap.xml'
     | '/terms'
+    | '/trending'
     | '/wishlist'
     | '/best/$category'
     | '/brand/$slug'
@@ -379,10 +412,13 @@ export interface FileRouteTypes {
     | '/editorial-policy'
     | '/faq'
     | '/how-we-review'
+    | '/new-arrivals'
     | '/privacy-policy'
+    | '/recently-viewed'
     | '/search'
     | '/sitemap.xml'
     | '/terms'
+    | '/trending'
     | '/wishlist'
     | '/best/$category'
     | '/brand/$slug'
@@ -413,10 +449,13 @@ export interface RootRouteChildren {
   EditorialPolicyRoute: typeof EditorialPolicyRoute
   FaqRoute: typeof FaqRoute
   HowWeReviewRoute: typeof HowWeReviewRoute
+  NewArrivalsRoute: typeof NewArrivalsRoute
   PrivacyPolicyRoute: typeof PrivacyPolicyRoute
+  RecentlyViewedRoute: typeof RecentlyViewedRoute
   SearchRoute: typeof SearchRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   TermsRoute: typeof TermsRoute
+  TrendingRoute: typeof TrendingRoute
   WishlistRoute: typeof WishlistRoute
   BestCategoryRoute: typeof BestCategoryRoute
   BrandSlugRoute: typeof BrandSlugRoute
@@ -442,6 +481,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof WishlistRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/trending': {
+      id: '/trending'
+      path: '/trending'
+      fullPath: '/trending'
+      preLoaderRoute: typeof TrendingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/terms': {
       id: '/terms'
       path: '/terms'
@@ -463,11 +509,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SearchRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/recently-viewed': {
+      id: '/recently-viewed'
+      path: '/recently-viewed'
+      fullPath: '/recently-viewed'
+      preLoaderRoute: typeof RecentlyViewedRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/privacy-policy': {
       id: '/privacy-policy'
       path: '/privacy-policy'
       fullPath: '/privacy-policy'
       preLoaderRoute: typeof PrivacyPolicyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/new-arrivals': {
+      id: '/new-arrivals'
+      path: '/new-arrivals'
+      fullPath: '/new-arrivals'
+      preLoaderRoute: typeof NewArrivalsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/how-we-review': {
@@ -669,10 +729,13 @@ const rootRouteChildren: RootRouteChildren = {
   EditorialPolicyRoute: EditorialPolicyRoute,
   FaqRoute: FaqRoute,
   HowWeReviewRoute: HowWeReviewRoute,
+  NewArrivalsRoute: NewArrivalsRoute,
   PrivacyPolicyRoute: PrivacyPolicyRoute,
+  RecentlyViewedRoute: RecentlyViewedRoute,
   SearchRoute: SearchRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   TermsRoute: TermsRoute,
+  TrendingRoute: TrendingRoute,
   WishlistRoute: WishlistRoute,
   BestCategoryRoute: BestCategoryRoute,
   BrandSlugRoute: BrandSlugRoute,
