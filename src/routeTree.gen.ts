@@ -9,13 +9,23 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as WishlistRouteImport } from './routes/wishlist'
+import { Route as TermsRouteImport } from './routes/terms'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as SearchRouteImport } from './routes/search'
+import { Route as PrivacyPolicyRouteImport } from './routes/privacy-policy'
+import { Route as HowWeReviewRouteImport } from './routes/how-we-review'
+import { Route as FaqRouteImport } from './routes/faq'
+import { Route as EditorialPolicyRouteImport } from './routes/editorial-policy'
+import { Route as DmcaRouteImport } from './routes/dmca'
 import { Route as DealsRouteImport } from './routes/deals'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as CollectionsRouteImport } from './routes/collections'
 import { Route as CategoriesRouteImport } from './routes/categories'
+import { Route as BestProductsRouteImport } from './routes/best-products'
 import { Route as BestOf2026RouteImport } from './routes/best-of-2026'
+import { Route as AffiliateDisclosureRouteImport } from './routes/affiliate-disclosure'
+import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ReviewsIndexRouteImport } from './routes/reviews.index'
 import { Route as GuidesIndexRouteImport } from './routes/guides.index'
@@ -29,7 +39,18 @@ import { Route as GuidesSlugRouteImport } from './routes/guides.$slug'
 import { Route as CompareSlugRouteImport } from './routes/compare.$slug'
 import { Route as CategorySlugRouteImport } from './routes/category.$slug'
 import { Route as BrandSlugRouteImport } from './routes/brand.$slug'
+import { Route as BestCategoryRouteImport } from './routes/best.$category'
 
+const WishlistRoute = WishlistRouteImport.update({
+  id: '/wishlist',
+  path: '/wishlist',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TermsRoute = TermsRouteImport.update({
+  id: '/terms',
+  path: '/terms',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
   id: '/sitemap.xml',
   path: '/sitemap.xml',
@@ -38,6 +59,31 @@ const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
 const SearchRoute = SearchRouteImport.update({
   id: '/search',
   path: '/search',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PrivacyPolicyRoute = PrivacyPolicyRouteImport.update({
+  id: '/privacy-policy',
+  path: '/privacy-policy',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const HowWeReviewRoute = HowWeReviewRouteImport.update({
+  id: '/how-we-review',
+  path: '/how-we-review',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FaqRoute = FaqRouteImport.update({
+  id: '/faq',
+  path: '/faq',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EditorialPolicyRoute = EditorialPolicyRouteImport.update({
+  id: '/editorial-policy',
+  path: '/editorial-policy',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DmcaRoute = DmcaRouteImport.update({
+  id: '/dmca',
+  path: '/dmca',
   getParentRoute: () => rootRouteImport,
 } as any)
 const DealsRoute = DealsRouteImport.update({
@@ -60,9 +106,24 @@ const CategoriesRoute = CategoriesRouteImport.update({
   path: '/categories',
   getParentRoute: () => rootRouteImport,
 } as any)
+const BestProductsRoute = BestProductsRouteImport.update({
+  id: '/best-products',
+  path: '/best-products',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const BestOf2026Route = BestOf2026RouteImport.update({
   id: '/best-of-2026',
   path: '/best-of-2026',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AffiliateDisclosureRoute = AffiliateDisclosureRouteImport.update({
+  id: '/affiliate-disclosure',
+  path: '/affiliate-disclosure',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AboutRoute = AboutRouteImport.update({
+  id: '/about',
+  path: '/about',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -130,16 +191,32 @@ const BrandSlugRoute = BrandSlugRouteImport.update({
   path: '/brand/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
+const BestCategoryRoute = BestCategoryRouteImport.update({
+  id: '/best/$category',
+  path: '/best/$category',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/affiliate-disclosure': typeof AffiliateDisclosureRoute
   '/best-of-2026': typeof BestOf2026Route
+  '/best-products': typeof BestProductsRoute
   '/categories': typeof CategoriesRoute
   '/collections': typeof CollectionsRoute
   '/contact': typeof ContactRoute
   '/deals': typeof DealsRoute
+  '/dmca': typeof DmcaRoute
+  '/editorial-policy': typeof EditorialPolicyRoute
+  '/faq': typeof FaqRoute
+  '/how-we-review': typeof HowWeReviewRoute
+  '/privacy-policy': typeof PrivacyPolicyRoute
   '/search': typeof SearchRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/terms': typeof TermsRoute
+  '/wishlist': typeof WishlistRoute
+  '/best/$category': typeof BestCategoryRoute
   '/brand/$slug': typeof BrandSlugRoute
   '/category/$slug': typeof CategorySlugRoute
   '/compare/$slug': typeof CompareSlugRoute
@@ -155,13 +232,24 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/affiliate-disclosure': typeof AffiliateDisclosureRoute
   '/best-of-2026': typeof BestOf2026Route
+  '/best-products': typeof BestProductsRoute
   '/categories': typeof CategoriesRoute
   '/collections': typeof CollectionsRoute
   '/contact': typeof ContactRoute
   '/deals': typeof DealsRoute
+  '/dmca': typeof DmcaRoute
+  '/editorial-policy': typeof EditorialPolicyRoute
+  '/faq': typeof FaqRoute
+  '/how-we-review': typeof HowWeReviewRoute
+  '/privacy-policy': typeof PrivacyPolicyRoute
   '/search': typeof SearchRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/terms': typeof TermsRoute
+  '/wishlist': typeof WishlistRoute
+  '/best/$category': typeof BestCategoryRoute
   '/brand/$slug': typeof BrandSlugRoute
   '/category/$slug': typeof CategorySlugRoute
   '/compare/$slug': typeof CompareSlugRoute
@@ -178,13 +266,24 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/affiliate-disclosure': typeof AffiliateDisclosureRoute
   '/best-of-2026': typeof BestOf2026Route
+  '/best-products': typeof BestProductsRoute
   '/categories': typeof CategoriesRoute
   '/collections': typeof CollectionsRoute
   '/contact': typeof ContactRoute
   '/deals': typeof DealsRoute
+  '/dmca': typeof DmcaRoute
+  '/editorial-policy': typeof EditorialPolicyRoute
+  '/faq': typeof FaqRoute
+  '/how-we-review': typeof HowWeReviewRoute
+  '/privacy-policy': typeof PrivacyPolicyRoute
   '/search': typeof SearchRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/terms': typeof TermsRoute
+  '/wishlist': typeof WishlistRoute
+  '/best/$category': typeof BestCategoryRoute
   '/brand/$slug': typeof BrandSlugRoute
   '/category/$slug': typeof CategorySlugRoute
   '/compare/$slug': typeof CompareSlugRoute
@@ -202,13 +301,24 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/about'
+    | '/affiliate-disclosure'
     | '/best-of-2026'
+    | '/best-products'
     | '/categories'
     | '/collections'
     | '/contact'
     | '/deals'
+    | '/dmca'
+    | '/editorial-policy'
+    | '/faq'
+    | '/how-we-review'
+    | '/privacy-policy'
     | '/search'
     | '/sitemap.xml'
+    | '/terms'
+    | '/wishlist'
+    | '/best/$category'
     | '/brand/$slug'
     | '/category/$slug'
     | '/compare/$slug'
@@ -224,13 +334,24 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/about'
+    | '/affiliate-disclosure'
     | '/best-of-2026'
+    | '/best-products'
     | '/categories'
     | '/collections'
     | '/contact'
     | '/deals'
+    | '/dmca'
+    | '/editorial-policy'
+    | '/faq'
+    | '/how-we-review'
+    | '/privacy-policy'
     | '/search'
     | '/sitemap.xml'
+    | '/terms'
+    | '/wishlist'
+    | '/best/$category'
     | '/brand/$slug'
     | '/category/$slug'
     | '/compare/$slug'
@@ -246,13 +367,24 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/about'
+    | '/affiliate-disclosure'
     | '/best-of-2026'
+    | '/best-products'
     | '/categories'
     | '/collections'
     | '/contact'
     | '/deals'
+    | '/dmca'
+    | '/editorial-policy'
+    | '/faq'
+    | '/how-we-review'
+    | '/privacy-policy'
     | '/search'
     | '/sitemap.xml'
+    | '/terms'
+    | '/wishlist'
+    | '/best/$category'
     | '/brand/$slug'
     | '/category/$slug'
     | '/compare/$slug'
@@ -269,13 +401,24 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AboutRoute: typeof AboutRoute
+  AffiliateDisclosureRoute: typeof AffiliateDisclosureRoute
   BestOf2026Route: typeof BestOf2026Route
+  BestProductsRoute: typeof BestProductsRoute
   CategoriesRoute: typeof CategoriesRoute
   CollectionsRoute: typeof CollectionsRoute
   ContactRoute: typeof ContactRoute
   DealsRoute: typeof DealsRoute
+  DmcaRoute: typeof DmcaRoute
+  EditorialPolicyRoute: typeof EditorialPolicyRoute
+  FaqRoute: typeof FaqRoute
+  HowWeReviewRoute: typeof HowWeReviewRoute
+  PrivacyPolicyRoute: typeof PrivacyPolicyRoute
   SearchRoute: typeof SearchRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
+  TermsRoute: typeof TermsRoute
+  WishlistRoute: typeof WishlistRoute
+  BestCategoryRoute: typeof BestCategoryRoute
   BrandSlugRoute: typeof BrandSlugRoute
   CategorySlugRoute: typeof CategorySlugRoute
   CompareSlugRoute: typeof CompareSlugRoute
@@ -292,6 +435,20 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/wishlist': {
+      id: '/wishlist'
+      path: '/wishlist'
+      fullPath: '/wishlist'
+      preLoaderRoute: typeof WishlistRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/terms': {
+      id: '/terms'
+      path: '/terms'
+      fullPath: '/terms'
+      preLoaderRoute: typeof TermsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/sitemap.xml': {
       id: '/sitemap.xml'
       path: '/sitemap.xml'
@@ -304,6 +461,41 @@ declare module '@tanstack/react-router' {
       path: '/search'
       fullPath: '/search'
       preLoaderRoute: typeof SearchRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/privacy-policy': {
+      id: '/privacy-policy'
+      path: '/privacy-policy'
+      fullPath: '/privacy-policy'
+      preLoaderRoute: typeof PrivacyPolicyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/how-we-review': {
+      id: '/how-we-review'
+      path: '/how-we-review'
+      fullPath: '/how-we-review'
+      preLoaderRoute: typeof HowWeReviewRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/faq': {
+      id: '/faq'
+      path: '/faq'
+      fullPath: '/faq'
+      preLoaderRoute: typeof FaqRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/editorial-policy': {
+      id: '/editorial-policy'
+      path: '/editorial-policy'
+      fullPath: '/editorial-policy'
+      preLoaderRoute: typeof EditorialPolicyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/dmca': {
+      id: '/dmca'
+      path: '/dmca'
+      fullPath: '/dmca'
+      preLoaderRoute: typeof DmcaRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/deals': {
@@ -334,11 +526,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CategoriesRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/best-products': {
+      id: '/best-products'
+      path: '/best-products'
+      fullPath: '/best-products'
+      preLoaderRoute: typeof BestProductsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/best-of-2026': {
       id: '/best-of-2026'
       path: '/best-of-2026'
       fullPath: '/best-of-2026'
       preLoaderRoute: typeof BestOf2026RouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/affiliate-disclosure': {
+      id: '/affiliate-disclosure'
+      path: '/affiliate-disclosure'
+      fullPath: '/affiliate-disclosure'
+      preLoaderRoute: typeof AffiliateDisclosureRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/about': {
+      id: '/about'
+      path: '/about'
+      fullPath: '/about'
+      preLoaderRoute: typeof AboutRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -432,18 +645,36 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BrandSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/best/$category': {
+      id: '/best/$category'
+      path: '/best/$category'
+      fullPath: '/best/$category'
+      preLoaderRoute: typeof BestCategoryRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AboutRoute: AboutRoute,
+  AffiliateDisclosureRoute: AffiliateDisclosureRoute,
   BestOf2026Route: BestOf2026Route,
+  BestProductsRoute: BestProductsRoute,
   CategoriesRoute: CategoriesRoute,
   CollectionsRoute: CollectionsRoute,
   ContactRoute: ContactRoute,
   DealsRoute: DealsRoute,
+  DmcaRoute: DmcaRoute,
+  EditorialPolicyRoute: EditorialPolicyRoute,
+  FaqRoute: FaqRoute,
+  HowWeReviewRoute: HowWeReviewRoute,
+  PrivacyPolicyRoute: PrivacyPolicyRoute,
   SearchRoute: SearchRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
+  TermsRoute: TermsRoute,
+  WishlistRoute: WishlistRoute,
+  BestCategoryRoute: BestCategoryRoute,
   BrandSlugRoute: BrandSlugRoute,
   CategorySlugRoute: CategorySlugRoute,
   CompareSlugRoute: CompareSlugRoute,
