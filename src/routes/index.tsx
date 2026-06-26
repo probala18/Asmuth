@@ -182,24 +182,17 @@ export default function Index() {
         </div>
       </section>
 
-      {/* HORIZONTAL SHOWCASE — Categories: heading is its own section so the pinned track below can scroll cleanly */}
-      <section className="px-6 lg:px-10 pt-24 pb-12">
-        <div className="max-w-7xl mx-auto flex items-end justify-between gap-8 flex-wrap">
-          <div>
-            <p className="font-mono-tech text-[10px] uppercase tracking-[0.3em] text-[var(--cyan-accent)] mb-3">
-              Worlds to explore
-            </p>
-            <h2 className="font-display text-4xl lg:text-6xl font-semibold max-w-3xl tracking-tight">
-              Every category, <span className="text-accent-gradient">elevated</span>.
-            </h2>
-          </div>
-          <p className="text-muted-foreground max-w-sm text-sm leading-relaxed">
-            Scroll horizontally — six worlds, hand-curated. Pinned in place so the story unfolds at the speed of your scroll.
+      {/* CINEMA GRID — Categories: staggered cinematic card reveal */}
+      <section className="px-6 lg:px-10 pt-24 pb-24">
+        <div className="max-w-7xl mx-auto mb-14">
+          <p className="font-mono-tech text-[10px] uppercase tracking-[0.3em] text-[var(--cyan-accent)] mb-3">
+            Worlds to explore
           </p>
+          <h2 className="font-display text-4xl lg:text-6xl font-semibold max-w-3xl tracking-tight">
+            Every category, <span className="text-accent-gradient">elevated</span>.
+          </h2>
         </div>
-      </section>
-      <div className="pb-24">
-        <HorizontalShowcase
+        <CinemaGrid
           items={[
             { title: "Computing", description: "Pro silicon, ultraportable chassis, cinema-grade displays — for makers and builders.", stats: "120+ products · 4.9 avg rating", icon: <Laptop className="size-6" /> },
             { title: "Audio", description: "Reference-tuned headphones and immersive spatial speakers for sound that disappears.", stats: "84 products · 4.8 avg rating", icon: <Headphones className="size-6" /> },
@@ -209,7 +202,8 @@ export default function Index() {
             { title: "Smart Home", description: "An ambient layer for your space — automations that fade into the architecture.", stats: "92 products · 4.8 avg rating", icon: <HomeIcon className="size-6" /> },
           ]}
         />
-      </div>
+      </section>
+
 
 
       {/* TRUST / COUNTERS */}
