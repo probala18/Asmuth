@@ -288,7 +288,9 @@ export function HorizontalShowcase({
       const { gsap } = await import("gsap");
       const { ScrollTrigger } = await import("gsap/ScrollTrigger");
       gsap.registerPlugin(ScrollTrigger);
+      
       const distance = () => track.scrollWidth - window.innerWidth + 80;
+      
       const tween = gsap.to(track, {
         x: () => -distance(),
         ease: "none",
@@ -301,12 +303,34 @@ export function HorizontalShowcase({
           invalidateOnRefresh: true,
         },
       });
-      cleanup = () => { tween.scrollTrigger?.kill(); tween.kill(); };
+
+      // Local cards reveal animation when section enters viewport (ignores global batch opacity: 0)
+      const cards = track.querySelectorAll("article");
+      gsap.set(cards, { opacity: 0, y: 40 });
+      const revealTween = gsap.to(cards, {
+        opacity: 1,
+        y: 0,
+        duration: 0.8,
+        stagger: 0.1,
+        ease: "power2.out",
+        scrollTrigger: {
+          trigger: section,
+          start: "top 80%",
+          once: true,
+        }
+      });
+
+      cleanup = () => { 
+        tween.scrollTrigger?.kill(); 
+        tween.kill(); 
+        revealTween.scrollTrigger?.kill();
+        revealTween.kill();
+      };
     })();
     return () => cleanup?.();
   }, [items.length]);
   return (
-    <section ref={sectionRef} className="relative overflow-hidden">
+    <section ref={sectionRef} data-no-batch className="relative overflow-hidden">
       <div ref={trackRef} className="flex gap-6 pl-6 lg:pl-10 py-8 will-change-transform">
         {items.map((it, i) => (
           <article

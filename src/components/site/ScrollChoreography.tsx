@@ -51,8 +51,8 @@ export function ScrollChoreography({ children }: { children: ReactNode }) {
       ].join(",");
 
       const targets = gsap.utils.toArray<HTMLElement>(selectors).filter((el) => {
-        // Avoid double-animating nested matches
-        return !el.closest("[data-cine-handled]");
+        // Avoid double-animating nested matches, and ignore elements inside a data-no-batch container
+        return !el.closest("[data-cine-handled]") && !el.closest("[data-no-batch]");
       });
 
       targets.forEach((el) => el.setAttribute("data-cine-handled", ""));
