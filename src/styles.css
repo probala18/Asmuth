@@ -56,6 +56,14 @@
   --font-display: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
   --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, monospace;
+
+  /* Transition timing tokens */
+  --transition-fast:        200ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-normal:      300ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slow:        500ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-fast-dark:   250ms cubic-bezier(0.34, 1.56, 0.64, 1);
+  --transition-normal-dark: 350ms cubic-bezier(0.34, 1.56, 0.64, 1);
+  --transition-slow-dark:   600ms cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 /* =========================
@@ -164,18 +172,41 @@
   --shadow-glow: 0 0 40px color-mix(in oklab, var(--emerald-accent) 35%, transparent);
   --shadow-soft: 0 20px 60px -20px color-mix(in oklab, var(--emerald-accent) 30%, transparent);
   --shadow-elegant: 0 30px 80px -30px oklch(0 0 0 / 0.6);
+
+  /* Layered glow shadow scale (dark mode only) */
+  --shadow-glow-sm: 0 0 15px rgba(6, 182, 212, 0.15), 0 2px 4px rgba(0, 0, 0, 0.2);
+  --shadow-glow-md: 0 0 20px rgba(6, 182, 212, 0.2),  0 4px 8px rgba(0, 0, 0, 0.3);
+  --shadow-glow-lg: 0 0 30px rgba(6, 182, 212, 0.25), 0 12px 24px rgba(0, 0, 0, 0.4);
+  --shadow-glow-xl: 0 0 40px rgba(6, 182, 212, 0.3),  0 20px 40px rgba(0, 0, 0, 0.5);
+  --shadow-glow-hover: 0 0 20px rgba(6, 182, 212, 0.4), 0 8px 16px rgba(0, 0, 0, 0.3);
+
+  /* Focus ring with glow */
+  --focus-ring-glow: 0 0 0 4px rgba(6, 182, 212, 0.3);
+
+  /* Transition easing — luxury feel */
+  --ease-luxury: cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 @layer base {
   * { border-color: var(--color-border); }
   html, body { background-color: var(--color-background); color: var(--color-foreground); }
   body { font-family: var(--font-sans); -webkit-font-smoothing: antialiased; }
-  html { scroll-behavior: auto; }
+  /* Smooth theme switch: background and text fade over 300ms */
+  html {
+    scroll-behavior: auto;
+    transition: background-color 300ms cubic-bezier(0.4, 0, 0.2, 1),
+                color 300ms cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  /* Subtle ambient glow in dark mode */
+  html.dark { box-shadow: inset 0 0 120px rgba(6, 182, 212, 0.03); }
   :focus-visible { outline: 2px solid var(--emerald-accent); outline-offset: 4px; }
+  /* Enhanced focus ring in dark mode */
+  .dark :focus-visible { box-shadow: var(--focus-ring-glow, none); }
   ::selection { background: color-mix(in oklab, var(--emerald-accent) 40%, transparent); color: var(--foreground); }
   ::-webkit-scrollbar { width: 8px; height: 8px; }
   ::-webkit-scrollbar-track { background: var(--background); }
   ::-webkit-scrollbar-thumb { background: color-mix(in oklab, var(--emerald-accent) 60%, transparent); border-radius: 4px; }
+  ::-webkit-scrollbar-thumb:hover { background: color-mix(in oklab, var(--emerald-accent) 80%, transparent); }
 }
 
 .font-display { font-family: var(--font-display); letter-spacing: -0.02em; }
@@ -285,6 +316,165 @@
 
 @keyframes fadeInUp { from { opacity:0; transform: translateY(24px);} to { opacity:1; transform:none; } }
 .fade-in-up { animation: fadeInUp .8s cubic-bezier(.2,.8,.2,1) both; }
+
+/* ============================================================
+   AETHER Extended Animation Keyframes
+   ============================================================ */
+
+/* Fade + Scale entry (light theme page loads) */
+@keyframes fadeScaleIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+/* Glowing cinematic entry (dark theme preferred) */
+@keyframes glowFadeIn {
+  0%   { opacity: 0; transform: translateY(20px); filter: drop-shadow(0 0 0px rgba(6, 182, 212, 0)); }
+  100% { opacity: 1; transform: translateY(0);    filter: drop-shadow(0 0 10px rgba(6, 182, 212, 0.2)); }
+}
+
+/* Fade from top */
+@keyframes fadeInDown {
+  from { opacity: 0; transform: translateY(-30px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Subtle opacity pulse (light mode badges/alerts) */
+@keyframes subtlePulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.8; }
+}
+
+/* Glowing box-shadow pulse (dark mode highlight elements) */
+@keyframes glowPulse {
+  0%, 100% { box-shadow: 0 0 15px rgba(6, 182, 212, 0.25); }
+  50%       { box-shadow: 0 0 28px rgba(6, 182, 212, 0.5); }
+}
+
+/* Loading shimmer — light mode skeleton */
+@keyframes shimmer {
+  0%   { background-position: -1000px 0; }
+  100% { background-position:  1000px 0; }
+}
+
+/* Loading shimmer — dark mode with glow pulse */
+@keyframes shimmerGlow {
+  0%, 100% { opacity: 0.7; box-shadow: 0 0 20px rgba(6, 182, 212, 0.08); }
+  50%       { opacity: 1;   box-shadow: 0 0 40px rgba(6, 182, 212, 0.22); }
+}
+
+/* Clip-path text / element reveal */
+@keyframes revealSlide {
+  from { opacity: 0; clip-path: inset(0 100% 0 0); }
+  to   { opacity: 1; clip-path: inset(0 0% 0 0); }
+}
+
+/* Spring scale entry */
+@keyframes bounceIn {
+  0%   { opacity: 0; transform: scale(0.6); }
+  60%  { opacity: 1; transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
+/* Rotate + scale entry */
+@keyframes rotateIn {
+  from { opacity: 0; transform: rotate(-10deg) scale(0.9); }
+  to   { opacity: 1; transform: rotate(0deg)  scale(1); }
+}
+
+/* ============================================================
+   Animation Utility Classes
+   ============================================================ */
+
+/* Fade scale in (light-mode default) */
+.animate-fade-scale-in {
+  animation: fadeScaleIn var(--transition-slow, 500ms) cubic-bezier(0.4, 0, 0.2, 1) both;
+}
+
+/* Generic fade-in-up */
+.animate-fade-in-up {
+  animation: fadeInUp var(--transition-normal, 300ms) cubic-bezier(0.4, 0, 0.2, 1) both;
+}
+
+/* Fade in from top */
+.animate-fade-in-down {
+  animation: fadeInDown var(--transition-normal, 300ms) cubic-bezier(0.4, 0, 0.2, 1) both;
+}
+
+/* Subtle opacity pulse */
+.animate-pulse-subtle {
+  animation: subtlePulse 2.4s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+/* Glow pulse — only meaningful in dark mode */
+.dark .animate-glow-pulse {
+  animation: glowPulse 3s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+/* Cinematic glow entry — dark mode only */
+.dark .animate-glow-fade-in {
+  animation: glowFadeIn var(--transition-slow-dark, 600ms) cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+/* Loading shimmer skeleton */
+.animate-shimmer {
+  background: linear-gradient(90deg, var(--surface) 25%, var(--surface-2) 50%, var(--surface) 75%);
+  background-size: 1000px 100%;
+  animation: shimmer 2s infinite linear;
+}
+.dark .animate-shimmer {
+  animation: shimmerGlow 2.2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+/* Clip-path reveal */
+.animate-reveal {
+  animation: revealSlide var(--transition-normal, 300ms) cubic-bezier(0.4, 0, 0.2, 1) both;
+}
+
+/* Spring entry */
+.animate-bounce-in {
+  animation: bounceIn var(--transition-normal, 300ms) cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+/* Rotate entry */
+.animate-rotate-in {
+  animation: rotateIn var(--transition-normal, 300ms) cubic-bezier(0.4, 0, 0.2, 1) both;
+}
+
+/* ============================================================
+   Stagger Utilities
+   Works with any of the animation classes above.
+   ============================================================ */
+.stagger-item { animation-fill-mode: both; }
+.stagger-item:nth-child(1) { animation-delay:   0ms; }
+.stagger-item:nth-child(2) { animation-delay: 100ms; }
+.stagger-item:nth-child(3) { animation-delay: 200ms; }
+.stagger-item:nth-child(4) { animation-delay: 300ms; }
+.stagger-item:nth-child(5) { animation-delay: 400ms; }
+.stagger-item:nth-child(6) { animation-delay: 500ms; }
+.stagger-item:nth-child(7) { animation-delay: 600ms; }
+.stagger-item:nth-child(n+8) { animation-delay: 700ms; }
+
+/* ============================================================
+   Link Underline Reveal
+   Usage: add class="link-underline" to any <a> or inline element
+   ============================================================ */
+@utility link-underline {
+  position: relative;
+  display: inline-block;
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 100%;
+    height: 1.5px;
+    background: currentColor;
+    transform: translateX(-101%);
+    transition: transform var(--transition-normal, 300ms) cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  &:hover::after { transform: translateX(0); }
+}
 
 .page-enter { opacity: 0; transform: translateY(12px); }
 .page-enter-active { opacity: 1; transform: none; transition: opacity .4s ease, transform .5s cubic-bezier(.2,.8,.2,1); }
