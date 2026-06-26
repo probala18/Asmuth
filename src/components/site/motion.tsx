@@ -392,6 +392,8 @@ export function CinemaGrid({
       ))}
     </div>
   );
+}
+
 
 /** Animated SVG journey line — vertical, draws on scroll */
 export function JourneyLine({ steps }: { steps: Array<{ title: string; body: string }> }) {
