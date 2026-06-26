@@ -41,9 +41,11 @@
   --color-surface: var(--surface);
   --color-surface-2: var(--surface-2);
   --color-surface-3: var(--surface-3);
+  --color-emerald: var(--emerald);
   --color-emerald-accent: var(--emerald-accent);
   --color-emerald-glow: var(--emerald-glow);
   --color-emerald-hover: var(--emerald-hover);
+  --color-cyan: var(--cyan);
   --color-cyan-accent: var(--cyan-accent);
   --color-cyan-glow: var(--cyan-glow);
   --color-success: var(--success);
@@ -75,11 +77,15 @@
   --popover: var(--surface);
   --popover-foreground: var(--foreground);
 
-  /* Accents — deep emerald-teal (primary) + bright aqua (accent) */
-  --emerald-accent: #0F9D84;    /* slightly deeper than bright emerald */
+  /* User Accent Colors */
+  --emerald: #0F9D84;           /* Slightly deeper than bright emerald */
+  --emerald-hover: #0B7F6B;     /* Hover Accent */
+  --cyan: #38BDF8;              /* Secondary Accent */
+
+  /* Aliases for backwards compatibility */
+  --emerald-accent: var(--emerald);
   --emerald-glow:   #14b8a6;
-  --emerald-hover:  #0B7F6B;
-  --cyan-accent:    #38BDF8;
+  --cyan-accent:    var(--cyan);
   --cyan-glow:      #7dd3fc;
 
   --success: #16A34A;

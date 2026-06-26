@@ -1,170 +1,244 @@
 import { useEffect, useRef } from "react";
 
+interface ThreeHeroProps {
+  className?: string;
+}
+
 /**
- * Subtle Three.js hero background — instanced floating points
- * forming a soft, drifting field. Cheap; capped DPR; respects prefers-reduced-motion.
- * Theme-aware: changes particle colors and blending when switching light/dark mode.
+ * Subtle Three.js hero background with instanced floating particles forming
+ * a soft, drifting field. Optimized for performance, accessibility, and theme awareness.
+ *
+ * Features:
+ * - Respects prefers-reduced-motion
+ * - Theme-aware (light/dark mode with appropriate colors and blending)
+ * - Mobile-optimized (reduced particles, device-specific rendering)
+ * - Robust error handling and cleanup
+ * - Mouse interaction with parallax effect
+ * - Responsive to window resizing
  */
-export function ThreeHero({ className = "" }: { className?: string }) {
+export function ThreeHero({ className = "" }: ThreeHeroProps) {
   const mountRef = useRef<HTMLDivElement>(null);
+  const cleanupRef = useRef<(() => void) | null>(null);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
+
     const mount = mountRef.current;
     if (!mount) return;
+
+    // Respect prefers-reduced-motion
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
-    let raf = 0;
-    let cleanup: (() => void) | undefined;
+    // Disable on very low-end devices or low memory situations
+    const deviceMemory = (navigator as any).deviceMemory;
+    if (deviceMemory && deviceMemory < 2) return;
 
-    (async () => {
-      const THREE = await import("three");
-      const width = mount.clientWidth;
-      const height = mount.clientHeight;
-      const scene = new THREE.Scene();
-      const camera = new THREE.PerspectiveCamera(60, width / height, 0.1, 100);
-      camera.position.z = 6;
+    // Initialize Three.js scene
+    const initScene = async () => {
+      try {
+        const THREE = await import("three");
 
-      const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
-      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.6));
-      renderer.setSize(width, height);
-      renderer.setClearColor(0x000000, 0);
-      mount.appendChild(renderer.domElement);
+        const width = Math.max(mount.clientWidth, 1);
+        const height = Math.max(mount.clientHeight, 1);
 
-      // Particles
-      const COUNT = 1400;
-      const positions = new Float32Array(COUNT * 3);
-      const colors = new Float32Array(COUNT * 3);
-      
-      // Store types so we can swap colors dynamically
-      const particleTypes = new Uint8Array(COUNT); // 1 for emerald, 0 for cyan
+        if (width === 0 || height === 0) return;
 
-      for (let i = 0; i < COUNT; i++) {
-        const r = 4 + Math.random() * 4;
-        const theta = Math.random() * Math.PI * 2;
-        const phi = Math.acos(2 * Math.random() - 1);
-        positions[i * 3 + 0] = r * Math.sin(phi) * Math.cos(theta);
-        positions[i * 3 + 1] = r * Math.sin(phi) * Math.sin(theta) * 0.55;
-        positions[i * 3 + 2] = r * Math.cos(phi) * 0.7 - 1;
-        
-        particleTypes[i] = Math.random() < 0.5 ? 1 : 0;
-      }
+        // Scene setup
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(60, width / height, 0.1, 100);
+        camera.position.z = 6;
 
-      // Create a round circular dot texture dynamically
-      const canvas = document.createElement("canvas");
-      canvas.width = 16;
-      canvas.height = 16;
-      const ctx = canvas.getContext("2d");
-      if (ctx) {
-        ctx.beginPath();
-        ctx.arc(8, 8, 8, 0, Math.PI * 2);
-        ctx.fillStyle = "#ffffff";
-        ctx.fill();
-      }
-      const texture = new THREE.CanvasTexture(canvas);
+        // Renderer configuration
+        const isMobile = /iPhone|iPad|Android|webOS/i.test(navigator.userAgent);
+        const dpr = Math.min(window.devicePixelRatio, isMobile ? 1.2 : 1.6);
+        const particleCount = isMobile ? 800 : 1400;
+        const particleSize = isMobile ? 2.5 : 3.5;
 
-      const geo = new THREE.BufferGeometry();
-      geo.setAttribute("position", new THREE.BufferAttribute(positions, 3));
-      geo.setAttribute("color", new THREE.BufferAttribute(colors, 3));
+        const renderer = new THREE.WebGLRenderer({
+          alpha: true,
+          antialias: true,
+          precision: "mediump",
+          powerPreference: isMobile ? "low-power" : "default",
+        });
 
-      const mat = new THREE.PointsMaterial({
-        size: 0.045, // slightly larger to look natural as a circle
-        vertexColors: true,
-        transparent: true,
-        depthWrite: false,
-        map: texture,
-        alphaTest: 0.01,
-      });
+        renderer.setPixelRatio(dpr);
+        renderer.setSize(width, height);
+        renderer.setClearColor(0x000000, 0);
+        mount.appendChild(renderer.domElement);
 
-      const points = new THREE.Points(geo, mat);
-      scene.add(points);
+        // Particle geometry setup
+        const positions = new Float32Array(particleCount * 3);
+        const colors = new Float32Array(particleCount * 3);
+        const particleTypes = new Uint8Array(particleCount); // 1 = emerald, 0 = cyan
 
-      // Theme logic helper
-      const updateThemeColors = (isDark: boolean) => {
-        const colorArr = geo.attributes.color.array as Float32Array;
-        const emeraldColor = new THREE.Color(isDark ? 0x10b981 : 0x0f9d84);
-        const cyanColor = new THREE.Color(isDark ? 0x22d3ee : 0x38bdf8);
+        // Generate particle positions in a spherical distribution
+        for (let i = 0; i < particleCount; i++) {
+          const radius = 4 + Math.random() * 4;
+          const theta = Math.random() * Math.PI * 2;
+          const phi = Math.acos(2 * Math.random() - 1);
 
-        for (let i = 0; i < COUNT; i++) {
-          const c = particleTypes[i] === 1 ? emeraldColor : cyanColor;
-          colorArr[i * 3 + 0] = c.r;
-          colorArr[i * 3 + 1] = c.g;
-          colorArr[i * 3 + 2] = c.b;
+          positions[i * 3 + 0] = radius * Math.sin(phi) * Math.cos(theta);
+          positions[i * 3 + 1] = radius * Math.sin(phi) * Math.sin(theta) * 0.55;
+          positions[i * 3 + 2] = radius * Math.cos(phi) * 0.7 - 1;
+
+          particleTypes[i] = Math.random() < 0.5 ? 1 : 0;
         }
-        geo.attributes.color.needsUpdate = true;
 
-        if (isDark) {
-          mat.blending = THREE.AdditiveBlending;
-          mat.opacity = 0.85;
-        } else {
-          mat.blending = THREE.NormalBlending;
-          mat.opacity = 0.45;
+        // Create circular dot texture
+        const canvas = document.createElement("canvas");
+        canvas.width = 16;
+        canvas.height = 16;
+        const ctx = canvas.getContext("2d");
+
+        if (ctx) {
+          ctx.beginPath();
+          ctx.arc(8, 8, 8, 0, Math.PI * 2);
+          ctx.fillStyle = "#ffffff";
+          ctx.fill();
         }
-        mat.needsUpdate = true;
-      };
 
-      // Set initial colors
-      const initialDark = document.documentElement.classList.contains("dark");
-      updateThemeColors(initialDark);
+        const texture = new THREE.CanvasTexture(canvas);
+        texture.colorSpace = THREE.SRGBColorSpace;
 
-      // Listen to theme changes
-      const observer = new MutationObserver((mutations) => {
-        for (const mutation of mutations) {
-          if (mutation.attributeName === "class") {
-            const dark = document.documentElement.classList.contains("dark");
-            updateThemeColors(dark);
+        // Geometry and material
+        const geometry = new THREE.BufferGeometry();
+        geometry.setAttribute(
+          "position",
+          new THREE.BufferAttribute(positions, 3)
+        );
+        geometry.setAttribute("color", new THREE.BufferAttribute(colors, 3));
+
+        const material = new THREE.PointsMaterial({
+          size: particleSize,
+          vertexColors: true,
+          transparent: true,
+          depthWrite: false,
+          map: texture,
+          alphaTest: 0.01,
+          sizeAttenuation: false,
+        });
+
+        const points = new THREE.Points(geometry, material);
+        scene.add(points);
+
+        // Theme color management
+        const updateThemeColors = (isDark: boolean) => {
+          const colorArray = geometry.attributes.color.array as Float32Array;
+          const emeraldColor = new THREE.Color(
+            isDark ? 0x10b981 : 0x0f9d84
+          );
+          const cyanColor = new THREE.Color(isDark ? 0x22d3ee : 0x38bdf8);
+
+          for (let i = 0; i < particleCount; i++) {
+            const color = particleTypes[i] === 1 ? emeraldColor : cyanColor;
+            colorArray[i * 3 + 0] = color.r;
+            colorArray[i * 3 + 1] = color.g;
+            colorArray[i * 3 + 2] = color.b;
           }
-        }
-      });
-      observer.observe(document.documentElement, { attributes: true, attributeFilter: ["class"] });
 
-      let mx = 0, my = 0;
-      const onMove = (e: MouseEvent) => {
-        const r = mount.getBoundingClientRect();
-        mx = ((e.clientX - r.left) / r.width - 0.5) * 0.6;
-        my = ((e.clientY - r.top) / r.height - 0.5) * 0.6;
-      };
-      window.addEventListener("mousemove", onMove, { passive: true });
+          geometry.attributes.color.needsUpdate = true;
 
-      const start = performance.now();
-      const tick = () => {
-        const t = (performance.now() - start) * 0.0001;
-        points.rotation.y = t * 1.2 + mx * 0.4;
-        points.rotation.x = Math.sin(t * 0.8) * 0.15 + my * 0.3;
-        renderer.render(scene, camera);
-        raf = requestAnimationFrame(tick);
-      };
-      raf = requestAnimationFrame(tick);
+          material.blending = isDark
+            ? THREE.AdditiveBlending
+            : THREE.NormalBlending;
+          material.opacity = isDark ? 0.85 : 0.45;
+          material.needsUpdate = true;
+        };
 
-      const onResize = () => {
-        const w = mount.clientWidth;
-        const h = mount.clientHeight;
-        camera.aspect = w / h;
-        camera.updateProjectionMatrix();
-        renderer.setSize(w, h);
-      };
-      window.addEventListener("resize", onResize);
+        // Initialize with current theme
+        const isDarkMode = document.documentElement.classList.contains("dark");
+        updateThemeColors(isDarkMode);
 
-      cleanup = () => {
-        cancelAnimationFrame(raf);
-        observer.disconnect();
-        window.removeEventListener("mousemove", onMove);
-        window.removeEventListener("resize", onResize);
-        renderer.dispose();
-        geo.dispose();
-        mat.dispose();
-        texture.dispose();
-        if (renderer.domElement.parentNode === mount) mount.removeChild(renderer.domElement);
-      };
-    })();
+        // Listen for theme changes
+        const observer = new MutationObserver(() => {
+          const dark = document.documentElement.classList.contains("dark");
+          updateThemeColors(dark);
+        });
 
-    return () => cleanup?.();
+        observer.observe(document.documentElement, {
+          attributes: true,
+          attributeFilter: ["class"],
+        });
+
+        // Mouse interaction
+        let mouseX = 0;
+        let mouseY = 0;
+
+        const handleMouseMove = (event: MouseEvent) => {
+          const rect = mount.getBoundingClientRect();
+          mouseX = ((event.clientX - rect.left) / rect.width - 0.5) * 0.6;
+          mouseY = ((event.clientY - rect.top) / rect.height - 0.5) * 0.6;
+        };
+
+        window.addEventListener("mousemove", handleMouseMove, {
+          passive: true,
+        });
+
+        // Animation loop
+        const startTime = performance.now();
+        let animationFrameId = 0;
+
+        const animate = () => {
+          const elapsed = (performance.now() - startTime) * 0.0001;
+
+          points.rotation.y = elapsed * 1.2 + mouseX * 0.4;
+          points.rotation.x = Math.sin(elapsed * 0.8) * 0.15 + mouseY * 0.3;
+
+          renderer.render(scene, camera);
+          animationFrameId = requestAnimationFrame(animate);
+        };
+
+        animationFrameId = requestAnimationFrame(animate);
+
+        // Handle window resize
+        const handleResize = () => {
+          const newWidth = Math.max(mount.clientWidth, 1);
+          const newHeight = Math.max(mount.clientHeight, 1);
+
+          if (newWidth > 0 && newHeight > 0) {
+            camera.aspect = newWidth / newHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(newWidth, newHeight);
+          }
+        };
+
+        window.addEventListener("resize", handleResize);
+
+        // Cleanup function
+        cleanupRef.current = () => {
+          cancelAnimationFrame(animationFrameId);
+          observer.disconnect();
+          window.removeEventListener("mousemove", handleMouseMove);
+          window.removeEventListener("resize", handleResize);
+
+          // Dispose Three.js resources
+          geometry.dispose();
+          material.dispose();
+          texture.dispose();
+          renderer.dispose();
+
+          // Remove canvas from DOM
+          if (renderer.domElement.parentNode === mount) {
+            mount.removeChild(renderer.domElement);
+          }
+        };
+      } catch (error) {
+        console.error("Three.js scene initialization failed:", error);
+      }
+    };
+
+    initScene();
+
+    return () => {
+      cleanupRef.current?.();
+    };
   }, []);
 
   return (
     <div
       ref={mountRef}
-      aria-hidden
+      aria-hidden="true"
+      role="presentation"
       className={`pointer-events-none absolute inset-0 ${className}`}
     />
   );
