@@ -333,68 +333,6 @@ export function HorizontalShowcase({
   );
 }
 
-/** Cinematic staggered grid reveal — cards fade up, scale & subtly rotate as they enter */
-export function CinemaGrid({
-  items,
-}: {
-  items: Array<{ title: string; description: string; stats: string; icon: ReactNode }>;
-}) {
-  const ref = useRef<HTMLDivElement>(null);
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (reduced) return;
-    let cleanup: (() => void) | undefined;
-    (async () => {
-      const { gsap } = await import("gsap");
-      const { ScrollTrigger } = await import("gsap/ScrollTrigger");
-      gsap.registerPlugin(ScrollTrigger);
-      const cards = gsap.utils.toArray<HTMLElement>(el.querySelectorAll("[data-cg-card]"));
-      cards.forEach((el) => el.setAttribute("data-cine-handled", ""));
-      gsap.set(cards, { y: 80, opacity: 0, scale: 0.92, rotateX: -8, transformPerspective: 900, transformOrigin: "50% 100%" });
-      const tweens = cards.map((card, i) =>
-        gsap.to(card, {
-          y: 0, opacity: 1, scale: 1, rotateX: 0,
-          duration: 1.1, ease: "power3.out", delay: (i % 3) * 0.08,
-          scrollTrigger: { trigger: card, start: "top 88%", once: true },
-        })
-      );
-      cleanup = () => tweens.forEach((t) => { t.scrollTrigger?.kill(); t.kill(); });
-    })();
-    return () => cleanup?.();
-  }, [items.length]);
-  return (
-    <div ref={ref} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 px-6 lg:px-10 max-w-7xl mx-auto">
-      {items.map((it, i) => (
-        <article
-          key={i}
-          data-cg-card
-          className="surface-card-2 group relative overflow-hidden p-8 lg:p-10 will-change-transform"
-        >
-          <div className="absolute -right-24 -top-24 size-72 rounded-full blur-3xl opacity-0 group-hover:opacity-40 transition-opacity duration-700" style={{ background: "var(--gradient-accent)" }} />
-          <div className="relative">
-            <div className="flex items-center justify-between mb-6">
-              <p className="font-mono-tech text-[10px] uppercase tracking-[0.25em] text-[var(--cyan-accent)]">
-                {String(i + 1).padStart(2, "0")} / {String(items.length).padStart(2, "0")}
-              </p>
-              <span className="block h-px w-12 bg-gradient-to-r from-[var(--emerald-accent)] to-transparent" />
-            </div>
-            <div className="size-14 grid place-items-center rounded-xl bg-[var(--surface-2)] border border-[var(--hairline)] text-[var(--emerald-accent)] mb-6 transition-transform duration-500 group-hover:-translate-y-1">
-              {it.icon}
-            </div>
-            <h3 className="font-display text-2xl lg:text-3xl font-semibold mb-3 tracking-tight">{it.title}</h3>
-            <p className="text-muted-foreground mb-5 leading-relaxed text-sm">{it.description}</p>
-            <p className="font-mono-tech text-[11px] text-[var(--emerald-accent)] mb-6">{it.stats}</p>
-            <button className="btn-ghost-glow rounded-full px-5 py-2 text-xs font-semibold">Explore →</button>
-          </div>
-        </article>
-      ))}
-    </div>
-  );
-}
-
-
 /** Animated SVG journey line — vertical, draws on scroll */
 export function JourneyLine({ steps }: { steps: Array<{ title: string; body: string }> }) {
   const ref = useRef<HTMLDivElement>(null);
