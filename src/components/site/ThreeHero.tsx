@@ -50,15 +50,30 @@ export function ThreeHero({ className = "" }: { className?: string }) {
         particleTypes[i] = Math.random() < 0.5 ? 1 : 0;
       }
 
+      // Create a round circular dot texture dynamically
+      const canvas = document.createElement("canvas");
+      canvas.width = 16;
+      canvas.height = 16;
+      const ctx = canvas.getContext("2d");
+      if (ctx) {
+        ctx.beginPath();
+        ctx.arc(8, 8, 8, 0, Math.PI * 2);
+        ctx.fillStyle = "#ffffff";
+        ctx.fill();
+      }
+      const texture = new THREE.CanvasTexture(canvas);
+
       const geo = new THREE.BufferGeometry();
       geo.setAttribute("position", new THREE.BufferAttribute(positions, 3));
       geo.setAttribute("color", new THREE.BufferAttribute(colors, 3));
 
       const mat = new THREE.PointsMaterial({
-        size: 0.035,
+        size: 0.045, // slightly larger to look natural as a circle
         vertexColors: true,
         transparent: true,
         depthWrite: false,
+        map: texture,
+        alphaTest: 0.01,
       });
 
       const points = new THREE.Points(geo, mat);
@@ -138,6 +153,7 @@ export function ThreeHero({ className = "" }: { className?: string }) {
         renderer.dispose();
         geo.dispose();
         mat.dispose();
+        texture.dispose();
         if (renderer.domElement.parentNode === mount) mount.removeChild(renderer.domElement);
       };
     })();
