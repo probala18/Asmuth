@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { Laptop, Headphones, Watch, Smartphone, Gamepad2, Home as HomeIcon, Camera, Cpu, Tv } from "lucide-react";
+import * as Icons from "lucide-react";
 import { SplitTextReveal, TiltCard, HandUnderline } from "@/components/site/motion";
+import { categories } from "@/data";
 
 export const Route = createFileRoute("/categories")({
   head: () => ({
@@ -13,18 +14,6 @@ export const Route = createFileRoute("/categories")({
   }),
   component: CategoriesPage,
 });
-
-const categories = [
-  { icon: Laptop, name: "Computing", count: "250+ Products", body: "Laptops, desktops, and tablets engineered for makers and creators." },
-  { icon: Headphones, name: "Audio", count: "180+ Products", body: "Reference-grade headphones, speakers, and spatial audio rigs." },
-  { icon: Watch, name: "Wearables", count: "120+ Products", body: "Smartwatches and fitness tech that quietly elevate your day." },
-  { icon: Smartphone, name: "Mobile", count: "90+ Products", body: "Flagship phones and accessories — silicon meeting software." },
-  { icon: Gamepad2, name: "Gaming", count: "210+ Products", body: "Consoles, rigs, and peripherals engineered for milliseconds." },
-  { icon: HomeIcon, name: "Smart Home", count: "340+ Products", body: "Ambient automations that disappear into the architecture." },
-  { icon: Camera, name: "Cameras", count: "75+ Products", body: "Mirrorless, cinema, and creator kits for serious storytelling." },
-  { icon: Cpu, name: "Components", count: "420+ Products", body: "CPUs, GPUs, memory, and storage for high-performance builds." },
-  { icon: Tv, name: "Displays", count: "95+ Products", body: "OLED, mini-LED, and reference monitors with calibration grade." },
-];
 
 function CategoriesPage() {
   return (
@@ -50,22 +39,25 @@ function CategoriesPage() {
 
       <section className="px-6 lg:px-10 py-20">
         <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {categories.map((c) => (
-            <TiltCard key={c.name} className="surface-card-2 p-10 relative overflow-hidden group" max={5}>
-              <div className="absolute inset-0 bg-gradient-to-br from-[color-mix(in_oklab,var(--emerald-accent)_15%,transparent)] via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-              <div className="relative">
-                <div className="size-16 rounded-2xl bg-[var(--surface)] border border-[var(--emerald-accent)]/25 grid place-items-center mb-8 group-hover:glow-emerald transition">
-                  <c.icon className="size-7 text-[var(--emerald-accent)]" />
+          {categories.map((c) => {
+            const IconComponent = (Icons as any)[c.icon] || Icons.HelpCircle;
+            return (
+              <TiltCard key={c.slug} className="surface-card-2 p-10 relative overflow-hidden group flex flex-col justify-between" max={5}>
+                <div className="absolute inset-0 bg-gradient-to-br from-[color-mix(in_oklab,var(--emerald-accent)_15%,transparent)] via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+                <div className="relative">
+                  <div className="size-16 rounded-2xl bg-[var(--surface)] border border-[var(--emerald-accent)]/25 grid place-items-center mb-8 group-hover:glow-emerald transition">
+                    <IconComponent className="size-7 text-[var(--emerald-accent)]" />
+                  </div>
+                  <h3 className="font-display text-2xl font-semibold mb-2">{c.name}</h3>
+                  <p className="text-sm text-muted-foreground leading-relaxed mb-6">{c.description}</p>
                 </div>
-                <h3 className="font-display text-2xl font-semibold mb-2">{c.name}</h3>
-                <p className="text-sm text-muted-foreground leading-relaxed mb-6">{c.body}</p>
-                <div className="flex items-center justify-between">
-                  <span className="font-mono-tech text-xs text-[var(--emerald-accent)]">{c.count}</span>
-                  <Link to="/collections" className="text-xs text-foreground/70 hover:text-[var(--emerald-accent)] transition">Explore →</Link>
+                <div className="flex items-center justify-between border-t border-[var(--hairline)]/50 pt-6 mt-6">
+                  <span className="font-mono-tech text-xs text-[var(--emerald-accent)]">{c.productCount} products</span>
+                  <Link to={`/category/${c.slug}`} className="text-xs font-semibold text-foreground/70 hover:text-[var(--emerald-accent)] transition">Explore →</Link>
                 </div>
-              </div>
-            </TiltCard>
-          ))}
+              </TiltCard>
+            );
+          })}
         </div>
       </section>
     </>

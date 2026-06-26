@@ -10,18 +10,34 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
+import { Route as SearchRouteImport } from './routes/search'
 import { Route as DealsRouteImport } from './routes/deals'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as CollectionsRouteImport } from './routes/collections'
 import { Route as CategoriesRouteImport } from './routes/categories'
 import { Route as BestOf2026RouteImport } from './routes/best-of-2026'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ReviewsIndexRouteImport } from './routes/reviews.index'
+import { Route as GuidesIndexRouteImport } from './routes/guides.index'
+import { Route as CompareIndexRouteImport } from './routes/compare.index'
+import { Route as BrandsIndexRouteImport } from './routes/brands.index'
 import { Route as ReviewsMacbookProRouteImport } from './routes/reviews.macbook-pro'
+import { Route as ReviewsSlugRouteImport } from './routes/reviews.$slug'
 import { Route as ProductsLaptopAirRouteImport } from './routes/products.laptop-air'
+import { Route as ProductSlugRouteImport } from './routes/product.$slug'
+import { Route as GuidesSlugRouteImport } from './routes/guides.$slug'
+import { Route as CompareSlugRouteImport } from './routes/compare.$slug'
+import { Route as CategorySlugRouteImport } from './routes/category.$slug'
+import { Route as BrandSlugRouteImport } from './routes/brand.$slug'
 
 const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
   id: '/sitemap.xml',
   path: '/sitemap.xml',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SearchRoute = SearchRouteImport.update({
+  id: '/search',
+  path: '/search',
   getParentRoute: () => rootRouteImport,
 } as any)
 const DealsRoute = DealsRouteImport.update({
@@ -54,14 +70,64 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ReviewsIndexRoute = ReviewsIndexRouteImport.update({
+  id: '/reviews/',
+  path: '/reviews/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const GuidesIndexRoute = GuidesIndexRouteImport.update({
+  id: '/guides/',
+  path: '/guides/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CompareIndexRoute = CompareIndexRouteImport.update({
+  id: '/compare/',
+  path: '/compare/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BrandsIndexRoute = BrandsIndexRouteImport.update({
+  id: '/brands/',
+  path: '/brands/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ReviewsMacbookProRoute = ReviewsMacbookProRouteImport.update({
   id: '/reviews/macbook-pro',
   path: '/reviews/macbook-pro',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ReviewsSlugRoute = ReviewsSlugRouteImport.update({
+  id: '/reviews/$slug',
+  path: '/reviews/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ProductsLaptopAirRoute = ProductsLaptopAirRouteImport.update({
   id: '/products/laptop-air',
   path: '/products/laptop-air',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProductSlugRoute = ProductSlugRouteImport.update({
+  id: '/product/$slug',
+  path: '/product/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const GuidesSlugRoute = GuidesSlugRouteImport.update({
+  id: '/guides/$slug',
+  path: '/guides/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CompareSlugRoute = CompareSlugRouteImport.update({
+  id: '/compare/$slug',
+  path: '/compare/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CategorySlugRoute = CategorySlugRouteImport.update({
+  id: '/category/$slug',
+  path: '/category/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BrandSlugRoute = BrandSlugRouteImport.update({
+  id: '/brand/$slug',
+  path: '/brand/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
 
@@ -72,9 +138,20 @@ export interface FileRoutesByFullPath {
   '/collections': typeof CollectionsRoute
   '/contact': typeof ContactRoute
   '/deals': typeof DealsRoute
+  '/search': typeof SearchRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/brand/$slug': typeof BrandSlugRoute
+  '/category/$slug': typeof CategorySlugRoute
+  '/compare/$slug': typeof CompareSlugRoute
+  '/guides/$slug': typeof GuidesSlugRoute
+  '/product/$slug': typeof ProductSlugRoute
   '/products/laptop-air': typeof ProductsLaptopAirRoute
+  '/reviews/$slug': typeof ReviewsSlugRoute
   '/reviews/macbook-pro': typeof ReviewsMacbookProRoute
+  '/brands/': typeof BrandsIndexRoute
+  '/compare/': typeof CompareIndexRoute
+  '/guides/': typeof GuidesIndexRoute
+  '/reviews/': typeof ReviewsIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -83,9 +160,20 @@ export interface FileRoutesByTo {
   '/collections': typeof CollectionsRoute
   '/contact': typeof ContactRoute
   '/deals': typeof DealsRoute
+  '/search': typeof SearchRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/brand/$slug': typeof BrandSlugRoute
+  '/category/$slug': typeof CategorySlugRoute
+  '/compare/$slug': typeof CompareSlugRoute
+  '/guides/$slug': typeof GuidesSlugRoute
+  '/product/$slug': typeof ProductSlugRoute
   '/products/laptop-air': typeof ProductsLaptopAirRoute
+  '/reviews/$slug': typeof ReviewsSlugRoute
   '/reviews/macbook-pro': typeof ReviewsMacbookProRoute
+  '/brands': typeof BrandsIndexRoute
+  '/compare': typeof CompareIndexRoute
+  '/guides': typeof GuidesIndexRoute
+  '/reviews': typeof ReviewsIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -95,9 +183,20 @@ export interface FileRoutesById {
   '/collections': typeof CollectionsRoute
   '/contact': typeof ContactRoute
   '/deals': typeof DealsRoute
+  '/search': typeof SearchRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/brand/$slug': typeof BrandSlugRoute
+  '/category/$slug': typeof CategorySlugRoute
+  '/compare/$slug': typeof CompareSlugRoute
+  '/guides/$slug': typeof GuidesSlugRoute
+  '/product/$slug': typeof ProductSlugRoute
   '/products/laptop-air': typeof ProductsLaptopAirRoute
+  '/reviews/$slug': typeof ReviewsSlugRoute
   '/reviews/macbook-pro': typeof ReviewsMacbookProRoute
+  '/brands/': typeof BrandsIndexRoute
+  '/compare/': typeof CompareIndexRoute
+  '/guides/': typeof GuidesIndexRoute
+  '/reviews/': typeof ReviewsIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -108,9 +207,20 @@ export interface FileRouteTypes {
     | '/collections'
     | '/contact'
     | '/deals'
+    | '/search'
     | '/sitemap.xml'
+    | '/brand/$slug'
+    | '/category/$slug'
+    | '/compare/$slug'
+    | '/guides/$slug'
+    | '/product/$slug'
     | '/products/laptop-air'
+    | '/reviews/$slug'
     | '/reviews/macbook-pro'
+    | '/brands/'
+    | '/compare/'
+    | '/guides/'
+    | '/reviews/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -119,9 +229,20 @@ export interface FileRouteTypes {
     | '/collections'
     | '/contact'
     | '/deals'
+    | '/search'
     | '/sitemap.xml'
+    | '/brand/$slug'
+    | '/category/$slug'
+    | '/compare/$slug'
+    | '/guides/$slug'
+    | '/product/$slug'
     | '/products/laptop-air'
+    | '/reviews/$slug'
     | '/reviews/macbook-pro'
+    | '/brands'
+    | '/compare'
+    | '/guides'
+    | '/reviews'
   id:
     | '__root__'
     | '/'
@@ -130,9 +251,20 @@ export interface FileRouteTypes {
     | '/collections'
     | '/contact'
     | '/deals'
+    | '/search'
     | '/sitemap.xml'
+    | '/brand/$slug'
+    | '/category/$slug'
+    | '/compare/$slug'
+    | '/guides/$slug'
+    | '/product/$slug'
     | '/products/laptop-air'
+    | '/reviews/$slug'
     | '/reviews/macbook-pro'
+    | '/brands/'
+    | '/compare/'
+    | '/guides/'
+    | '/reviews/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -142,9 +274,20 @@ export interface RootRouteChildren {
   CollectionsRoute: typeof CollectionsRoute
   ContactRoute: typeof ContactRoute
   DealsRoute: typeof DealsRoute
+  SearchRoute: typeof SearchRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
+  BrandSlugRoute: typeof BrandSlugRoute
+  CategorySlugRoute: typeof CategorySlugRoute
+  CompareSlugRoute: typeof CompareSlugRoute
+  GuidesSlugRoute: typeof GuidesSlugRoute
+  ProductSlugRoute: typeof ProductSlugRoute
   ProductsLaptopAirRoute: typeof ProductsLaptopAirRoute
+  ReviewsSlugRoute: typeof ReviewsSlugRoute
   ReviewsMacbookProRoute: typeof ReviewsMacbookProRoute
+  BrandsIndexRoute: typeof BrandsIndexRoute
+  CompareIndexRoute: typeof CompareIndexRoute
+  GuidesIndexRoute: typeof GuidesIndexRoute
+  ReviewsIndexRoute: typeof ReviewsIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -154,6 +297,13 @@ declare module '@tanstack/react-router' {
       path: '/sitemap.xml'
       fullPath: '/sitemap.xml'
       preLoaderRoute: typeof SitemapDotxmlRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/search': {
+      id: '/search'
+      path: '/search'
+      fullPath: '/search'
+      preLoaderRoute: typeof SearchRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/deals': {
@@ -198,6 +348,34 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/reviews/': {
+      id: '/reviews/'
+      path: '/reviews'
+      fullPath: '/reviews/'
+      preLoaderRoute: typeof ReviewsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/guides/': {
+      id: '/guides/'
+      path: '/guides'
+      fullPath: '/guides/'
+      preLoaderRoute: typeof GuidesIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/compare/': {
+      id: '/compare/'
+      path: '/compare'
+      fullPath: '/compare/'
+      preLoaderRoute: typeof CompareIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/brands/': {
+      id: '/brands/'
+      path: '/brands'
+      fullPath: '/brands/'
+      preLoaderRoute: typeof BrandsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/reviews/macbook-pro': {
       id: '/reviews/macbook-pro'
       path: '/reviews/macbook-pro'
@@ -205,11 +383,53 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ReviewsMacbookProRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/reviews/$slug': {
+      id: '/reviews/$slug'
+      path: '/reviews/$slug'
+      fullPath: '/reviews/$slug'
+      preLoaderRoute: typeof ReviewsSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/products/laptop-air': {
       id: '/products/laptop-air'
       path: '/products/laptop-air'
       fullPath: '/products/laptop-air'
       preLoaderRoute: typeof ProductsLaptopAirRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/product/$slug': {
+      id: '/product/$slug'
+      path: '/product/$slug'
+      fullPath: '/product/$slug'
+      preLoaderRoute: typeof ProductSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/guides/$slug': {
+      id: '/guides/$slug'
+      path: '/guides/$slug'
+      fullPath: '/guides/$slug'
+      preLoaderRoute: typeof GuidesSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/compare/$slug': {
+      id: '/compare/$slug'
+      path: '/compare/$slug'
+      fullPath: '/compare/$slug'
+      preLoaderRoute: typeof CompareSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/category/$slug': {
+      id: '/category/$slug'
+      path: '/category/$slug'
+      fullPath: '/category/$slug'
+      preLoaderRoute: typeof CategorySlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/brand/$slug': {
+      id: '/brand/$slug'
+      path: '/brand/$slug'
+      fullPath: '/brand/$slug'
+      preLoaderRoute: typeof BrandSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
   }
@@ -222,10 +442,31 @@ const rootRouteChildren: RootRouteChildren = {
   CollectionsRoute: CollectionsRoute,
   ContactRoute: ContactRoute,
   DealsRoute: DealsRoute,
+  SearchRoute: SearchRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
+  BrandSlugRoute: BrandSlugRoute,
+  CategorySlugRoute: CategorySlugRoute,
+  CompareSlugRoute: CompareSlugRoute,
+  GuidesSlugRoute: GuidesSlugRoute,
+  ProductSlugRoute: ProductSlugRoute,
   ProductsLaptopAirRoute: ProductsLaptopAirRoute,
+  ReviewsSlugRoute: ReviewsSlugRoute,
   ReviewsMacbookProRoute: ReviewsMacbookProRoute,
+  BrandsIndexRoute: BrandsIndexRoute,
+  CompareIndexRoute: CompareIndexRoute,
+  GuidesIndexRoute: GuidesIndexRoute,
+  ReviewsIndexRoute: ReviewsIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}

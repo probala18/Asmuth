@@ -20,12 +20,12 @@ export const Route = createFileRoute("/collections")({
 });
 
 const collections = [
-  { title: "Creator Workstation", count: 8, body: "The full stack for video, design, and dev — from silicon to monitor calibration.", img: laptopImg },
-  { title: "Immersive Audio", count: 6, body: "Reference-grade headphones, spatial speakers, and the gear that makes them sing.", img: headphonesImg },
-  { title: "Quiet Wearables", count: 5, body: "Vitals, focus, and time — beautifully resolved, never demanding.", img: watchImg },
-  { title: "Pocket Flagships", count: 4, body: "The phones engineered as one. Silicon, software, and signal in perfect step.", img: phoneImg },
-  { title: "Ambient Smart Home", count: 9, body: "Automations that fade into the architecture instead of fighting for attention.", img: laptopImg },
-  { title: "Travel Light", count: 7, body: "The carry-on stack — thin laptops, fast chargers, sub-300g headphones.", img: headphonesImg },
+  { title: "Creator Workstation", count: 8, body: "The full stack for video, design, and dev — from silicon to monitor calibration.", img: laptopImg, categorySlug: "computing" },
+  { title: "Immersive Audio", count: 6, body: "Reference-grade headphones, spatial speakers, and the gear that makes them sing.", img: headphonesImg, categorySlug: "audio" },
+  { title: "Quiet Wearables", count: 5, body: "Vitals, focus, and time — beautifully resolved, never demanding.", img: watchImg, categorySlug: "wearables" },
+  { title: "Pocket Flagships", count: 4, body: "The phones engineered as one. Silicon, software, and signal in perfect step.", img: phoneImg, categorySlug: "mobile" },
+  { title: "Ambient Smart Home", count: 9, body: "Automations that fade into the architecture instead of fighting for attention.", img: laptopImg, categorySlug: "smart-home" },
+  { title: "Travel Light", count: 7, body: "The carry-on stack — thin laptops, fast chargers, sub-300g headphones.", img: headphonesImg, categorySlug: "computing" },
 ];
 
 function CollectionsPage() {
@@ -59,7 +59,7 @@ function CollectionsPage() {
               <div className="p-6">
                 <h3 className="font-display text-xl font-semibold mb-2">{c.title}</h3>
                 <p className="text-sm text-muted-foreground mb-5 line-clamp-2">{c.body}</p>
-                <Link to="/products/laptop-air" className="inline-flex items-center gap-2 text-sm font-semibold text-[var(--emerald-accent)] hover:gap-3 transition-all">
+                <Link to={`/category/${c.categorySlug}`} className="inline-flex items-center gap-2 text-sm font-semibold text-[var(--emerald-accent)] hover:gap-3 transition-all">
                   View collection <ArrowRight className="size-4" />
                 </Link>
               </div>

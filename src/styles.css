@@ -43,8 +43,12 @@
   --color-surface-3: var(--surface-3);
   --color-emerald-accent: var(--emerald-accent);
   --color-emerald-glow: var(--emerald-glow);
+  --color-emerald-hover: var(--emerald-hover);
   --color-cyan-accent: var(--cyan-accent);
   --color-cyan-glow: var(--cyan-glow);
+  --color-success: var(--success);
+  --color-warning: var(--warning);
+  --color-danger: var(--danger);
   --color-hairline: var(--hairline);
 
   --font-display: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
@@ -60,11 +64,11 @@
   --radius: 0.875rem;
   color-scheme: light;
 
-  --background: oklch(0.985 0.012 175);      /* misted mint-white */
-  --foreground: oklch(0.18 0.04 180);        /* deep teal-ink */
-  --surface:   oklch(1 0 0);
-  --surface-2: oklch(0.96 0.018 175);
-  --surface-3: oklch(0.92 0.025 175);
+  --background: #FCFCFA;      /* warm white similar to Apple */
+  --foreground: #0F172A;      /* deep slate */
+  --surface:   #F6F8FA;        /* cards, sections, elevated panels */
+  --surface-2: #EEF2F6;        /* comparison tables, filters, hover states */
+  --surface-3: #E2E8F0;
 
   --card: var(--surface);
   --card-foreground: var(--foreground);
@@ -72,25 +76,30 @@
   --popover-foreground: var(--foreground);
 
   /* Accents — deep emerald-teal (primary) + bright aqua (accent) */
-  --emerald-accent: oklch(0.42 0.09 175);    /* deep teal #1B5A50 */
-  --emerald-glow:   oklch(0.58 0.13 172);
-  --cyan-accent:    oklch(0.66 0.13 195);    /* aqua */
-  --cyan-glow:      oklch(0.78 0.13 195);
+  --emerald-accent: #0F9D84;    /* slightly deeper than bright emerald */
+  --emerald-glow:   #14b8a6;
+  --emerald-hover:  #0B7F6B;
+  --cyan-accent:    #38BDF8;
+  --cyan-glow:      #7dd3fc;
+
+  --success: #16A34A;
+  --warning: #F59E0B;
+  --danger: #DC2626;
 
   --primary: var(--emerald-accent);
-  --primary-foreground: oklch(0.99 0.005 175);
+  --primary-foreground: #FCFCFA;
   --secondary: var(--surface-2);
   --secondary-foreground: var(--foreground);
-  --muted: var(--surface-2);
-  --muted-foreground: oklch(0.44 0.035 180);
+  --muted: #64748B;
+  --muted-foreground: #64748B;
   --accent: var(--cyan-accent);
-  --accent-foreground: oklch(0.18 0.04 180);
-  --destructive: oklch(0.6 0.22 25);
-  --destructive-foreground: oklch(0.99 0 0);
+  --accent-foreground: #0F172A;
+  --destructive: var(--danger);
+  --destructive-foreground: #FCFCFA;
 
-  --hairline: oklch(0.18 0.04 180 / 0.10);
-  --border:   oklch(0.18 0.04 180 / 0.10);
-  --input:    oklch(0.18 0.04 180 / 0.18);
+  --hairline: rgba(15, 23, 42, 0.08);
+  --border:   #E2E8F0;
+  --input:    #E2E8F0;
   --ring: var(--emerald-accent);
 
   --gradient-accent: linear-gradient(135deg, var(--emerald-accent), var(--cyan-accent));
@@ -156,6 +165,7 @@
   html, body { background-color: var(--color-background); color: var(--color-foreground); }
   body { font-family: var(--font-sans); -webkit-font-smoothing: antialiased; }
   html { scroll-behavior: auto; }
+  :focus-visible { outline: 2px solid var(--emerald-accent); outline-offset: 4px; }
   ::selection { background: color-mix(in oklab, var(--emerald-accent) 40%, transparent); color: var(--foreground); }
   ::-webkit-scrollbar { width: 8px; height: 8px; }
   ::-webkit-scrollbar-track { background: var(--background); }

@@ -3,6 +3,7 @@ import { useEffect, useRef } from "react";
 /**
  * Subtle Three.js hero background — instanced floating points
  * forming a soft, drifting field. Cheap; capped DPR; respects prefers-reduced-motion.
+ * Theme-aware: changes particle colors and blending when switching light/dark mode.
  */
 export function ThreeHero({ className = "" }: { className?: string }) {
   const mountRef = useRef<HTMLDivElement>(null);
@@ -34,8 +35,10 @@ export function ThreeHero({ className = "" }: { className?: string }) {
       const COUNT = 1400;
       const positions = new Float32Array(COUNT * 3);
       const colors = new Float32Array(COUNT * 3);
-      const emerald = new THREE.Color(0x10b981);
-      const cyan = new THREE.Color(0x22d3ee);
+      
+      // Store types so we can swap colors dynamically
+      const particleTypes = new Uint8Array(COUNT); // 1 for emerald, 0 for cyan
+
       for (let i = 0; i < COUNT; i++) {
         const r = 4 + Math.random() * 4;
         const theta = Math.random() * Math.PI * 2;
@@ -43,26 +46,62 @@ export function ThreeHero({ className = "" }: { className?: string }) {
         positions[i * 3 + 0] = r * Math.sin(phi) * Math.cos(theta);
         positions[i * 3 + 1] = r * Math.sin(phi) * Math.sin(theta) * 0.55;
         positions[i * 3 + 2] = r * Math.cos(phi) * 0.7 - 1;
-        const c = Math.random() < 0.5 ? emerald : cyan;
-        colors[i * 3 + 0] = c.r;
-        colors[i * 3 + 1] = c.g;
-        colors[i * 3 + 2] = c.b;
+        
+        particleTypes[i] = Math.random() < 0.5 ? 1 : 0;
       }
+
       const geo = new THREE.BufferGeometry();
       geo.setAttribute("position", new THREE.BufferAttribute(positions, 3));
       geo.setAttribute("color", new THREE.BufferAttribute(colors, 3));
+
       const mat = new THREE.PointsMaterial({
         size: 0.035,
         vertexColors: true,
         transparent: true,
-        opacity: 0.85,
         depthWrite: false,
-        blending: THREE.AdditiveBlending,
       });
+
       const points = new THREE.Points(geo, mat);
       scene.add(points);
 
-      // Soft fog effect via background gradient is handled by CSS; we just render points
+      // Theme logic helper
+      const updateThemeColors = (isDark: boolean) => {
+        const colorArr = geo.attributes.color.array as Float32Array;
+        const emeraldColor = new THREE.Color(isDark ? 0x10b981 : 0x0f9d84);
+        const cyanColor = new THREE.Color(isDark ? 0x22d3ee : 0x38bdf8);
+
+        for (let i = 0; i < COUNT; i++) {
+          const c = particleTypes[i] === 1 ? emeraldColor : cyanColor;
+          colorArr[i * 3 + 0] = c.r;
+          colorArr[i * 3 + 1] = c.g;
+          colorArr[i * 3 + 2] = c.b;
+        }
+        geo.attributes.color.needsUpdate = true;
+
+        if (isDark) {
+          mat.blending = THREE.AdditiveBlending;
+          mat.opacity = 0.85;
+        } else {
+          mat.blending = THREE.NormalBlending;
+          mat.opacity = 0.45;
+        }
+        mat.needsUpdate = true;
+      };
+
+      // Set initial colors
+      const initialDark = document.documentElement.classList.contains("dark");
+      updateThemeColors(initialDark);
+
+      // Listen to theme changes
+      const observer = new MutationObserver((mutations) => {
+        for (const mutation of mutations) {
+          if (mutation.attributeName === "class") {
+            const dark = document.documentElement.classList.contains("dark");
+            updateThemeColors(dark);
+          }
+        }
+      });
+      observer.observe(document.documentElement, { attributes: true, attributeFilter: ["class"] });
 
       let mx = 0, my = 0;
       const onMove = (e: MouseEvent) => {
@@ -93,6 +132,7 @@ export function ThreeHero({ className = "" }: { className?: string }) {
 
       cleanup = () => {
         cancelAnimationFrame(raf);
+        observer.disconnect();
         window.removeEventListener("mousemove", onMove);
         window.removeEventListener("resize", onResize);
         renderer.dispose();

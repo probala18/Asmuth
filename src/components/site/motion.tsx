@@ -403,3 +403,80 @@ export function JourneyLine({ steps }: { steps: Array<{ title: string; body: str
     </div>
   );
 }
+
+/** Fade up elements when scrolled into view using GSAP */
+export function RevealOnScroll({
+  children,
+  delay = 0,
+  y = 30,
+  duration = 0.8,
+  className = "",
+}: {
+  children: ReactNode;
+  delay?: number;
+  y?: number;
+  duration?: number;
+  className?: string;
+}) {
+  const ref = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    let cleanup: (() => void) | undefined;
+    (async () => {
+      const { gsap } = await import("gsap");
+      const { ScrollTrigger } = await import("gsap/ScrollTrigger");
+      gsap.registerPlugin(ScrollTrigger);
+      const tween = gsap.fromTo(
+        el,
+        { opacity: 0, y },
+        {
+          opacity: 1,
+          y: 0,
+          duration,
+          ease: "power2.out",
+          delay,
+          scrollTrigger: { trigger: el, start: "top 88%", once: true },
+        }
+      );
+      cleanup = () => {
+        tween.scrollTrigger?.kill();
+        tween.kill();
+      };
+    })();
+    return () => cleanup?.();
+  }, [delay, y, duration]);
+  return (
+    <div ref={ref} className={`will-change-transform opacity-0 ${className}`}>
+      {children}
+    </div>
+  );
+}
+
+/** Hover mouse glow tracker */
+export function MouseGlow({ className = "" }: { className?: string }) {
+  const ref = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const handleMove = (e: MouseEvent) => {
+      const r = el.getBoundingClientRect();
+      const x = e.clientX - r.left;
+      const y = e.clientY - r.top;
+      el.style.setProperty("--x", `${x}px`);
+      el.style.setProperty("--y", `${y}px`);
+    };
+    window.addEventListener("mousemove", handleMove, { passive: true });
+    return () => window.removeEventListener("mousemove", handleMove);
+  }, []);
+  return (
+    <div
+      ref={ref}
+      className={`pointer-events-none absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 ${className}`}
+      style={{
+        background: "radial-gradient(400px circle at var(--x, 0px) var(--y, 0px), color-mix(in oklab, var(--emerald-accent) 15%, transparent), transparent 80%)",
+      }}
+    />
+  );
+}
+

@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Timer, Flame, Tag } from "lucide-react";
 import { SplitTextReveal, TiltCard, HandUnderline } from "@/components/site/motion";
@@ -19,13 +20,49 @@ export const Route = createFileRoute("/deals")({
 });
 
 const deals = [
-  { name: "Aether Laptop Air", img: laptopImg, was: 1199, now: 999, off: 17, end: "12:48:09" },
-  { name: "Aether Buds Pro", img: headphonesImg, was: 159, now: 129, off: 19, end: "06:22:14" },
-  { name: "Aether Watch X", img: watchImg, was: 249, now: 199, off: 20, end: "23:14:00" },
-  { name: "Aether Phone 15", img: phoneImg, was: 899, now: 799, off: 11, end: "04:51:33" },
-  { name: "Aether Pad Pro", img: laptopImg, was: 749, now: 649, off: 13, end: "18:09:21" },
-  { name: "Aether Lens X", img: phoneImg, was: 1499, now: 1299, off: 13, end: "09:00:00" },
+  { slug: "aether-laptop-air", name: "Aether Laptop Air", img: laptopImg, was: 1199, now: 999, off: 17, hours: 4 },
+  { slug: "aether-buds-pro", name: "Aether Buds Pro", img: headphonesImg, was: 159, now: 129, off: 19, hours: 8 },
+  { slug: "aether-watch-x", name: "Aether Watch X", img: watchImg, was: 249, now: 199, off: 20, hours: 12 },
+  { slug: "aether-phone-15", name: "Aether Phone 15", img: phoneImg, was: 899, now: 799, off: 11, hours: 6 },
+  { slug: "aether-pad-pro", name: "Aether Pad Pro", img: laptopImg, was: 749, now: 649, off: 13, hours: 20 },
+  { slug: "aether-lens-x", name: "Aether Lens X", img: phoneImg, was: 1499, now: 1299, off: 13, hours: 16 },
 ];
+
+function Countdown({ hours }: { hours: number }) {
+  const [timeLeft, setTimeLeft] = useState("");
+
+  useEffect(() => {
+    // Generate a fixed target date for this session
+    const target = new Date();
+    target.setHours(target.getHours() + hours);
+
+    const updateTimer = () => {
+      const now = new Date().getTime();
+      const difference = target.getTime() - now;
+
+      if (difference <= 0) {
+        setTimeLeft("00:00:00");
+        return;
+      }
+
+      const h = Math.floor(difference / (1000 * 60 * 60));
+      const m = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+      const s = Math.floor((difference % (1000 * 60)) / 1000);
+
+      const hStr = h.toString().padStart(2, "0");
+      const mStr = m.toString().padStart(2, "0");
+      const sStr = s.toString().padStart(2, "0");
+
+      setTimeLeft(`${hStr}:${mStr}:${sStr}`);
+    };
+
+    updateTimer();
+    const interval = setInterval(updateTimer, 1000);
+    return () => clearInterval(interval);
+  }, [hours]);
+
+  return <span className="font-mono-tech tabular-nums">{timeLeft}</span>;
+}
 
 function DealsPage() {
   return (
@@ -54,7 +91,8 @@ function DealsPage() {
                   -{d.off}%
                 </span>
                 <span className="absolute top-3 right-3 flex items-center gap-1 rounded-full bg-background/70 backdrop-blur px-2.5 py-1 text-[10px] font-mono-tech text-[var(--cyan-accent)]">
-                  <Timer className="size-3" /> {d.end}
+                  <Timer className="size-3 text-[var(--emerald-accent)]" /> 
+                  <Countdown hours={d.hours} />
                 </span>
               </div>
               <div className="p-5 space-y-2">
@@ -63,7 +101,10 @@ function DealsPage() {
                   <span className="font-display text-2xl font-bold text-accent-gradient">${d.now}</span>
                   <span className="text-sm text-muted-foreground line-through">${d.was}</span>
                 </div>
-                <Link to="/products/laptop-air" className="btn-ghost-glow w-full rounded-full py-2 text-xs font-semibold inline-flex items-center justify-center gap-2 mt-2">
+                <Link 
+                  to={`/product/${d.slug}`} 
+                  className="btn-ghost-glow w-full rounded-full py-2 text-xs font-semibold inline-flex items-center justify-center gap-2 mt-2"
+                >
                   <Tag className="size-3" /> Grab deal
                 </Link>
               </div>

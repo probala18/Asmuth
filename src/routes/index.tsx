@@ -1,18 +1,47 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import {
-  ArrowRight, ArrowUpRight, Box, Shield, Truck, Sparkles,
-  Laptop, Headphones, Watch, Smartphone, Gamepad2, Camera,
-  Home as HomeIcon, Cpu, Star,
+  ArrowRight,
+  ArrowUpRight,
+  Award,
+  Box,
+  Cpu,
+  Flame,
+  Gamepad2,
+  Headphones,
+  Home as HomeIcon,
+  Laptop,
+  Scale,
+  Shield,
+  Smartphone,
+  Sparkles,
+  Star,
+  Tag,
+  TrendingUp,
+  Truck,
+  Watch,
 } from "lucide-react";
 import {
-  SplitTextReveal, HandUnderline, AnimatedCounter, TiltCard,
-  HorizontalShowcase, JourneyLine,
+  SplitTextReveal,
+  HandUnderline,
+  AnimatedCounter,
+  TiltCard,
+  HorizontalShowcase,
+  JourneyLine,
+  RevealOnScroll,
 } from "@/components/site/motion";
 import { ThreeHero } from "@/components/site/ThreeHero";
-import laptopImg from "@/assets/product-laptop.jpg";
-import headphonesImg from "@/assets/product-headphones.jpg";
-import watchImg from "@/assets/product-watch.jpg";
-import phoneImg from "@/assets/product-phone.jpg";
+import { ProductCard, DealCard, CategoryCard } from "@/components/site/ProductCards";
+import { ReviewCard, GuideCard, BrandCard } from "@/components/site/ContentCards";
+import { TrustMetric } from "@/components/site/UIComponents";
+import {
+  products,
+  categories,
+  brands,
+  reviews,
+  guides,
+  comparisons,
+  testimonials,
+} from "@/data";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -26,27 +55,21 @@ export const Route = createFileRoute("/")({
   component: Index,
 });
 
-const products = [
-  { name: "Aether Buds Pro", category: "Audio", price: "$129", rating: 4.9, img: headphonesImg },
-  { name: "Aether Watch X", category: "Wearables", price: "$199", rating: 4.8, img: watchImg },
-  { name: "Aether Laptop Air", category: "Computing", price: "$999", rating: 4.9, img: laptopImg },
-  { name: "Aether Phone 15", category: "Mobile", price: "$799", rating: 4.7, img: phoneImg },
-  { name: "Aether Pad Pro", category: "Tablet", price: "$649", rating: 4.8, img: laptopImg },
-  { name: "Aether Lens X", category: "Camera", price: "$1,299", rating: 4.9, img: phoneImg },
-];
+function Index() {
+  // Get sliced data for section previews
+  const featuredCategories = categories.filter((c) => c.featured).slice(0, 3);
+  const trendingProducts = products.filter((p) => p.isTrending).slice(0, 3);
+  const editorPicks = products.filter((p) => p.isEditorsPick).slice(0, 3);
+  const dealsList = products.filter((p) => p.originalPrice && p.originalPrice > p.price).slice(0, 3);
+  const bestSellers = products.filter((p) => p.isBestSeller).slice(0, 3);
+  const latestReviews = reviews.slice(0, 3);
+  const buyingGuides = guides.slice(0, 2);
+  const featuredBrands = brands.slice(0, 4);
 
-const features = [
-  { icon: Box, title: "Innovative Design", body: "Every product crafted with future-forward aesthetics, where engineering meets art." },
-  { icon: Shield, title: "Lifetime Warranty", body: "Premium materials backed by lifetime protection. Built once. Built right." },
-  { icon: Truck, title: "Express Delivery", body: "Global priority shipping. Tracked, insured, and at your door in 48 hours." },
-  { icon: Sparkles, title: "Concierge Service", body: "Direct access to product specialists for setup, support, and personalization." },
-];
-
-export default function Index() {
   return (
     <>
-      {/* HERO */}
-      <section className="relative min-h-screen pt-32 pb-20 px-6 lg:px-10 overflow-hidden">
+      {/* 1. HERO SECTION */}
+      <section className="relative min-h-screen pt-32 pb-20 px-6 lg:px-10 overflow-hidden flex items-center">
         <ThreeHero className="opacity-70" />
         <div className="absolute inset-0 bg-radial-glow" />
         <div className="absolute inset-0 bg-grid opacity-50" />
@@ -64,7 +87,7 @@ export default function Index() {
           <SplitTextReveal
             text="LUXURY THAT ELEVATES EVERY DAY"
             as="h1"
-            className="font-display text-6xl md:text-7xl lg:text-8xl xl:text-[8.5rem] font-bold leading-[0.95] tracking-tight"
+            className="font-display text-6xl md:text-7xl lg:text-8xl xl:text-[8.2rem] font-bold leading-[0.95] tracking-tight"
           />
 
           <p className="text-muted-foreground text-lg lg:text-xl leading-relaxed max-w-2xl mx-auto">
@@ -97,15 +120,14 @@ export default function Index() {
           </div>
         </div>
 
-        {/* scroll cue */}
+        {/* Scroll cue */}
         <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2">
           <span className="font-mono-tech text-[10px] uppercase tracking-[0.3em] text-muted-foreground">Scroll</span>
           <span className="block h-10 w-px bg-gradient-to-b from-[var(--emerald-accent)] to-transparent" />
         </div>
       </section>
 
-
-      {/* MARQUEE */}
+      {/* 2. LOGO MARQUEE */}
       <section className="relative overflow-hidden py-10 border-y border-[var(--hairline)] bg-[var(--surface)]/40">
         <div className="flex gap-16 animate-marquee whitespace-nowrap">
           {[...Array(2)].map((_, k) => (
@@ -118,133 +140,306 @@ export default function Index() {
         </div>
       </section>
 
-      {/* FEATURES */}
-      <section className="px-6 lg:px-10 py-24">
-        <div className="max-w-7xl mx-auto surface-card-2 p-10 lg:p-16 relative overflow-hidden">
-          <div className="absolute -top-32 -right-32 size-96 rounded-full blur-3xl opacity-20" style={{ background: "var(--gradient-accent)" }} />
-          <div className="relative">
-            <div className="flex items-center gap-3 mb-12">
-              <span className="block w-8 h-px bg-[var(--emerald-accent)]" />
-              <span className="font-mono-tech text-[10px] uppercase tracking-[0.3em] text-[var(--emerald-accent)]">
-                Built for excellence
-              </span>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
-              {features.map((f) => (
-                <div key={f.title} className="group">
-                  <div className="size-14 rounded-xl bg-[var(--surface)] border border-[var(--hairline)] grid place-items-center mb-6 group-hover:ring-emerald transition-all">
-                    <f.icon className="size-6 text-[var(--emerald-accent)]" />
-                  </div>
-                  <h3 className="font-display text-lg font-semibold mb-3 tracking-tight">{f.title}</h3>
-                  <p className="text-sm text-muted-foreground leading-relaxed">{f.body}</p>
-                </div>
-              ))}
-            </div>
+      {/* 3. TRUST METRICS */}
+      <section className="px-6 lg:px-10 py-16">
+        <div className="max-w-7xl mx-auto surface-card-2 p-8 lg:p-12">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
+            <TrustMetric value={25000} suffix="+" label="Products Reviewed" iconName="Box" />
+            <TrustMetric value={500} suffix="+" label="Buying Guides" iconName="Cpu" />
+            <TrustMetric value={100} suffix="+" label="Categories" iconName="Sparkles" />
+            <TrustMetric value={98} suffix="%" label="Reader Satisfaction" iconName="Shield" />
           </div>
         </div>
       </section>
 
-      {/* PRODUCT GRID */}
+      {/* 4. FEATURED CATEGORIES */}
       <section className="px-6 lg:px-10 py-16">
         <div className="max-w-7xl mx-auto">
-          <div className="flex items-end justify-between mb-12 gap-8 flex-wrap">
-            <div>
-              <p className="font-mono-tech text-[10px] uppercase tracking-[0.3em] text-[var(--cyan-accent)] mb-3">
-                Signature Edition
-              </p>
-              <h2 className="font-display text-4xl lg:text-5xl font-semibold max-w-2xl">
-                The collection, <HandUnderline>defined</HandUnderline>.
-              </h2>
-            </div>
-            <Link to="/categories" className="btn-ghost-glow rounded-full px-5 py-2.5 text-sm font-semibold inline-flex items-center gap-2">
-              View all <ArrowUpRight className="size-4" />
-            </Link>
-          </div>
-
-          <div className="grid grid-cols-2 lg:grid-cols-3 gap-6">
-            {products.map((p) => (
-              <TiltCard key={p.name} className="surface-card overflow-hidden group">
-                <div className="relative aspect-[5/4] overflow-hidden bg-[var(--surface-2)]">
-                  <img
-                    src={p.img}
-                    alt={p.name}
-                    loading="lazy"
-                    className="absolute inset-0 size-full object-cover transition-transform duration-700 group-hover:scale-[1.08]"
-                  />
-                  <span className="absolute top-3 right-3 rounded-full px-2.5 py-1 text-[10px] font-bold font-mono-tech text-background" style={{ background: "var(--gradient-accent)" }}>
-                    {p.rating}
-                  </span>
-                  <span className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500" style={{ background: "radial-gradient(circle at 50% 100%, color-mix(in oklab, var(--emerald-accent) 25%, transparent), transparent 60%)" }} />
-                </div>
-                <div className="p-5">
-                  <div className="flex items-center justify-between mb-2">
-                    <span className="font-mono-tech text-[10px] uppercase tracking-[0.2em] text-[var(--emerald-accent)]">{p.category}</span>
-                    <span className="font-display text-lg font-semibold">{p.price}</span>
-                  </div>
-                  <h3 className="font-display text-lg font-semibold">{p.name}</h3>
-                </div>
-              </TiltCard>
+          <RevealOnScroll className="space-y-4 mb-12">
+            <p className="font-mono-tech text-[10px] uppercase tracking-[0.3em] text-[var(--emerald-accent)]">
+              Browse by Ecosystem
+            </p>
+            <h2 className="font-display text-4xl lg:text-5xl font-semibold">
+              Curated <span className="text-accent-gradient">product worlds</span>.
+            </h2>
+          </RevealOnScroll>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {featuredCategories.map((c) => (
+              <CategoryCard key={c.slug} category={c} />
             ))}
           </div>
         </div>
       </section>
 
-      {/* HORIZONTAL SHOWCASE — Categories: heading is its own section so the pinned track below can scroll cleanly */}
+      {/* 5. TRENDING PRODUCTS */}
+      <section className="px-6 lg:px-10 py-16">
+        <div className="max-w-7xl mx-auto">
+          <div className="flex items-end justify-between mb-12 gap-8 flex-wrap">
+            <RevealOnScroll className="space-y-3">
+              <p className="font-mono-tech text-[10px] uppercase tracking-[0.3em] text-[var(--cyan-accent)]">
+                Trending Now
+              </p>
+              <h2 className="font-display text-4xl lg:text-5xl font-semibold">
+                Hot picks, <HandUnderline>rising fast</HandUnderline>.
+              </h2>
+            </RevealOnScroll>
+            <Link to="/trending" className="btn-ghost-glow rounded-full px-5 py-2.5 text-sm font-semibold inline-flex items-center gap-2">
+              View all trending <ArrowUpRight className="size-4" />
+            </Link>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {trendingProducts.map((p) => (
+              <ProductCard key={p.slug} product={p} />
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* 6. TODAY'S DEALS */}
+      <section className="px-6 lg:px-10 py-16 bg-[var(--surface)]/30 border-y border-[var(--hairline)]">
+        <div className="max-w-7xl mx-auto">
+          <div className="flex items-end justify-between mb-12 gap-8 flex-wrap">
+            <RevealOnScroll className="space-y-3">
+              <p className="font-mono-tech text-[10px] uppercase tracking-[0.3em] text-[var(--emerald-accent)]">
+                Limited Offers
+              </p>
+              <h2 className="font-display text-4xl lg:text-5xl font-semibold">
+                Deals you <span className="text-accent-gradient">actually want</span>.
+              </h2>
+            </RevealOnScroll>
+            <Link to="/deals" className="btn-ghost-glow rounded-full px-5 py-2.5 text-sm font-semibold inline-flex items-center gap-2">
+              All deals <ArrowUpRight className="size-4" />
+            </Link>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {dealsList.map((d, index) => (
+              <DealCard key={d.slug} product={d} hours={[4, 8, 12][index % 3]} />
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* 7. BEST SELLERS */}
+      <section className="px-6 lg:px-10 py-16">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-16 space-y-4">
+            <p className="font-mono-tech text-[10px] uppercase tracking-[0.3em] text-[var(--cyan-accent)]">
+              Ranked Collection
+            </p>
+            <h2 className="font-display text-4xl lg:text-6xl font-bold tracking-tight">
+              Best Sellers <span className="italic">2026</span>
+            </h2>
+            <p className="text-muted-foreground text-sm max-w-md mx-auto">
+              Our editor's top three recommendations, ranked according to performance, value, and reliability.
+            </p>
+          </div>
+
+          <div className="space-y-8">
+            {bestSellers.map((p, idx) => (
+              <RevealOnScroll key={p.slug} delay={idx * 0.1} className="surface-card-2 p-8 lg:p-12 relative overflow-hidden group">
+                <div className="absolute top-8 right-8 font-display text-7xl font-bold text-[var(--emerald-accent)]/15 group-hover:scale-110 transition-transform">
+                  0{idx + 1}
+                </div>
+                
+                <div className="grid grid-cols-1 lg:grid-cols-[1.2fr_2fr] gap-8 items-center">
+                  <div className="aspect-[4/3] rounded-2xl overflow-hidden bg-[var(--surface)] border border-[var(--hairline)]">
+                    <img src={p.image} alt={p.name} className="size-full object-cover" />
+                  </div>
+                  
+                  <div className="space-y-4">
+                    <span className="font-mono-tech text-[9px] uppercase tracking-widest text-[var(--emerald-accent)]">
+                      RANK {idx + 1} · {p.category}
+                    </span>
+                    <h3 className="font-display text-3xl font-semibold text-foreground">{p.name}</h3>
+                    <p className="text-muted-foreground text-sm leading-relaxed">{p.description}</p>
+                    
+                    <div className="pt-4 border-t border-[var(--hairline)]/50 flex flex-wrap items-center gap-6">
+                      <div>
+                        <p className="text-[10px] font-mono-tech uppercase text-muted-foreground">Rating</p>
+                        <p className="font-display font-semibold text-lg text-foreground flex items-center gap-1">
+                          <Star className="size-4 fill-amber-400 text-amber-400" />
+                          {p.rating.toFixed(1)}
+                        </p>
+                      </div>
+                      <div>
+                        <p className="text-[10px] font-mono-tech uppercase text-muted-foreground">Price</p>
+                        <p className="font-display font-semibold text-lg text-[var(--emerald-accent)]">${p.price}</p>
+                      </div>
+                      <div className="lg:ml-auto">
+                        <Link to={`/product/${p.slug}`} className="btn-accent inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-xs font-semibold">
+                          View details
+                          <ArrowRight className="size-3.5" />
+                        </Link>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </RevealOnScroll>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* 8. HORIZONTAL SCROLL STORY */}
       <section className="px-6 lg:px-10 pt-24 pb-12">
         <div className="max-w-7xl mx-auto flex items-end justify-between gap-8 flex-wrap">
-          <div>
-            <p className="font-mono-tech text-[10px] uppercase tracking-[0.3em] text-[var(--cyan-accent)] mb-3">
-              Worlds to explore
+          <RevealOnScroll className="space-y-3">
+            <p className="font-mono-tech text-[10px] uppercase tracking-[0.3em] text-[var(--cyan-accent)]">
+              Ecosystem Showcase
             </p>
-            <h2 className="font-display text-4xl lg:text-6xl font-semibold max-w-3xl tracking-tight">
+            <h2 className="font-display text-4xl lg:text-6xl font-semibold tracking-tight">
               Every category, <span className="text-accent-gradient">elevated</span>.
             </h2>
-          </div>
+          </RevealOnScroll>
           <p className="text-muted-foreground max-w-sm text-sm leading-relaxed">
-            Scroll horizontally — six worlds, hand-curated. Pinned in place so the story unfolds at the speed of your scroll.
+            Scroll horizontally — five worlds, hand-curated. Pinned in place so the story unfolds at the speed of your scroll.
           </p>
         </div>
       </section>
-      <div className="pb-24">
+      <div className="pb-16">
         <HorizontalShowcase
           items={[
             { title: "Computing", description: "Pro silicon, ultraportable chassis, cinema-grade displays — for makers and builders.", stats: "120+ products · 4.9 avg rating", icon: <Laptop className="size-6" /> },
             { title: "Audio", description: "Reference-tuned headphones and immersive spatial speakers for sound that disappears.", stats: "84 products · 4.8 avg rating", icon: <Headphones className="size-6" /> },
             { title: "Wearables", description: "Quiet intelligence on your wrist — vitals, focus, and time, beautifully resolved.", stats: "42 products · 4.9 avg rating", icon: <Watch className="size-6" /> },
             { title: "Mobile", description: "Flagship phones engineered as one — silicon, software, and signal in perfect step.", stats: "36 products · 4.7 avg rating", icon: <Smartphone className="size-6" /> },
-            { title: "Gaming", description: "Frame-perfect rigs and peripherals built for the moment between input and reaction.", stats: "58 products · 4.8 avg rating", icon: <Gamepad2 className="size-6" /> },
-            { title: "Smart Home", description: "An ambient layer for your space — automations that fade into the architecture.", stats: "92 products · 4.8 avg rating", icon: <HomeIcon className="size-6" /> },
+            { title: "Cameras", description: "Mirrorless cinema gear and tools designed to capture high-density creative detail.", stats: "58 products · 4.9 avg rating", icon: <Camera className="size-6" /> },
           ]}
         />
       </div>
 
+      {/* 9. TOP BRANDS */}
+      <section className="px-6 lg:px-10 py-16">
+        <div className="max-w-7xl mx-auto">
+          <RevealOnScroll className="space-y-3 text-center mb-12">
+            <p className="font-mono-tech text-[10px] uppercase tracking-[0.3em] text-[var(--emerald-accent)]">
+              Partner Directory
+            </p>
+            <h2 className="font-display text-4xl lg:text-5xl font-semibold">
+              Top <span className="text-accent-gradient">brand architectures</span>.
+            </h2>
+          </RevealOnScroll>
 
-      {/* TRUST / COUNTERS */}
-      <section className="px-6 lg:px-10 py-24">
-        <div className="max-w-7xl mx-auto surface-card-2 p-10 lg:p-16 relative overflow-hidden">
-          <div className="absolute inset-x-0 top-0 h-px hairline-x" />
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-10">
-            {[
-              { n: 25000, suffix: "+", label: "Products Reviewed", Icon: Box },
-              { n: 500, suffix: "+", label: "Buying Guides", Icon: Cpu },
-              { n: 100, suffix: "+", label: "Categories", Icon: Sparkles },
-              { n: 98, suffix: "%", label: "Reader Satisfaction", Icon: Shield },
-            ].map((s) => (
-              <div key={s.label} className="text-center">
-                <div className="inline-grid place-items-center size-12 rounded-full bg-[var(--surface)] border border-[var(--emerald-accent)]/30 mb-4">
-                  <s.Icon className="size-5 text-[var(--emerald-accent)]" />
-                </div>
-                <p className="font-display text-4xl lg:text-5xl font-bold">
-                  <AnimatedCounter to={s.n} suffix={s.suffix} className="text-accent-gradient" />
-                </p>
-                <p className="text-sm text-muted-foreground mt-2">{s.label}</p>
-              </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {featuredBrands.map((b) => (
+              <BrandCard key={b.slug} brand={b} />
             ))}
           </div>
         </div>
       </section>
 
-      {/* JOURNEY */}
+      {/* 10. BUYING GUIDES */}
+      <section className="px-6 lg:px-10 py-16">
+        <div className="max-w-7xl mx-auto">
+          <div className="flex items-end justify-between mb-12 gap-8 flex-wrap">
+            <RevealOnScroll className="space-y-3">
+              <p className="font-mono-tech text-[10px] uppercase tracking-[0.3em] text-[var(--cyan-accent)]">
+                In-Depth Guides
+              </p>
+              <h2 className="font-display text-4xl lg:text-5xl font-semibold">
+                Buying guides for <HandUnderline>critical builders</HandUnderline>.
+              </h2>
+            </RevealOnScroll>
+            <Link to="/guides" className="btn-ghost-glow rounded-full px-5 py-2.5 text-sm font-semibold inline-flex items-center gap-2">
+              Browse all guides <ArrowUpRight className="size-4" />
+            </Link>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            {buyingGuides.map((g) => (
+              <GuideCard key={g.slug} guide={g} />
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* 11. LATEST REVIEWS */}
+      <section className="px-6 lg:px-10 py-16 bg-[var(--surface)]/20 border-y border-[var(--hairline)]">
+        <div className="max-w-7xl mx-auto">
+          <div className="flex items-end justify-between mb-12 gap-8 flex-wrap">
+            <RevealOnScroll className="space-y-3">
+              <p className="font-mono-tech text-[10px] uppercase tracking-[0.3em] text-[var(--emerald-accent)]">
+                Tested & Graded
+              </p>
+              <h2 className="font-display text-4xl lg:text-5xl font-semibold">
+                Latest expert <span className="text-accent-gradient">lab reviews</span>.
+              </h2>
+            </RevealOnScroll>
+            <Link to="/reviews" className="btn-ghost-glow rounded-full px-5 py-2.5 text-sm font-semibold inline-flex items-center gap-2">
+              All reviews <ArrowUpRight className="size-4" />
+            </Link>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {latestReviews.map((r) => (
+              <ReviewCard key={r.slug} review={r} />
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* 12. PRODUCT COMPARISON MINI */}
+      <section className="px-6 lg:px-10 py-16">
+        <div className="max-w-4xl mx-auto">
+          <RevealOnScroll className="text-center mb-12 space-y-3">
+            <p className="font-mono-tech text-[10px] uppercase tracking-[0.3em] text-[var(--cyan-accent)]">
+              Side by Side
+            </p>
+            <h2 className="font-display text-3xl lg:text-4xl font-semibold">
+              Laptop Air vs. Dell XPS 16
+            </h2>
+            <p className="text-xs text-muted-foreground font-mono-tech">
+              A quick review of the defining specs.
+            </p>
+          </RevealOnScroll>
+
+          <div className="surface-card-2 overflow-hidden border border-[var(--hairline)] rounded-2xl">
+            {[
+              { spec: "Chip", a: "M-class · 12 core", b: "Intel Ultra 9", winner: "a" },
+              { spec: "Display", a: "14.2\" OLED 120Hz", b: "16.3\" OLED 90Hz", winner: "a" },
+              { spec: "Battery", a: "22h video run", b: "11.5h video run", winner: "a" },
+              { spec: "Weight", a: "1.24 kg", b: "2.13 kg", winner: "a" },
+              { spec: "Starting Price", a: "$999", b: "$1,899", winner: "a" },
+            ].map((row, i) => (
+              <div key={i} className="grid grid-cols-[1.2fr_2fr_2fr] items-center px-6 py-4 border-t border-[var(--hairline)] first:border-t-0">
+                <span className="text-xs font-mono-tech uppercase tracking-wider text-muted-foreground">{row.spec}</span>
+                <span className={`text-sm ${row.winner === "a" ? "text-[var(--emerald-accent)] font-semibold" : ""}`}>{row.a}</span>
+                <span className={`text-sm ${row.winner === "b" ? "text-[var(--emerald-accent)] font-semibold" : ""}`}>{row.b}</span>
+              </div>
+            ))}
+          </div>
+          
+          <div className="text-center mt-8">
+            <Link to="/compare" className="btn-ghost-glow rounded-full px-6 py-2.5 text-xs font-semibold inline-flex items-center gap-1.5">
+              <Scale className="size-3.5" /> Go to Comparison Hub
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* 13. EDITOR'S PICKS */}
+      <section className="px-6 lg:px-10 py-16 bg-[var(--surface)]/30 border-y border-[var(--hairline)]">
+        <div className="max-w-7xl mx-auto">
+          <RevealOnScroll className="space-y-3 mb-12 text-center">
+            <p className="font-mono-tech text-[10px] uppercase tracking-[0.3em] text-[var(--emerald-accent)]">
+              Curated shortlist
+            </p>
+            <h2 className="font-display text-4xl lg:text-5xl font-semibold">
+              Editor's <span className="text-accent-gradient">personal picks</span>.
+            </h2>
+          </RevealOnScroll>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {editorPicks.map((p) => (
+              <ProductCard key={p.slug} product={p} />
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* 14. WHY TRUST AETHER */}
       <section className="px-6 lg:px-10 py-24">
         <div className="max-w-5xl mx-auto">
           <div className="mb-16">
@@ -264,34 +459,33 @@ export default function Index() {
         </div>
       </section>
 
-      {/* TESTIMONIAL */}
+      {/* 15. TESTIMONIALS */}
       <section className="px-6 lg:px-10 py-24">
         <div className="max-w-5xl mx-auto surface-card-2 p-10 lg:p-16 text-center relative overflow-hidden">
           <div className="absolute inset-0 bg-radial-glow opacity-50" />
           <div className="relative">
-            <Camera className="size-8 mx-auto text-[var(--emerald-accent)] mb-6" />
-            <p className="font-display text-2xl lg:text-3xl leading-snug max-w-3xl mx-auto">
+            <span className="font-display text-2xl lg:text-3xl leading-snug max-w-3xl mx-auto block mb-6">
               "AETHER is the only place I check before any tech purchase. The reviews are the reviews
               I'd write — if I had three weeks per product."
-            </p>
-            <p className="font-mono-tech text-[10px] uppercase tracking-[0.3em] text-[var(--emerald-accent)] mt-6">
+            </span>
+            <p className="font-mono-tech text-[10px] uppercase tracking-[0.3em] text-[var(--emerald-accent)]">
               Maya Chen — Director of Design, Loop Studio
             </p>
           </div>
         </div>
       </section>
 
-      {/* CTA */}
+      {/* BOTTOM CTA */}
       <section className="px-6 lg:px-10 py-24">
-        <div className="max-w-7xl mx-auto rounded-3xl p-10 lg:p-20 text-center relative overflow-hidden" style={{ background: "var(--gradient-accent)" }}>
+        <div className="max-w-7xl mx-auto rounded-3xl p-10 lg:p-20 text-center relative overflow-hidden shadow-2xl" style={{ background: "var(--gradient-accent)" }}>
           <h2 className="font-display text-4xl lg:text-6xl font-bold text-[oklch(0.13_0.03_270)] tracking-tight">
             Ready to upgrade <span className="italic">everything</span>?
           </h2>
-          <p className="text-[oklch(0.13_0.03_270)]/80 max-w-xl mx-auto mt-4">
+          <p className="text-[oklch(0.13_0.03_270)]/80 max-w-xl mx-auto mt-4 font-medium text-sm">
             Browse the 2026 collection, or start with the editor's shortlist.
           </p>
           <div className="flex gap-3 justify-center mt-8 flex-wrap">
-            <Link to="/collections" className="rounded-full px-7 py-3.5 text-sm font-semibold bg-background text-foreground hover:bg-[var(--surface)] transition-colors">
+            <Link to="/collections" className="rounded-full px-7 py-3.5 text-sm font-semibold bg-background text-foreground hover:bg-[var(--surface)] transition-colors shadow-md">
               Shop Collections
             </Link>
             <Link to="/best-of-2026" className="rounded-full px-7 py-3.5 text-sm font-semibold border border-[oklch(0.13_0.03_270)] text-[oklch(0.13_0.03_270)] hover:bg-[oklch(0.13_0.03_270)] hover:text-background transition-colors">
@@ -303,4 +497,3 @@ export default function Index() {
     </>
   );
 }
-
