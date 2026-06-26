@@ -6,7 +6,7 @@ import {
 } from "lucide-react";
 import {
   SplitTextReveal, HandUnderline, AnimatedCounter, TiltCard,
-  HorizontalShowcase, JourneyLine,
+  HorizontalShowcase, JourneyLine, CinemaGrid,
 } from "@/components/site/motion";
 import { ThreeHero } from "@/components/site/ThreeHero";
 import laptopImg from "@/assets/product-laptop.jpg";
