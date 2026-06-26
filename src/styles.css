@@ -57,50 +57,51 @@
    Editorial ivory + ink + indigo / amber
    ========================= */
 :root {
-  --radius: 0.75rem;
+  --radius: 0.875rem;
   color-scheme: light;
 
-  --background: oklch(0.985 0.006 85);       /* warm ivory #FBF9F4 */
-  --foreground: oklch(0.18 0.025 265);       /* deep ink */
+  --background: oklch(0.985 0.012 175);      /* misted mint-white */
+  --foreground: oklch(0.18 0.04 180);        /* deep teal-ink */
   --surface:   oklch(1 0 0);
-  --surface-2: oklch(0.965 0.008 85);        /* parchment */
-  --surface-3: oklch(0.93 0.012 85);
+  --surface-2: oklch(0.96 0.018 175);
+  --surface-3: oklch(0.92 0.025 175);
 
   --card: var(--surface);
   --card-foreground: var(--foreground);
   --popover: var(--surface);
   --popover-foreground: var(--foreground);
 
-  /* Accents — indigo (primary) + amber (accent) */
-  --emerald-accent: oklch(0.52 0.20 270);    /* deep indigo, alias kept for compat */
-  --emerald-glow:   oklch(0.66 0.20 270);
-  --cyan-accent:    oklch(0.74 0.17 65);     /* warm amber */
-  --cyan-glow:      oklch(0.82 0.15 70);
+  /* Accents — deep emerald-teal (primary) + bright aqua (accent) */
+  --emerald-accent: oklch(0.42 0.09 175);    /* deep teal #1B5A50 */
+  --emerald-glow:   oklch(0.58 0.13 172);
+  --cyan-accent:    oklch(0.66 0.13 195);    /* aqua */
+  --cyan-glow:      oklch(0.78 0.13 195);
 
   --primary: var(--emerald-accent);
-  --primary-foreground: oklch(0.99 0 0);
+  --primary-foreground: oklch(0.99 0.005 175);
   --secondary: var(--surface-2);
   --secondary-foreground: var(--foreground);
   --muted: var(--surface-2);
-  --muted-foreground: oklch(0.46 0.025 265);
+  --muted-foreground: oklch(0.44 0.035 180);
   --accent: var(--cyan-accent);
-  --accent-foreground: oklch(0.18 0.025 265);
+  --accent-foreground: oklch(0.18 0.04 180);
   --destructive: oklch(0.6 0.22 25);
   --destructive-foreground: oklch(0.99 0 0);
 
-  --hairline: oklch(0.18 0.025 265 / 0.10);
-  --border:   oklch(0.18 0.025 265 / 0.10);
-  --input:    oklch(0.18 0.025 265 / 0.18);
+  --hairline: oklch(0.18 0.04 180 / 0.10);
+  --border:   oklch(0.18 0.04 180 / 0.10);
+  --input:    oklch(0.18 0.04 180 / 0.18);
   --ring: var(--emerald-accent);
 
   --gradient-accent: linear-gradient(135deg, var(--emerald-accent), var(--cyan-accent));
   --gradient-radial-glow:
-    radial-gradient(ellipse at 70% 30%, color-mix(in oklab, var(--emerald-accent) 12%, transparent) 0%, transparent 55%),
-    radial-gradient(ellipse at 20% 80%, color-mix(in oklab, var(--cyan-accent) 14%, transparent) 0%, transparent 45%);
-  --shadow-glow: 0 0 40px color-mix(in oklab, var(--emerald-accent) 22%, transparent);
-  --shadow-soft: 0 20px 60px -20px color-mix(in oklab, var(--emerald-accent) 18%, transparent);
-  --shadow-elegant: 0 30px 80px -30px oklch(0.18 0.025 265 / 0.28);
+    radial-gradient(ellipse at 70% 30%, color-mix(in oklab, var(--emerald-accent) 14%, transparent) 0%, transparent 55%),
+    radial-gradient(ellipse at 20% 80%, color-mix(in oklab, var(--cyan-accent) 16%, transparent) 0%, transparent 45%);
+  --shadow-glow: 0 0 40px color-mix(in oklab, var(--emerald-accent) 24%, transparent);
+  --shadow-soft: 0 20px 60px -20px color-mix(in oklab, var(--emerald-accent) 22%, transparent);
+  --shadow-elegant: 0 30px 80px -30px oklch(0.18 0.04 180 / 0.32);
 }
+
 
 /* =========================
    DARK THEME — preserved
