@@ -52,6 +52,7 @@ export function ThreeHero({ className = "" }: ThreeHeroProps) {
         const isMobile = /iPhone|iPad|Android|webOS/i.test(navigator.userAgent);
         const dpr = Math.min(window.devicePixelRatio, isMobile ? 1.2 : 1.6);
         const particleCount = isMobile ? 800 : 1400;
+        const particleSize = isMobile ? 2.5 : 3.5;
 
         const renderer = new THREE.WebGLRenderer({
           alpha: true,
@@ -108,13 +109,13 @@ export function ThreeHero({ className = "" }: ThreeHeroProps) {
         geometry.setAttribute("color", new THREE.BufferAttribute(colors, 3));
 
         const material = new THREE.PointsMaterial({
-          size: isMobile ? 0.018 : 0.020,
+          size: particleSize,
           vertexColors: true,
           transparent: true,
           depthWrite: false,
           map: texture,
           alphaTest: 0.01,
-          sizeAttenuation: true,
+          sizeAttenuation: false,
         });
 
         const points = new THREE.Points(geometry, material);
@@ -123,43 +124,24 @@ export function ThreeHero({ className = "" }: ThreeHeroProps) {
         // Theme color management
         const updateThemeColors = (isDark: boolean) => {
           const colorArray = geometry.attributes.color.array as Float32Array;
+          const emeraldColor = new THREE.Color(
+            isDark ? 0x10b981 : 0x0f9d84
+          );
+          const cyanColor = new THREE.Color(isDark ? 0x22d3ee : 0x38bdf8);
 
-          if (isDark) {
-            // Restore dark mode settings EXACTLY as they were originally
-            material.size = isMobile ? 0.018 : 0.020;
-            material.sizeAttenuation = true;
-            material.opacity = 0.85;
-            material.blending = THREE.AdditiveBlending;
-
-            const emeraldColor = new THREE.Color(0x10b981);
-            const cyanColor = new THREE.Color(0x22d3ee);
-
-            for (let i = 0; i < particleCount; i++) {
-              const color = particleTypes[i] === 1 ? emeraldColor : cyanColor;
-              colorArray[i * 3 + 0] = color.r;
-              colorArray[i * 3 + 1] = color.g;
-              colorArray[i * 3 + 2] = color.b;
-            }
-          } else {
-            // Light mode: Make them extremely subtle, faint, and desaturated
-            // to prevent them from looking like dust/noise on the light background
-            material.size = isMobile ? 0.010 : 0.012;
-            material.sizeAttenuation = true;
-            material.opacity = 0.08; // Very faint, almost invisible
-            material.blending = THREE.NormalBlending;
-
-            const lightColor1 = new THREE.Color(0x94a3b8); // Slate-400
-            const lightColor2 = new THREE.Color(0xcbd5e1); // Slate-300
-
-            for (let i = 0; i < particleCount; i++) {
-              const color = particleTypes[i] === 1 ? lightColor1 : lightColor2;
-              colorArray[i * 3 + 0] = color.r;
-              colorArray[i * 3 + 1] = color.g;
-              colorArray[i * 3 + 2] = color.b;
-            }
+          for (let i = 0; i < particleCount; i++) {
+            const color = particleTypes[i] === 1 ? emeraldColor : cyanColor;
+            colorArray[i * 3 + 0] = color.r;
+            colorArray[i * 3 + 1] = color.g;
+            colorArray[i * 3 + 2] = color.b;
           }
 
           geometry.attributes.color.needsUpdate = true;
+
+          material.blending = isDark
+            ? THREE.AdditiveBlending
+            : THREE.NormalBlending;
+          material.opacity = isDark ? 0.85 : 0.45;
           material.needsUpdate = true;
         };
 

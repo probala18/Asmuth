@@ -74,116 +74,149 @@
   --radius: 0.875rem;
   color-scheme: light;
 
-  --background: #FCFCFA;      /* warm white similar to Apple */
-  --foreground: #0F172A;      /* deep slate */
-  --surface:   #F6F8FA;        /* cards, sections, elevated panels */
-  --surface-2: #EEF2F6;        /* comparison tables, filters, hover states */
-  --surface-3: #E2E8F0;
+  /* ── Backgrounds ─────────────────────────────────────────── */
+  --background: #ffffff;         /* Pure white main surface */
+  --foreground: #0f172a;         /* Slate-900 — deep navy text */
+  --surface:   #f8fafc;          /* Slate-50  — cards, elevated panels */
+  --surface-2: #f1f5f9;          /* Slate-100 — hover states, subtle fills */
+  --surface-3: #e2e8f0;          /* Slate-200 — dividers, borders */
 
   --card: var(--surface);
   --card-foreground: var(--foreground);
   --popover: var(--surface);
   --popover-foreground: var(--foreground);
 
-  /* User Accent Colors */
-  --emerald: #0F9D84;           /* Slightly deeper than bright emerald */
-  --emerald-hover: #0B7F6B;     /* Hover Accent */
-  --cyan: #38BDF8;              /* Secondary Accent */
+  /* ── Accent Colors ───────────────────────────────────────── */
+  --emerald: #0891b2;            /* Cyan-600  — Primary CTA, rich teal */
+  --emerald-hover: #0e7490;      /* Cyan-700  — Hover / pressed */
+  --cyan: #06b6d4;               /* Cyan-500  — Secondary accent, hover states */
 
   /* Aliases for backwards compatibility */
   --emerald-accent: var(--emerald);
-  --emerald-glow:   #14b8a6;
+  --emerald-glow:   #14b8a6;     /* Teal-500  — Tertiary warm complement */
   --cyan-accent:    var(--cyan);
-  --cyan-glow:      #7dd3fc;
+  --cyan-glow:      #67e8f9;     /* Cyan-300  — Soft glow tint */
 
-  --success: #16A34A;
-  --warning: #F59E0B;
-  --danger: #DC2626;
+  /* ── Semantic Colors ─────────────────────────────────────── */
+  --success: #10b981;            /* Emerald-500 */
+  --warning: #f59e0b;            /* Amber-500 */
+  --danger:  #ef4444;            /* Red-500 */
+  --info:    #3b82f6;            /* Blue-500 */
 
-  --primary: var(--emerald-accent);
-  --primary-foreground: #FCFCFA;
-  --secondary: var(--surface-2);
+  /* ── Component Tokens ────────────────────────────────────── */
+  --primary: var(--emerald-accent);           /* #0891b2 */
+  --primary-foreground: #ffffff;
+  --secondary: var(--surface-2);              /* #f1f5f9 */
   --secondary-foreground: var(--foreground);
-  --muted: #64748B;
-  --muted-foreground: #64748B;
-  --accent: var(--cyan-accent);
-  --accent-foreground: #0F172A;
+  --muted: var(--surface-2);
+  --muted-foreground: #475569;               /* Slate-600 — secondary text */
+  --accent: var(--cyan-accent);              /* #06b6d4 */
+  --accent-foreground: #0f172a;
   --destructive: var(--danger);
-  --destructive-foreground: #FCFCFA;
+  --destructive-foreground: #ffffff;
 
   --hairline: rgba(15, 23, 42, 0.08);
-  --border:   #E2E8F0;
-  --input:    #E2E8F0;
-  --ring: var(--emerald-accent);
+  --border:   #e2e8f0;                       /* Slate-200 */
+  --input:    #e2e8f0;
+  --ring: var(--emerald-accent);             /* #0891b2 */
 
+  /* ── Overlay / Focus ─────────────────────────────────────── */
+  --hover-overlay:  rgba(8, 145, 178, 0.05); /* Primary @ 5% */
+  --focus-overlay:  rgba(8, 145, 178, 0.20); /* Primary @ 20% focus ring */
+  --active-overlay: rgba(8, 145, 178, 0.10); /* Primary @ 10% active */
+
+  /* ── Gradients & Shadows ─────────────────────────────────── */
   --gradient-accent: linear-gradient(135deg, var(--emerald-accent), var(--cyan-accent));
+  --gradient-bg: linear-gradient(180deg, #f8fafc 0%, #ffffff 100%);
   --gradient-radial-glow:
-    radial-gradient(ellipse at 70% 30%, color-mix(in oklab, var(--emerald-accent) 14%, transparent) 0%, transparent 55%),
-    radial-gradient(ellipse at 20% 80%, color-mix(in oklab, var(--cyan-accent) 16%, transparent) 0%, transparent 45%);
-  --shadow-glow: 0 0 40px color-mix(in oklab, var(--emerald-accent) 24%, transparent);
-  --shadow-soft: 0 20px 60px -20px color-mix(in oklab, var(--emerald-accent) 22%, transparent);
-  --shadow-elegant: 0 30px 80px -30px oklch(0.18 0.04 180 / 0.32);
+    radial-gradient(ellipse at 70% 30%, color-mix(in oklab, var(--emerald-accent) 12%, transparent) 0%, transparent 55%),
+    radial-gradient(ellipse at 20% 80%, color-mix(in oklab, var(--cyan-accent) 10%, transparent) 0%, transparent 45%);
+  --shadow-glow:    0 0 40px color-mix(in oklab, var(--emerald-accent) 20%, transparent);
+  --shadow-soft:    0 20px 60px -20px color-mix(in oklab, var(--emerald-accent) 18%, transparent);
+  --shadow-elegant: 0 30px 80px -30px rgba(15, 23, 42, 0.12);
+  --shadow-card:    0 2px 8px rgba(0, 0, 0, 0.08);
+  --shadow-hover:   0 6px 12px rgba(8, 145, 178, 0.20);
 }
 
 
 /* =========================
-   DARK THEME — preserved
-   Deep-space navy + emerald + cyan
+   DARK THEME — "Deep Luxury"
+   Slate-900 base + Cyan-400 accent
    ========================= */
 .dark {
   color-scheme: dark;
 
-  --background: oklch(0.13 0.03 270);        /* #050816 */
-  --foreground: oklch(0.96 0.005 250);
-  --surface:   oklch(0.17 0.03 265);         /* #0B1120 */
-  --surface-2: oklch(0.22 0.025 265);        /* #111827 */
-  --surface-3: oklch(0.28 0.022 265);
+  /* ── Backgrounds ─────────────────────────────────────────── */
+  --background: #0f172a;         /* Slate-900 — deep dark base */
+  --foreground: #f8fafc;         /* Slate-50  — almost white text */
+  --surface:   #0f172a;          /* Slate-900 — same as bg, primary surface */
+  --surface-2: #1e293b;          /* Slate-800 — cards, elevated elements */
+  --surface-3: #334155;          /* Slate-700 — interactive hover */
 
-  --card: var(--surface);
+  --card: var(--surface-2);      /* Cards use elevated surface */
   --card-foreground: var(--foreground);
-  --popover: var(--surface);
+  --popover: var(--surface-2);
   --popover-foreground: var(--foreground);
 
-  --emerald-accent: oklch(0.74 0.16 162);    /* #10B981 */
-  --emerald-glow:   oklch(0.82 0.18 162);
-  --cyan-accent:    oklch(0.82 0.13 200);    /* #22D3EE */
-  --cyan-glow:      oklch(0.88 0.13 200);
+  /* ── Accent Colors ───────────────────────────────────────── */
+  --emerald-accent: #06b6d4;     /* Cyan-400  — Primary CTA, glowing */
+  --emerald-hover:  #0891b2;     /* Cyan-600  — Hover / pressed */
+  --emerald-glow:   #22d3ee;     /* Cyan-300  — Glow/highlight tint */
+  --cyan-accent:    #0891b2;     /* Cyan-600  — Secondary accent */
+  --cyan-glow:      #67e8f9;     /* Cyan-200  — Soft glow */
 
-  --primary: var(--emerald-accent);
-  --primary-foreground: oklch(0.13 0.03 270);
-  --secondary: var(--surface-2);
+  /* ── Semantic Colors ─────────────────────────────────────── */
+  --success: #10b981;            /* Emerald-500 — glowing positive */
+  --warning: #fbbf24;            /* Amber-400   — bright caution */
+  --danger:  #f87171;            /* Red-400     — visible error */
+  --info:    #60a5fa;            /* Blue-400    — glowing info */
+
+  /* ── Component Tokens ────────────────────────────────────── */
+  --primary: var(--emerald-accent);           /* #06b6d4 */
+  --primary-foreground: #0f172a;
+  --secondary: var(--surface-3);              /* #334155 */
   --secondary-foreground: var(--foreground);
   --muted: var(--surface-2);
-  --muted-foreground: oklch(0.7 0.02 260);
-  --accent: var(--cyan-accent);
-  --accent-foreground: oklch(0.13 0.03 270);
-  --destructive: oklch(0.62 0.22 25);
-  --destructive-foreground: oklch(0.99 0 0);
+  --muted-foreground: #cbd5e1;               /* Slate-300 — readable secondary */
+  --accent: var(--cyan-accent);              /* #0891b2 */
+  --accent-foreground: #0f172a;
+  --destructive: var(--danger);              /* #f87171 */
+  --destructive-foreground: #0f172a;
 
-  --hairline: oklch(0.96 0.005 250 / 0.10);
-  --border:   oklch(0.96 0.005 250 / 0.10);
-  --input:    oklch(0.96 0.005 250 / 0.15);
-  --ring: var(--emerald-accent);
+  --hairline: rgba(51, 65, 85, 0.6);         /* Slate-700 tinted */
+  --border:   #334155;                       /* Slate-700 */
+  --input:    #334155;
+  --ring: var(--emerald-accent);             /* #06b6d4 */
 
-  --gradient-accent: linear-gradient(135deg, var(--emerald-accent), var(--cyan-accent));
+  /* ── Overlay / Focus ─────────────────────────────────────── */
+  --hover-overlay:  rgba(6, 182, 212, 0.08); /* Primary @ 8% */
+  --focus-overlay:  rgba(6, 182, 212, 0.30); /* Primary @ 30% focus ring */
+  --active-overlay: rgba(6, 182, 212, 0.15); /* Primary @ 15% active */
+
+  /* ── Gradients & Shadows ─────────────────────────────────── */
+  --gradient-accent: linear-gradient(135deg, var(--emerald-accent), var(--emerald-glow));
+  --gradient-bg: radial-gradient(ellipse at 50% 0%, #1e293b 0%, #0f172a 60%);
   --gradient-radial-glow:
-    radial-gradient(ellipse at 70% 30%, color-mix(in oklab, var(--emerald-accent) 18%, transparent) 0%, transparent 55%),
-    radial-gradient(ellipse at 20% 80%, color-mix(in oklab, var(--cyan-accent) 16%, transparent) 0%, transparent 45%);
-  --shadow-glow: 0 0 40px color-mix(in oklab, var(--emerald-accent) 35%, transparent);
-  --shadow-soft: 0 20px 60px -20px color-mix(in oklab, var(--emerald-accent) 30%, transparent);
-  --shadow-elegant: 0 30px 80px -30px oklch(0 0 0 / 0.6);
+    radial-gradient(ellipse at 70% 30%, rgba(6, 182, 212, 0.12) 0%, transparent 55%),
+    radial-gradient(ellipse at 20% 80%, rgba(20, 184, 166, 0.10) 0%, transparent 45%);
+  --shadow-glow:    0 0 40px rgba(6, 182, 212, 0.25);
+  --shadow-soft:    0 20px 60px -20px rgba(6, 182, 212, 0.20);
+  --shadow-elegant: 0 30px 80px -30px rgba(0, 0, 0, 0.60);
+  --shadow-card:    0 0 20px rgba(6, 182, 212, 0.15), 0 8px 16px rgba(0, 0, 0, 0.30);
+  --shadow-hover:   0 0 20px rgba(6, 182, 212, 0.40), 0 8px 16px rgba(0, 0, 0, 0.30);
 
-  /* Layered glow shadow scale (dark mode only) */
+  /* ── Layered Glow Shadow Scale ───────────────────────────── */
   --shadow-glow-sm: 0 0 15px rgba(6, 182, 212, 0.15), 0 2px 4px rgba(0, 0, 0, 0.2);
-  --shadow-glow-md: 0 0 20px rgba(6, 182, 212, 0.2),  0 4px 8px rgba(0, 0, 0, 0.3);
+  --shadow-glow-md: 0 0 20px rgba(6, 182, 212, 0.20), 0 4px 8px rgba(0, 0, 0, 0.3);
   --shadow-glow-lg: 0 0 30px rgba(6, 182, 212, 0.25), 0 12px 24px rgba(0, 0, 0, 0.4);
-  --shadow-glow-xl: 0 0 40px rgba(6, 182, 212, 0.3),  0 20px 40px rgba(0, 0, 0, 0.5);
-  --shadow-glow-hover: 0 0 20px rgba(6, 182, 212, 0.4), 0 8px 16px rgba(0, 0, 0, 0.3);
+  --shadow-glow-xl: 0 0 40px rgba(6, 182, 212, 0.30), 0 20px 40px rgba(0, 0, 0, 0.5);
+  --shadow-glow-hover: 0 0 20px rgba(6, 182, 212, 0.40), 0 8px 16px rgba(0, 0, 0, 0.3);
 
-  /* Focus ring with glow */
-  --focus-ring-glow: 0 0 0 4px rgba(6, 182, 212, 0.3);
+  /* ── Focus & Utility ─────────────────────────────────────── */
+  --focus-ring-glow: 0 0 0 4px rgba(6, 182, 212, 0.30);
+  --accent-inner-glow: inset 0 1px 0 rgba(255, 255, 255, 0.10);
 
-  /* Transition easing — luxury feel */
+  /* ── Easing ──────────────────────────────────────────────── */
   --ease-luxury: cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 

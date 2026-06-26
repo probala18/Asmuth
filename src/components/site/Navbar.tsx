@@ -88,7 +88,7 @@ export function Navbar() {
               <span className="absolute inset-0 rounded-xl blur-md opacity-50" style={{ background: "var(--gradient-accent)" }} />
             </div>
             <span className="font-display text-xl font-semibold tracking-tight">
-              AETHER<span className="text-[var(--emerald-accent)] text-xs align-top ml-0.5">®</span>
+              Asmuth<span className="text-[var(--emerald-accent)] text-xs align-top ml-0.5">®</span>
             </span>
           </Link>
 
