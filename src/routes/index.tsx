@@ -50,63 +50,50 @@ export default function Index() {
         <ThreeHero className="opacity-70" />
         <div className="absolute inset-0 bg-radial-glow" />
         <div className="absolute inset-0 bg-grid opacity-50" />
-        <div className="relative max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-[1.1fr_1fr] gap-16 items-center">
-          <div className="space-y-8">
-            <div className="flex items-center gap-3">
-              <span className="relative flex size-2">
-                <span className="absolute inline-flex h-full w-full rounded-full bg-[var(--emerald-accent)] opacity-75 animate-ping" />
-                <span className="relative inline-flex rounded-full size-2 bg-[var(--emerald-accent)]" />
-              </span>
-              <span className="font-mono-tech text-[10px] uppercase tracking-[0.3em] text-[var(--emerald-accent)]">
-                Premium Collection · 2026
-              </span>
-            </div>
-
-            <SplitTextReveal
-              text="LUXURY THAT ELEVATES EVERY DAY"
-              as="h1"
-              className="font-display text-5xl lg:text-7xl xl:text-8xl font-bold leading-[1.05] tracking-tight"
-            />
-
-            <p className="text-muted-foreground text-lg leading-relaxed max-w-md">
-              Curated excellence — engineered as one. Discover premium products that transform your day with
-              <span className="text-foreground"> </span>
-              <HandUnderline><span className="text-foreground">timeless precision</span></HandUnderline>.
-            </p>
-
-            <div className="flex items-center gap-4 pt-2">
-              <Link to="/collections" className="btn-accent inline-flex items-center gap-3 rounded-full px-7 py-3.5 text-sm font-semibold tracking-wide">
-                Explore Collection
-                <ArrowRight className="size-4" />
-              </Link>
-              <Link to="/best-of-2026" className="btn-ghost-glow rounded-full px-7 py-3.5 text-sm font-semibold inline-flex items-center gap-2">
-                Best of 2026
-              </Link>
-            </div>
-
-            <div className="flex items-center gap-6 pt-6">
-              <div className="flex -space-x-2">
-                {[...Array(4)].map((_, i) => (
-                  <span key={i} className="size-8 rounded-full border-2 border-background" style={{ background: i % 2 ? "var(--cyan-accent)" : "var(--emerald-accent)" }} />
-                ))}
-              </div>
-              <div>
-                <div className="flex items-center gap-1 text-[var(--emerald-accent)]">
-                  {[...Array(5)].map((_, i) => <Star key={i} className="size-3.5 fill-current" />)}
-                </div>
-                <p className="text-xs text-muted-foreground mt-1">2.5M+ trusted by enthusiasts</p>
-              </div>
-            </div>
+        <div className="relative max-w-5xl mx-auto text-center space-y-10 pt-10">
+          <div className="flex items-center justify-center gap-3">
+            <span className="relative flex size-2">
+              <span className="absolute inline-flex h-full w-full rounded-full bg-[var(--emerald-accent)] opacity-75 animate-ping" />
+              <span className="relative inline-flex rounded-full size-2 bg-[var(--emerald-accent)]" />
+            </span>
+            <span className="font-mono-tech text-[10px] uppercase tracking-[0.3em] text-[var(--emerald-accent)]">
+              Premium Collection · 2026
+            </span>
           </div>
 
-          {/* Floating product mockups */}
-          <div className="relative h-[520px] lg:h-[620px]">
-            <FloatCard className="absolute top-2 right-2 w-64 h-44 animate-[float_5s_ease-in-out_infinite]" img={laptopImg} />
-            <FloatCard className="absolute top-40 left-0 w-52 h-52 animate-[float_6s_ease-in-out_infinite_1s]" img={headphonesImg} />
-            <FloatCard className="absolute bottom-20 right-12 w-44 h-56 animate-[float_5.5s_ease-in-out_infinite_.5s]" img={watchImg} />
-            <FloatCard className="absolute bottom-0 left-16 w-40 h-48 animate-[float_6.5s_ease-in-out_infinite_2s]" img={phoneImg} />
-            <div className="absolute top-1/3 left-1/3 size-32 border border-[var(--emerald-accent)]/30 rounded-full" />
-            <div className="absolute bottom-1/4 right-4 size-20 border border-[var(--cyan-accent)]/30 rounded-full" />
+          <SplitTextReveal
+            text="LUXURY THAT ELEVATES EVERY DAY"
+            as="h1"
+            className="font-display text-6xl md:text-7xl lg:text-8xl xl:text-[8.5rem] font-bold leading-[0.95] tracking-tight"
+          />
+
+          <p className="text-muted-foreground text-lg lg:text-xl leading-relaxed max-w-2xl mx-auto">
+            Curated excellence — engineered as one. Discover premium products that transform your day with{" "}
+            <HandUnderline><span className="text-foreground">timeless precision</span></HandUnderline>.
+          </p>
+
+          <div className="flex items-center justify-center gap-4 pt-2 flex-wrap">
+            <Link to="/collections" className="btn-accent inline-flex items-center gap-3 rounded-full px-7 py-3.5 text-sm font-semibold tracking-wide">
+              Explore Collection
+              <ArrowRight className="size-4" />
+            </Link>
+            <Link to="/best-of-2026" className="btn-ghost-glow rounded-full px-7 py-3.5 text-sm font-semibold inline-flex items-center gap-2">
+              Best of 2026
+            </Link>
+          </div>
+
+          <div className="flex items-center justify-center gap-6 pt-6">
+            <div className="flex -space-x-2">
+              {[...Array(4)].map((_, i) => (
+                <span key={i} className="size-8 rounded-full border-2 border-background" style={{ background: i % 2 ? "var(--cyan-accent)" : "var(--emerald-accent)" }} />
+              ))}
+            </div>
+            <div className="text-left">
+              <div className="flex items-center gap-1 text-[var(--emerald-accent)]">
+                {[...Array(5)].map((_, i) => <Star key={i} className="size-3.5 fill-current" />)}
+              </div>
+              <p className="text-xs text-muted-foreground mt-1">2.5M+ trusted by enthusiasts</p>
+            </div>
           </div>
         </div>
 
@@ -116,6 +103,7 @@ export default function Index() {
           <span className="block h-10 w-px bg-gradient-to-b from-[var(--emerald-accent)] to-transparent" />
         </div>
       </section>
+
 
       {/* MARQUEE */}
       <section className="relative overflow-hidden py-10 border-y border-[var(--hairline)] bg-[var(--surface)]/40">
