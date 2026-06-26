@@ -82,18 +82,11 @@ export default function Index() {
             </Link>
           </div>
 
-          <div className="flex items-center justify-center gap-6 pt-6">
-            <div className="flex -space-x-2">
-              {[...Array(4)].map((_, i) => (
-                <span key={i} className="size-8 rounded-full border-2 border-background" style={{ background: i % 2 ? "var(--cyan-accent)" : "var(--emerald-accent)" }} />
-              ))}
+          <div className="flex items-center justify-center gap-3 pt-6">
+            <div className="flex items-center gap-1 text-[var(--emerald-accent)]">
+              {[...Array(5)].map((_, i) => <Star key={i} className="size-3.5 fill-current" />)}
             </div>
-            <div className="text-left">
-              <div className="flex items-center gap-1 text-[var(--emerald-accent)]">
-                {[...Array(5)].map((_, i) => <Star key={i} className="size-3.5 fill-current" />)}
-              </div>
-              <p className="text-xs text-muted-foreground mt-1">2.5M+ trusted by enthusiasts</p>
-            </div>
+            <p className="text-xs text-muted-foreground">2.5M+ trusted by enthusiasts</p>
           </div>
         </div>
 
