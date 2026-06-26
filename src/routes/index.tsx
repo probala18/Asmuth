@@ -4,6 +4,7 @@ import {
   ArrowUpRight,
   Award,
   Box,
+  Camera,
   Cpu,
   Flame,
   Gamepad2,
