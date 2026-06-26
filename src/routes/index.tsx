@@ -304,10 +304,3 @@ export default function Index() {
   );
 }
 
-function FloatCard({ img, className }: { img: string; className?: string }) {
-  return (
-    <div className={`surface-card overflow-hidden ${className ?? ""}`}>
-      <img src={img} alt="" className="size-full object-cover" loading="lazy" />
-    </div>
-  );
-}
