@@ -83,12 +83,13 @@ export function Navbar() {
         <div className="max-w-7xl mx-auto px-6 lg:px-10 h-20 flex items-center justify-between">
           {/* Logo */}
           <Link to="/" className="flex items-center gap-3 group z-50" onClick={() => setMobileMenuOpen(false)}>
-            <div className="relative w-10 h-10 rounded-xl flex items-center justify-center" style={{ background: "var(--gradient-accent)" }}>
-              <span className="font-display text-lg font-bold text-[oklch(0.13_0.03_270)]">Æ</span>
-              <span className="absolute inset-0 rounded-xl blur-md opacity-50" style={{ background: "var(--gradient-accent)" }} />
-            </div>
+            <img
+              src="/assets/logo.png"
+              alt="Asmuth logo"
+              className="h-9 w-9 rounded-full border border-hairline bg-surface object-cover"
+            />
             <span className="font-display text-xl font-semibold tracking-tight">
-              Asmuth<span className="text-[var(--emerald-accent)] text-xs align-top ml-0.5">®</span>
+              Asmuth<span className="text-emerald-accent text-xs align-top ml-0.5">®</span>
             </span>
           </Link>
 
