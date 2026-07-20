@@ -294,9 +294,6 @@ function Index() {
               Every category, <span className="text-accent-gradient">elevated</span>.
             </h2>
           </RevealOnScroll>
-          <p className="text-muted-foreground max-w-sm text-sm leading-relaxed">
-            Scroll horizontally — five worlds, hand-curated. Pinned in place so the story unfolds at the speed of your scroll.
-          </p>
         </div>
       </section>
       <div className="pb-16">
