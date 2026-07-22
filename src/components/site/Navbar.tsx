@@ -73,10 +73,8 @@ export function Navbar() {
   return (
     <>
       <header
-        className={`fixed top-0 inset-x-0 z-50 transition-all duration-300 ${
-          scrolled || mobileMenuOpen || searchOpen
-            ? "bg-background/70 backdrop-blur-xl border-b border-[var(--hairline)]"
-            : "bg-transparent"
+        className={`fixed top-0 inset-x-0 z-50 transition-all duration-300 bg-background/80 backdrop-blur-xl border-b border-[var(--hairline)] ${
+          scrolled || mobileMenuOpen || searchOpen ? "bg-background/90" : ""
         }`}
         onMouseLeave={() => setMega(false)}
       >
@@ -130,6 +128,13 @@ export function Navbar() {
             </button>
 
             <ThemeToggle />
+
+            <Link
+              to="/login"
+              className="hidden md:inline-flex items-center rounded-full border border-[var(--hairline)] px-4 py-2 text-sm font-semibold text-foreground transition-colors hover:bg-[var(--surface-2)]"
+            >
+              Login
+            </Link>
 
             {/* Shop Now (desktop) */}
             <Link
@@ -252,6 +257,14 @@ export function Navbar() {
                     <ArrowUpRight className="size-5 text-muted-foreground" />
                   </Link>
                 ))}
+                <Link
+                  to="/login"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="text-2xl font-display font-semibold hover:text-[var(--emerald-accent)] transition-colors py-2 flex items-center justify-between"
+                >
+                  Login
+                  <ArrowUpRight className="size-5 text-muted-foreground" />
+                </Link>
               </div>
             </div>
 

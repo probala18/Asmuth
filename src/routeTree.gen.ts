@@ -17,6 +17,7 @@ import { Route as SearchRouteImport } from './routes/search'
 import { Route as RecentlyViewedRouteImport } from './routes/recently-viewed'
 import { Route as PrivacyPolicyRouteImport } from './routes/privacy-policy'
 import { Route as NewArrivalsRouteImport } from './routes/new-arrivals'
+import { Route as LoginRouteImport } from './routes/login'
 import { Route as HowWeReviewRouteImport } from './routes/how-we-review'
 import { Route as FaqRouteImport } from './routes/faq'
 import { Route as EditorialPolicyRouteImport } from './routes/editorial-policy'
@@ -82,6 +83,11 @@ const PrivacyPolicyRoute = PrivacyPolicyRouteImport.update({
 const NewArrivalsRoute = NewArrivalsRouteImport.update({
   id: '/new-arrivals',
   path: '/new-arrivals',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LoginRoute = LoginRouteImport.update({
+  id: '/login',
+  path: '/login',
   getParentRoute: () => rootRouteImport,
 } as any)
 const HowWeReviewRoute = HowWeReviewRouteImport.update({
@@ -229,6 +235,7 @@ export interface FileRoutesByFullPath {
   '/editorial-policy': typeof EditorialPolicyRoute
   '/faq': typeof FaqRoute
   '/how-we-review': typeof HowWeReviewRoute
+  '/login': typeof LoginRoute
   '/new-arrivals': typeof NewArrivalsRoute
   '/privacy-policy': typeof PrivacyPolicyRoute
   '/recently-viewed': typeof RecentlyViewedRoute
@@ -265,6 +272,7 @@ export interface FileRoutesByTo {
   '/editorial-policy': typeof EditorialPolicyRoute
   '/faq': typeof FaqRoute
   '/how-we-review': typeof HowWeReviewRoute
+  '/login': typeof LoginRoute
   '/new-arrivals': typeof NewArrivalsRoute
   '/privacy-policy': typeof PrivacyPolicyRoute
   '/recently-viewed': typeof RecentlyViewedRoute
@@ -302,6 +310,7 @@ export interface FileRoutesById {
   '/editorial-policy': typeof EditorialPolicyRoute
   '/faq': typeof FaqRoute
   '/how-we-review': typeof HowWeReviewRoute
+  '/login': typeof LoginRoute
   '/new-arrivals': typeof NewArrivalsRoute
   '/privacy-policy': typeof PrivacyPolicyRoute
   '/recently-viewed': typeof RecentlyViewedRoute
@@ -340,6 +349,7 @@ export interface FileRouteTypes {
     | '/editorial-policy'
     | '/faq'
     | '/how-we-review'
+    | '/login'
     | '/new-arrivals'
     | '/privacy-policy'
     | '/recently-viewed'
@@ -376,6 +386,7 @@ export interface FileRouteTypes {
     | '/editorial-policy'
     | '/faq'
     | '/how-we-review'
+    | '/login'
     | '/new-arrivals'
     | '/privacy-policy'
     | '/recently-viewed'
@@ -412,6 +423,7 @@ export interface FileRouteTypes {
     | '/editorial-policy'
     | '/faq'
     | '/how-we-review'
+    | '/login'
     | '/new-arrivals'
     | '/privacy-policy'
     | '/recently-viewed'
@@ -449,6 +461,7 @@ export interface RootRouteChildren {
   EditorialPolicyRoute: typeof EditorialPolicyRoute
   FaqRoute: typeof FaqRoute
   HowWeReviewRoute: typeof HowWeReviewRoute
+  LoginRoute: typeof LoginRoute
   NewArrivalsRoute: typeof NewArrivalsRoute
   PrivacyPolicyRoute: typeof PrivacyPolicyRoute
   RecentlyViewedRoute: typeof RecentlyViewedRoute
@@ -528,6 +541,13 @@ declare module '@tanstack/react-router' {
       path: '/new-arrivals'
       fullPath: '/new-arrivals'
       preLoaderRoute: typeof NewArrivalsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/how-we-review': {
@@ -729,6 +749,7 @@ const rootRouteChildren: RootRouteChildren = {
   EditorialPolicyRoute: EditorialPolicyRoute,
   FaqRoute: FaqRoute,
   HowWeReviewRoute: HowWeReviewRoute,
+  LoginRoute: LoginRoute,
   NewArrivalsRoute: NewArrivalsRoute,
   PrivacyPolicyRoute: PrivacyPolicyRoute,
   RecentlyViewedRoute: RecentlyViewedRoute,
