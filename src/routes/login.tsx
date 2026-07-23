@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 export const Route = createFileRoute("/login")({
   head: () => ({
@@ -13,6 +13,7 @@ export const Route = createFileRoute("/login")({
 
 function LoginPage() {
   const [isSignUp, setIsSignUp] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
   const shellClass = isSignUp ? "auth-page-shell sign-up-mode" : "auth-page-shell";
 
   return (
@@ -133,6 +134,55 @@ function LoginPage() {
         .auth-page-shell .input-field input::placeholder {
           color: #aaa;
           font-weight: 400;
+        }
+
+        .auth-page-shell .password-field {
+          grid-template-columns: 15% 1fr 48px;
+        }
+
+        .auth-page-shell .password-toggle {
+          border: none;
+          background: none;
+          color: #666;
+          cursor: pointer;
+          font-size: 1rem;
+          padding: 0 0.75rem;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+
+        .auth-page-shell .form-options {
+          max-width: 380px;
+          width: 100%;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          gap: 0.75rem;
+          margin: 0.35rem 0 0.4rem;
+          font-size: 0.95rem;
+        }
+
+        .auth-page-shell .remember-me {
+          display: inline-flex;
+          align-items: center;
+          gap: 0.5rem;
+          color: #4b5563;
+          cursor: pointer;
+        }
+
+        .auth-page-shell .remember-me input {
+          accent-color: var(--emerald-accent);
+        }
+
+        .auth-page-shell .forgot-password {
+          color: #0f766e;
+          font-weight: 600;
+          text-decoration: none;
+        }
+
+        .auth-page-shell .forgot-password:hover {
+          text-decoration: underline;
         }
 
         .auth-page-shell .btn {
@@ -421,13 +471,30 @@ function LoginPage() {
               <h2 className="title">Sign in</h2>
               <div className="input-field">
                 <i>📧</i>
-                <input type="email" placeholder="Email" />
+                <input type="email" placeholder="you@example.com" />
               </div>
-              <div className="input-field">
+              <div className="input-field password-field">
                 <i>🔒</i>
-                <input type="password" placeholder="Password" />
+                <input type={showPassword ? "text" : "password"} placeholder="Enter your password" />
+                <button
+                  type="button"
+                  className="password-toggle"
+                  onClick={() => setShowPassword((value) => !value)}
+                  aria-label={showPassword ? "Hide password" : "Show password"}
+                >
+                  {showPassword ? "🙈" : "👁️"}
+                </button>
               </div>
-              <input type="submit" value="Login" className="btn solid" />
+              <div className="form-options">
+                <label className="remember-me">
+                  <input type="checkbox" />
+                  <span>Remember Me</span>
+                </label>
+                <a href="#" className="forgot-password">
+                  Forgot Password?
+                </a>
+              </div>
+              <input type="submit" value="Sign In" className="btn solid" />
               <p className="social-text">Or sign in with social platforms</p>
               <div className="social-media">
                 <SocialIcons />
