@@ -296,10 +296,11 @@ export function HorizontalShowcase({
         ease: "none",
         scrollTrigger: {
           trigger: section,
-          start: "top top",
+          start: "top 15%",
           end: () => `+=${distance()}`,
           scrub: 1,
           pin: true,
+          pinSpacing: true,
           invalidateOnRefresh: true,
         },
       });
@@ -330,15 +331,15 @@ export function HorizontalShowcase({
     return () => cleanup?.();
   }, [items.length]);
   return (
-    <section ref={sectionRef} data-no-batch className="relative overflow-hidden">
+    <section ref={sectionRef} data-no-batch className="relative overflow-hidden bg-background">
       <div ref={trackRef} className="flex gap-6 pl-6 lg:pl-10 py-8 will-change-transform">
         {items.map((it, i) => (
           <article
             key={i}
-            className="surface-card-2 w-[80vw] md:w-[55vw] lg:w-[40vw] shrink-0 p-10 relative overflow-hidden"
+            className="surface-card-2 w-[80vw] md:w-[55vw] lg:w-[40vw] shrink-0 p-10 relative overflow-hidden z-10"
           >
-            <div className="absolute -right-20 -top-20 size-72 rounded-full blur-3xl opacity-30" style={{ background: "var(--gradient-accent)" }} />
-            <div className="relative">
+            <div className="absolute -right-20 -top-20 size-72 rounded-full blur-3xl opacity-30 pointer-events-none" style={{ background: "var(--gradient-accent)" }} />
+            <div className="relative z-20">
               <p className="font-mono-tech text-[10px] uppercase tracking-[0.25em] text-[var(--cyan-accent)] mb-4">
                 {String(i + 1).padStart(2, "0")} / {String(items.length).padStart(2, "0")}
               </p>
