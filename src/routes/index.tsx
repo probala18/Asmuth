@@ -86,14 +86,18 @@ function Index() {
           </div>
 
           <SplitTextReveal
-            text="LUXURY THAT ELEVATES EVERY DAY"
+            text="Discover Better. Choose Smarter."
             as="h1"
             className="font-display text-6xl md:text-7xl lg:text-8xl xl:text-[8.2rem] font-bold leading-[0.95] tracking-tight"
           />
 
           <p className="text-muted-foreground text-lg lg:text-xl leading-relaxed max-w-2xl mx-auto">
-            Curated excellence — engineered as one. Discover premium products that transform your day with{" "}
-            <HandUnderline><span className="text-foreground">timeless precision</span></HandUnderline>.
+            We research, compare, and curate the products worth your attention — so you can {" "}
+            <HandUnderline><span className="text-foreground">spend less time</span></HandUnderline>{" "} 
+            
+            searching and more time choosing with {" "}
+            <HandUnderline><span className="text-foreground">confidence</span></HandUnderline>.
+            
           </p>
 
           <div className="flex items-center justify-center gap-4 pt-2 flex-wrap">
@@ -145,8 +149,8 @@ function Index() {
       <section className="px-6 lg:px-10 py-16">
         <div className="max-w-7xl mx-auto surface-card-2 p-8 lg:p-12">
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
-            <TrustMetric value={25000} suffix="+" label="Products Reviewed" iconName="Box" />
-            <TrustMetric value={500} suffix="+" label="Buying Guides" iconName="Cpu" />
+            <TrustMetric value={25000} suffix="+" label="Products Researched" iconName="Box" />
+            <TrustMetric value={500} suffix="+" label="Buying Covered" iconName="Cpu" />
             <TrustMetric value={100} suffix="+" label="Categories" iconName="Sparkles" />
             <TrustMetric value={98} suffix="%" label="Reader Satisfaction" iconName="Shield" />
           </div>
@@ -158,7 +162,7 @@ function Index() {
         <div className="max-w-7xl mx-auto">
           <RevealOnScroll className="space-y-4 mb-12">
             <p className="font-mono-tech text-[10px] uppercase tracking-[0.3em] text-[var(--emerald-accent)]">
-              Browse by Ecosystem
+              Browse by Category
             </p>
             <h2 className="font-display text-4xl lg:text-5xl font-semibold">
               Curated <span className="text-accent-gradient">product worlds</span>.
@@ -284,20 +288,12 @@ function Index() {
       </section>
 
       {/* 8. HORIZONTAL SCROLL STORY */}
-      <section className="px-6 lg:px-10 pt-24 pb-12">
-        <div className="max-w-7xl mx-auto flex items-end justify-between gap-8 flex-wrap">
-          <RevealOnScroll className="space-y-3">
-            <p className="font-mono-tech text-[10px] uppercase tracking-[0.3em] text-[var(--cyan-accent)]">
-              Ecosystem Showcase
-            </p>
-            <h2 className="font-display text-4xl lg:text-6xl font-semibold tracking-tight">
-              Every category, <span className="text-accent-gradient">elevated</span>.
-            </h2>
-          </RevealOnScroll>
-        </div>
-      </section>
       <div className="pb-16">
         <HorizontalShowcase
+          header={{
+            label: "Ecosystem Showcase",
+            title: <>Every category, <span className="text-accent-gradient">elevated</span>.</>,
+          }}
           items={[
             { title: "Computing", description: "Pro silicon, ultraportable chassis, cinema-grade displays — for makers and builders.", stats: "120+ products · 4.9 avg rating", icon: <Laptop className="size-6" /> },
             { title: "Audio", description: "Reference-tuned headphones and immersive spatial speakers for sound that disappears.", stats: "84 products · 4.8 avg rating", icon: <Headphones className="size-6" /> },

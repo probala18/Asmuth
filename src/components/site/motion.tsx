@@ -274,15 +274,19 @@ export function StackingCards({ items }: { items: Array<{ title: string; subtitl
 /** Horizontal showcase pinned to scroll */
 export function HorizontalShowcase({
   items,
+  header,
 }: {
   items: Array<{ title: string; description: string; stats: string; icon: ReactNode }>;
+  header?: { label: string; title: ReactNode };
 }) {
+  const containerRef = useRef<HTMLDivElement>(null);
   const sectionRef = useRef<HTMLDivElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
+    const container = containerRef.current;
     const section = sectionRef.current;
     const track = trackRef.current;
-    if (!section || !track) return;
+    if (!container || !section || !track) return;
     let cleanup: (() => void) | undefined;
     (async () => {
       const { gsap } = await import("gsap");
@@ -295,7 +299,7 @@ export function HorizontalShowcase({
         x: () => -distance(),
         ease: "none",
         scrollTrigger: {
-          trigger: section,
+          trigger: container,
           start: "top 15%",
           end: () => `+=${distance()}`,
           scrub: 1,
@@ -315,7 +319,7 @@ export function HorizontalShowcase({
         stagger: 0.1,
         ease: "power2.out",
         scrollTrigger: {
-          trigger: section,
+          trigger: container,
           start: "top 80%",
           once: true,
         }
@@ -331,8 +335,23 @@ export function HorizontalShowcase({
     return () => cleanup?.();
   }, [items.length]);
   return (
-    <section ref={sectionRef} data-no-batch className="relative overflow-hidden bg-background">
-      <div ref={trackRef} className="flex gap-6 pl-6 lg:pl-10 py-8 will-change-transform">
+    <div ref={containerRef} className="relative">
+      {header && (
+        <div className="px-6 lg:px-10 pt-24 pb-12">
+          <div className="max-w-7xl mx-auto flex items-end justify-between gap-8 flex-wrap">
+            <div className="space-y-3">
+              <p className="font-mono-tech text-[10px] uppercase tracking-[0.3em] text-[var(--cyan-accent)]">
+                {header.label}
+              </p>
+              <h2 className="font-display text-4xl lg:text-6xl font-semibold tracking-tight">
+                {header.title}
+              </h2>
+            </div>
+          </div>
+        </div>
+      )}
+      <section ref={sectionRef} data-no-batch className="relative overflow-hidden bg-background">
+        <div ref={trackRef} className="flex gap-6 pl-6 lg:pl-10 py-8 will-change-transform">
         {items.map((it, i) => (
           <article
             key={i}
@@ -355,6 +374,7 @@ export function HorizontalShowcase({
         ))}
       </div>
     </section>
+    </div>
   );
 }
 
