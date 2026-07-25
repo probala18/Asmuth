@@ -23,6 +23,7 @@ import { Route as FaqRouteImport } from './routes/faq'
 import { Route as EditorialPolicyRouteImport } from './routes/editorial-policy'
 import { Route as DmcaRouteImport } from './routes/dmca'
 import { Route as DealsRouteImport } from './routes/deals'
+import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as CollectionsRouteImport } from './routes/collections'
 import { Route as CategoriesRouteImport } from './routes/categories'
@@ -113,6 +114,11 @@ const DmcaRoute = DmcaRouteImport.update({
 const DealsRoute = DealsRouteImport.update({
   id: '/deals',
   path: '/deals',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DashboardRoute = DashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ContactRoute = ContactRouteImport.update({
@@ -230,6 +236,7 @@ export interface FileRoutesByFullPath {
   '/categories': typeof CategoriesRoute
   '/collections': typeof CollectionsRoute
   '/contact': typeof ContactRoute
+  '/dashboard': typeof DashboardRoute
   '/deals': typeof DealsRoute
   '/dmca': typeof DmcaRoute
   '/editorial-policy': typeof EditorialPolicyRoute
@@ -267,6 +274,7 @@ export interface FileRoutesByTo {
   '/categories': typeof CategoriesRoute
   '/collections': typeof CollectionsRoute
   '/contact': typeof ContactRoute
+  '/dashboard': typeof DashboardRoute
   '/deals': typeof DealsRoute
   '/dmca': typeof DmcaRoute
   '/editorial-policy': typeof EditorialPolicyRoute
@@ -305,6 +313,7 @@ export interface FileRoutesById {
   '/categories': typeof CategoriesRoute
   '/collections': typeof CollectionsRoute
   '/contact': typeof ContactRoute
+  '/dashboard': typeof DashboardRoute
   '/deals': typeof DealsRoute
   '/dmca': typeof DmcaRoute
   '/editorial-policy': typeof EditorialPolicyRoute
@@ -344,6 +353,7 @@ export interface FileRouteTypes {
     | '/categories'
     | '/collections'
     | '/contact'
+    | '/dashboard'
     | '/deals'
     | '/dmca'
     | '/editorial-policy'
@@ -381,6 +391,7 @@ export interface FileRouteTypes {
     | '/categories'
     | '/collections'
     | '/contact'
+    | '/dashboard'
     | '/deals'
     | '/dmca'
     | '/editorial-policy'
@@ -418,6 +429,7 @@ export interface FileRouteTypes {
     | '/categories'
     | '/collections'
     | '/contact'
+    | '/dashboard'
     | '/deals'
     | '/dmca'
     | '/editorial-policy'
@@ -456,6 +468,7 @@ export interface RootRouteChildren {
   CategoriesRoute: typeof CategoriesRoute
   CollectionsRoute: typeof CollectionsRoute
   ContactRoute: typeof ContactRoute
+  DashboardRoute: typeof DashboardRoute
   DealsRoute: typeof DealsRoute
   DmcaRoute: typeof DmcaRoute
   EditorialPolicyRoute: typeof EditorialPolicyRoute
@@ -583,6 +596,13 @@ declare module '@tanstack/react-router' {
       path: '/deals'
       fullPath: '/deals'
       preLoaderRoute: typeof DealsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/dashboard': {
+      id: '/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof DashboardRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/contact': {
@@ -744,6 +764,7 @@ const rootRouteChildren: RootRouteChildren = {
   CategoriesRoute: CategoriesRoute,
   CollectionsRoute: CollectionsRoute,
   ContactRoute: ContactRoute,
+  DashboardRoute: DashboardRoute,
   DealsRoute: DealsRoute,
   DmcaRoute: DmcaRoute,
   EditorialPolicyRoute: EditorialPolicyRoute,

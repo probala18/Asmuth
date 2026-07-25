@@ -4,6 +4,7 @@ import {
   Link,
   createRootRouteWithContext,
   useRouter,
+  useRouterState,
   HeadContent,
   Scripts,
 } from "@tanstack/react-router";
@@ -112,13 +113,15 @@ function RootShell({ children }: { children: ReactNode }) {
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
+  const location = useRouterState({ select: (s) => s.location.pathname });
+  const isDashboard = location.startsWith("/dashboard");
 
   return (
     <QueryClientProvider client={queryClient}>
       <ThemeProvider>
         <SmoothScroll>
           <div className="cine-progress" aria-hidden />
-          <Navbar />
+          {!isDashboard && <Navbar />}
           <ScrollChoreography>
             <PageTransition>
               <main className="relative">

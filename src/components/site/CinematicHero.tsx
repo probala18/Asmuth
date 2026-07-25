@@ -2,6 +2,10 @@ import { useEffect, useRef, useState } from "react";
 import { Link } from "@tanstack/react-router";
 import { ArrowRight, Sparkles } from "lucide-react";
 import { ShimmerButton } from "@/components/ui/shimmer-button";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
 
 export interface HeroScene {
   id: string;
@@ -66,103 +70,95 @@ export function CinematicHero() {
   const [progressPercent, setProgressPercent] = useState(0);
 
   useEffect(() => {
-    let cleanup: (() => void) | undefined;
+    let isMounted = true;
+    const container = containerRef.current;
+    if (!container) return;
 
-    (async () => {
-      const { gsap } = await import("gsap");
-      const { ScrollTrigger } = await import("gsap/ScrollTrigger");
-      gsap.registerPlugin(ScrollTrigger);
+    const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (prefersReduced) return;
 
-      const container = containerRef.current;
-      if (!container) return;
+    // Play all videos muted to keep them ready and buffered
+    videoRefs.current.forEach((v) => {
+      if (v) {
+        v.play().catch(() => {});
+      }
+    });
 
-      const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-      if (prefersReduced) return;
+    const numScenes = heroScenes.length;
 
-      // Play all videos muted to keep them ready and buffered
-      videoRefs.current.forEach((v) => {
-        if (v) {
-          v.play().catch(() => {});
-        }
-      });
-
-      const numScenes = heroScenes.length;
-
-      // GSAP scrubbed timeline for pinning and synchronized video + text crossfades
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: container,
-          start: "top top",
-          end: `+=${numScenes * 100}%`,
-          pin: true,
-          pinSpacing: true,
-          scrub: 0.5,
-          onUpdate: (self) => {
-            const p = self.progress;
-            setProgressPercent(Math.min(100, Math.round(p * 100)));
-            const idx = Math.min(numScenes - 1, Math.floor(p * numScenes));
-            setActiveSceneIndex(idx);
-          },
+    // GSAP scrubbed timeline for pinning and synchronized video + text crossfades
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: container,
+        start: "top top",
+        end: `+=${numScenes * 100}%`,
+        pin: true,
+        pinSpacing: true,
+        scrub: 0.5,
+        onUpdate: (self) => {
+          if (!isMounted) return;
+          const p = self.progress;
+          setProgressPercent(Math.min(100, Math.round(p * 100)));
+          const idx = Math.min(numScenes - 1, Math.floor(p * numScenes));
+          setActiveSceneIndex(idx);
         },
-      });
+      },
+    });
 
-      // Initialize initial states for text and video layers using autoAlpha (opacity + visibility)
-      videoRefs.current.forEach((v, idx) => {
-        if (v) gsap.set(v, { autoAlpha: idx === 0 ? 1 : 0 });
-      });
-      textRefs.current.forEach((el, idx) => {
-        if (el) {
-          gsap.set(el, { autoAlpha: idx === 0 ? 1 : 0, y: idx === 0 ? 0 : 25 });
-        }
-      });
-      if (outroRef.current) {
-        gsap.set(outroRef.current, { autoAlpha: 0, y: 25 });
+    // Initialize initial states for text and video layers using autoAlpha
+    videoRefs.current.forEach((v, idx) => {
+      if (v) gsap.set(v, { autoAlpha: idx === 0 ? 1 : 0 });
+    });
+    textRefs.current.forEach((el, idx) => {
+      if (el) {
+        gsap.set(el, { autoAlpha: idx === 0 ? 1 : 0, y: idx === 0 ? 0 : 25 });
       }
+    });
+    if (outroRef.current) {
+      gsap.set(outroRef.current, { autoAlpha: 0, y: 25 });
+    }
 
-      // Step-by-step sequential crossfade keyframes (zero overlap)
-      const stepDuration = 1 / numScenes;
+    // Step-by-step sequential crossfade keyframes (zero overlap)
+    const stepDuration = 1 / numScenes;
 
-      heroScenes.forEach((_, i) => {
-        if (i < numScenes - 1) {
-          const curVideo = videoRefs.current[i];
-          const nextVideo = videoRefs.current[i + 1];
-          const curText = textRefs.current[i];
-          const nextText = textRefs.current[i + 1];
-          const time = (i + 0.65) * stepDuration;
+    heroScenes.forEach((_, i) => {
+      if (i < numScenes - 1) {
+        const curVideo = videoRefs.current[i];
+        const nextVideo = videoRefs.current[i + 1];
+        const curText = textRefs.current[i];
+        const nextText = textRefs.current[i + 1];
+        const time = (i + 0.65) * stepDuration;
 
-          tl.to(curVideo, { autoAlpha: 0, duration: stepDuration * 0.5, ease: "sine.inOut" }, time)
-            .to(nextVideo, { autoAlpha: 1, duration: stepDuration * 0.5, ease: "sine.inOut" }, time)
-            // CurText fades out and sets visibility: hidden
-            .to(curText, { autoAlpha: 0, y: -20, duration: stepDuration * 0.3, ease: "power2.in" }, time)
-            // NextText fades in AFTER curText is hidden
-            .to(nextText, { autoAlpha: 1, y: 0, duration: stepDuration * 0.35, ease: "power2.out" }, time + stepDuration * 0.32);
-        }
-      });
-
-      // Final scene transition into Outro panel
-      const lastText = textRefs.current[numScenes - 1];
-      const outroTime = (numScenes - 0.45) * stepDuration;
-      if (lastText && outroRef.current) {
-        tl.to(lastText, { autoAlpha: 0, y: -20, duration: stepDuration * 0.3, ease: "power2.in" }, outroTime)
-          .to(outroRef.current, { autoAlpha: 1, y: 0, duration: stepDuration * 0.35, ease: "power2.out" }, outroTime + stepDuration * 0.32);
+        tl.to(curVideo, { autoAlpha: 0, duration: stepDuration * 0.5, ease: "sine.inOut" }, time)
+          .to(nextVideo, { autoAlpha: 1, duration: stepDuration * 0.5, ease: "sine.inOut" }, time)
+          .to(curText, { autoAlpha: 0, y: -20, duration: stepDuration * 0.3, ease: "power2.in" }, time)
+          .to(nextText, { autoAlpha: 1, y: 0, duration: stepDuration * 0.35, ease: "power2.out" }, time + stepDuration * 0.32);
       }
+    });
 
-      // Refresh ScrollTrigger to ensure pin spacing matches layout
-      setTimeout(() => {
-        ScrollTrigger.refresh();
-      }, 100);
+    // Final scene transition into Outro panel
+    const lastText = textRefs.current[numScenes - 1];
+    const outroTime = (numScenes - 0.45) * stepDuration;
+    if (lastText && outroRef.current) {
+      tl.to(lastText, { autoAlpha: 0, y: -20, duration: stepDuration * 0.3, ease: "power2.in" }, outroTime)
+        .to(outroRef.current, { autoAlpha: 1, y: 0, duration: stepDuration * 0.35, ease: "power2.out" }, outroTime + stepDuration * 0.32);
+    }
 
-      cleanup = () => {
-        tl.scrollTrigger?.kill();
-        tl.kill();
-      };
-    })();
+    // Refresh ScrollTrigger to ensure pin spacing matches layout
+    const timer = setTimeout(() => {
+      if (isMounted) ScrollTrigger.refresh();
+    }, 100);
 
-    return () => cleanup?.();
+    return () => {
+      isMounted = false;
+      clearTimeout(timer);
+      tl.scrollTrigger?.kill(true);
+      tl.kill();
+    };
   }, []);
 
   return (
-    <div ref={containerRef} className="relative w-full h-screen overflow-hidden bg-background text-foreground z-10">
+    <div ref={containerRef} data-no-batch className="relative w-full h-screen overflow-hidden bg-background text-foreground z-10">
       {/* 1. CINEMATIC VIDEO BACKGROUND LAYERS */}
       <div className="absolute inset-0 z-0 overflow-hidden">
         {heroScenes.map((scene, index) => (
@@ -176,20 +172,24 @@ export function CinematicHero() {
             playsInline
             preload="metadata"
             className="absolute inset-0 size-full object-cover transition-transform duration-700 pointer-events-none"
+            style={{
+              opacity: index === 0 ? 1 : 0,
+              visibility: index === 0 ? "visible" : "hidden",
+            }}
           />
         ))}
 
         {/* Dynamic Light/Dark Theme Ambient Lighting & Mask Overlays */}
-        <div className="absolute inset-0 bg-gradient-to-t from-background via-background/60 to-background/30 dark:from-background dark:via-background/70 dark:to-background/40" />
-        <div className="absolute inset-0 bg-radial-glow opacity-60 dark:opacity-80" />
-        <div className="absolute inset-0 bg-grid opacity-30 dark:opacity-40" />
+        <div className="absolute inset-0 bg-gradient-to-t from-background via-background/60 to-background/30 dark:from-background dark:via-background/70 dark:to-background/40 pointer-events-none" />
+        <div className="absolute inset-0 bg-radial-glow opacity-60 dark:opacity-80 pointer-events-none" />
+        <div className="absolute inset-0 bg-grid opacity-30 dark:opacity-40 pointer-events-none" />
       </div>
 
       {/* 2. HUD TOP EYEBROW & HERO NAV CONTAINER */}
-      <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-10 pt-28 pb-8 flex flex-col justify-between h-full">
+      <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-10 pt-28 pb-8 flex flex-col justify-between h-full pointer-events-none">
         
         {/* Top Tagline */}
-        <div className="flex items-center justify-between gap-4 pt-4">
+        <div className="flex items-center justify-between gap-4 pt-4 pointer-events-auto">
           <div className="inline-flex items-center gap-2 rounded-full px-3.5 py-1.5 surface-card text-xs font-mono-tech uppercase tracking-[0.25em] text-[var(--emerald-accent)] border border-[var(--hairline)]">
             <span className="relative flex size-2">
               <span className="absolute inline-flex h-full w-full rounded-full bg-[var(--emerald-accent)] opacity-75 animate-ping" />
@@ -216,6 +216,10 @@ export function CinematicHero() {
               key={scene.id}
               ref={(el) => (textRefs.current[index] = el)}
               className="absolute inset-x-0 space-y-6 pointer-events-auto"
+              style={{
+                opacity: index === 0 ? 1 : 0,
+                visibility: index === 0 ? "visible" : "hidden",
+              }}
             >
               {/* Category Badge */}
               <div className="inline-block font-mono-tech text-xs uppercase tracking-[0.3em] text-[var(--emerald-accent)]">
@@ -254,6 +258,10 @@ export function CinematicHero() {
           <div
             ref={outroRef}
             className="absolute inset-x-0 space-y-6 pointer-events-auto"
+            style={{
+              opacity: 0,
+              visibility: "hidden",
+            }}
           >
             <div className="inline-block font-mono-tech text-xs uppercase tracking-[0.3em] text-[var(--cyan-accent)]">
               CHOICE CONFIDENCE GUARANTEED
@@ -284,7 +292,7 @@ export function CinematicHero() {
         </div>
 
         {/* 4. SCROLL PROGRESS HUD BOTTOM BAR */}
-        <div className="flex items-center justify-between gap-6 pb-4 pt-4 border-t border-[var(--hairline)]/50">
+        <div className="flex items-center justify-between gap-6 pb-4 pt-4 border-t border-[var(--hairline)]/50 pointer-events-auto">
           {/* Scene counter */}
           <div className="font-mono-tech text-xs uppercase tracking-widest text-muted-foreground flex items-center gap-2">
             <span className="text-foreground font-semibold">0{activeSceneIndex + 1}</span>

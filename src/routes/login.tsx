@@ -1,4 +1,4 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { FormEvent, useState } from "react";
 import { supabase } from "@/supabase";
 import { Mail, Lock, User, Eye, EyeOff, ArrowRight, CheckCircle2, XCircle } from "lucide-react";
@@ -14,6 +14,7 @@ export const Route = createFileRoute("/login")({
 });
 
 function LoginPage() {
+  const navigate = useNavigate();
   const [isSignUp, setIsSignUp] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState("");
@@ -41,7 +42,10 @@ function LoginPage() {
       return;
     }
 
-    setAuthMessage("Signed in successfully.");
+    setAuthMessage("Signed in successfully. Redirecting to workspace...");
+    setTimeout(() => {
+      navigate({ to: "/dashboard" });
+    }, 500);
   };
 
   const handleSignUp = async (event: FormEvent<HTMLFormElement>) => {

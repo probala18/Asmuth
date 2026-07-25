@@ -49,6 +49,7 @@ import {
 } from "@/data";
 
 import { CinematicHero } from "@/components/site/CinematicHero";
+import { ProductStorytelling } from "@/components/site/ProductStorytelling";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -90,6 +91,9 @@ function Index() {
         </Marquee>
       </section>
 
+      {/* 2.5. PRODUCT STORYTELLING */}
+      <ProductStorytelling />
+
       {/* 3. TRUST METRICS */}
       <motion.section
         className="px-6 lg:px-10 py-16"
@@ -98,14 +102,7 @@ function Index() {
         viewport={{ once: true, margin: "-60px" }}
         transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
       >
-        <div className="max-w-7xl mx-auto surface-card-2 p-8 lg:p-12">
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
-            <TrustMetric value={25000} suffix="+" label="Products Researched" iconName="Box" />
-            <TrustMetric value={500} suffix="+" label="Buying Covered" iconName="Cpu" />
-            <TrustMetric value={100} suffix="+" label="Categories" iconName="Sparkles" />
-            <TrustMetric value={98} suffix="%" label="Reader Satisfaction" iconName="Shield" />
-          </div>
-        </div>
+
       </motion.section>
 
       {/* 4. FEATURED CATEGORIES */}
