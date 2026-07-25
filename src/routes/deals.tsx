@@ -24,8 +24,8 @@ const deals = [
   { slug: "aether-buds-pro", name: "Aether Buds Pro", img: headphonesImg, was: 159, now: 129, off: 19, hours: 8 },
   { slug: "aether-watch-x", name: "Aether Watch X", img: watchImg, was: 249, now: 199, off: 20, hours: 12 },
   { slug: "aether-phone-15", name: "Aether Phone 15", img: phoneImg, was: 899, now: 799, off: 11, hours: 6 },
-  { slug: "aether-pad-pro", name: "Aether Pad Pro", img: laptopImg, was: 749, now: 649, off: 13, hours: 20 },
-  { slug: "aether-lens-x", name: "Aether Lens X", img: phoneImg, was: 1499, now: 1299, off: 13, hours: 16 },
+  { slug: "aether-pad-pro", name: "Aether Pad Pro", img: "/assets/product-tablet.png", was: 749, now: 649, off: 13, hours: 20 },
+  { slug: "aether-lens-x", name: "Aether Lens X", img: "/assets/product-camera.png", was: 1499, now: 1299, off: 13, hours: 16 },
 ];
 
 function Countdown({ hours }: { hours: number }) {
@@ -86,7 +86,7 @@ function DealsPage() {
           {deals.map((d) => (
             <TiltCard key={d.name} className="surface-card overflow-hidden group" max={5}>
               <div className="relative aspect-[5/4] overflow-hidden bg-[var(--surface-2)]">
-                <img src={d.img} alt={d.name} loading="lazy" className="size-full object-cover transition-transform duration-700 group-hover:scale-[1.06]" />
+                <img src={d.img} alt={d.name} loading="lazy" decoding="async" className="size-full object-cover transition-transform duration-700 group-hover:scale-[1.06]" />
                 <span className="absolute top-3 left-3 rounded-full px-3 py-1 text-[10px] font-bold font-mono-tech text-background" style={{ background: "var(--gradient-accent)" }}>
                   -{d.off}%
                 </span>

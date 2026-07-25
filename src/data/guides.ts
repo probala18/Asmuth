@@ -41,7 +41,7 @@ export const guides: Guide[] = [
     author: "Marcus Vance",
     publishedAt: "2026-06-22",
     readTime: "6 min read",
-    image: "/assets/product-headphones.jpg",
+    image: "/assets/product-studio-monitor.png",
     sections: [
       {
         title: "Understanding Reference Responses",

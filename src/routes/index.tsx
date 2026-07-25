@@ -70,7 +70,7 @@ function Index() {
   return (
     <>
       {/* 1. HERO SECTION */}
-      <section className="relative min-h-screen pt-32 pb-20 px-6 lg:px-10 overflow-hidden flex items-center">
+      <section className="relative min-h-[92dvh] pt-28 pb-20 px-6 lg:px-10 overflow-hidden flex items-center">
         <ThreeHero className="opacity-70" />
         <div className="absolute inset-0 bg-radial-glow" />
         <div className="absolute inset-0 bg-grid opacity-50" />
@@ -88,7 +88,7 @@ function Index() {
           <SplitTextReveal
             text="Discover Better. Choose Smarter."
             as="h1"
-            className="font-display text-6xl md:text-7xl lg:text-8xl xl:text-[8.2rem] font-bold leading-[0.95] tracking-tight"
+            className="font-display text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold leading-[0.98]"
           />
 
           <p className="text-muted-foreground text-lg lg:text-xl leading-relaxed max-w-2xl mx-auto">
@@ -123,12 +123,12 @@ function Index() {
               <p className="text-xs text-muted-foreground mt-1">2.5M+ trusted by enthusiasts</p>
             </div>
           </div>
-        </div>
 
-        {/* Scroll cue */}
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2">
-          <span className="font-mono-tech text-[10px] uppercase tracking-[0.3em] text-muted-foreground">Scroll</span>
-          <span className="block h-10 w-px bg-gradient-to-b from-[var(--emerald-accent)] to-transparent" />
+          {/* Scroll cue */}
+          <div className="flex flex-col items-center gap-2 pt-8">
+            <span className="font-mono-tech text-[10px] uppercase tracking-[0.3em] text-muted-foreground">Scroll</span>
+            <span className="block h-10 w-px bg-gradient-to-b from-[var(--emerald-accent)] to-transparent" />
+          </div>
         </div>
       </section>
 
@@ -250,7 +250,7 @@ function Index() {
                 
                 <div className="grid grid-cols-1 lg:grid-cols-[1.2fr_2fr] gap-8 items-center">
                   <div className="aspect-[4/3] rounded-2xl overflow-hidden bg-[var(--surface)] border border-[var(--hairline)]">
-                    <img src={p.image} alt={p.name} className="size-full object-cover" />
+                    <img src={p.image} alt={p.name} loading="lazy" decoding="async" className="size-full object-cover" />
                   </div>
                   
                   <div className="space-y-4">

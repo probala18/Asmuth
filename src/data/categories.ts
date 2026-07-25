@@ -44,7 +44,7 @@ export const categories: Category[] = [
     description: "Explore cameras, lenses, and creative gear built to capture your best work.",
     icon: "Camera",
     productCount: 1,
-    image: "/assets/product-camera.jpg",
+    image: "/assets/product-camera.png",
     featured: true,
   },
   {
@@ -53,7 +53,7 @@ export const categories: Category[] = [
     description: "Gaming laptops, monitors, keyboards, mice, and accessories built for serious play.",
     icon: "Gamepad",
     productCount: 1,
-    image: "/assets/product-watch.jpg",
+    image: "/assets/product-gaming.png",
     featured: false,
   },
 ];

@@ -24,8 +24,8 @@ const collections = [
   { title: "Immersive Audio", count: 6, body: "Reference-grade headphones, spatial speakers, and the gear that makes them sing.", img: headphonesImg, categorySlug: "audio" },
   { title: "Quiet Wearables", count: 5, body: "Vitals, focus, and time — beautifully resolved, never demanding.", img: watchImg, categorySlug: "wearables" },
   { title: "Pocket Flagships", count: 4, body: "The phones engineered as one. Silicon, software, and signal in perfect step.", img: phoneImg, categorySlug: "mobile" },
-  { title: "Ambient Smart Home", count: 9, body: "Automations that fade into the architecture instead of fighting for attention.", img: laptopImg, categorySlug: "smart-home" },
-  { title: "Travel Light", count: 7, body: "The carry-on stack — thin laptops, fast chargers, sub-300g headphones.", img: headphonesImg, categorySlug: "computing" },
+  { title: "Ambient Smart Home", count: 9, body: "Automations that fade into the architecture instead of fighting for attention.", img: "/assets/product-hub.png", categorySlug: "smart-home" },
+  { title: "Travel Light", count: 7, body: "The carry-on stack — thin laptops, fast chargers, sub-300g headphones.", img: "/assets/product-studio-monitor.png", categorySlug: "computing" },
 ];
 
 function CollectionsPage() {
@@ -50,7 +50,7 @@ function CollectionsPage() {
           {collections.map((c) => (
             <TiltCard key={c.title} className="surface-card overflow-hidden group" max={6}>
               <div className="relative aspect-[4/3] overflow-hidden bg-[var(--surface-2)]">
-                <img src={c.img} alt={c.title} loading="lazy" className="size-full object-cover transition-transform duration-700 group-hover:scale-[1.06]" />
+                <img src={c.img} alt={c.title} loading="lazy" decoding="async" className="size-full object-cover transition-transform duration-700 group-hover:scale-[1.06]" />
                 <div className="absolute inset-0 bg-gradient-to-t from-background via-background/30 to-transparent" />
                 <span className="absolute top-4 left-4 font-mono-tech text-[10px] uppercase tracking-[0.25em] text-[var(--emerald-accent)] bg-background/60 backdrop-blur px-2 py-1 rounded">
                   {c.count} items

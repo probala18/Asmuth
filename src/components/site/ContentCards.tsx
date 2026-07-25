@@ -12,6 +12,8 @@ export function ReviewCard({ review }: { review: Review }) {
             src={review.image}
             alt={review.productName}
             loading="lazy"
+            decoding="async"
+            sizes="(min-width: 768px) 33vw, 100vw"
             className="absolute inset-0 size-full object-cover transition-transform duration-700 group-hover:scale-[1.05]"
           />
           <MouseGlow />
@@ -69,6 +71,8 @@ export function GuideCard({ guide }: { guide: Guide }) {
             src={guide.image}
             alt={guide.title}
             loading="lazy"
+            decoding="async"
+            sizes="(min-width: 1024px) 50vw, 100vw"
             className="absolute inset-0 size-full object-cover transition-transform duration-700 group-hover:scale-[1.05]"
           />
           <MouseGlow />

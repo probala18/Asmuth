@@ -26,6 +26,8 @@ export function ProductCard({ product }: { product: Product }) {
             src={product.image}
             alt={product.name}
             loading="lazy"
+            decoding="async"
+            sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
             className="absolute inset-0 size-full object-cover transition-transform duration-700 group-hover:scale-[1.06]"
           />
           <MouseGlow />
@@ -133,6 +135,8 @@ export function DealCard({ product, hours }: { product: Product; hours: number }
           src={product.image}
           alt={product.name}
           loading="lazy"
+          decoding="async"
+          sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
           className="absolute inset-0 size-full object-cover transition-transform duration-700 group-hover:scale-[1.06]"
         />
         <MouseGlow />
@@ -180,10 +184,19 @@ export function CategoryCard({ category }: { category: Category }) {
   const IconComponent = resolveIcon(category.icon);
 
   return (
-    <TiltCard className="surface-card-2 p-8 relative overflow-hidden group flex flex-col justify-between h-full min-h-[220px]" max={6}>
+    <TiltCard className="surface-card-2 relative overflow-hidden group flex flex-col justify-between h-full min-h-[280px]" max={6}>
+      <img
+        src={category.image}
+        alt=""
+        loading="lazy"
+        decoding="async"
+        sizes="(min-width: 768px) 33vw, 100vw"
+        className="absolute inset-0 size-full object-cover opacity-30 transition-transform duration-700 group-hover:scale-[1.04] dark:opacity-20"
+      />
+      <div className="absolute inset-0 bg-gradient-to-br from-background via-background/90 to-background/55" />
       <div className="absolute -right-20 -top-20 size-60 rounded-full blur-3xl opacity-20 group-hover:opacity-40 transition-opacity" style={{ background: "var(--gradient-accent)" }} />
       
-      <div>
+      <div className="relative p-8 pb-0">
         <div className="size-12 grid place-items-center rounded-xl bg-background border border-[var(--hairline)] text-[var(--emerald-accent)] group-hover:scale-110 transition-transform duration-300 mb-6">
           <IconComponent className="size-5" />
         </div>
@@ -191,7 +204,7 @@ export function CategoryCard({ category }: { category: Category }) {
         <p className="text-sm text-muted-foreground leading-relaxed pr-4 line-clamp-2">{category.description}</p>
       </div>
 
-      <div className="pt-6 border-t border-[var(--hairline)]/50 mt-6 flex items-center justify-between">
+      <div className="relative p-8 pt-6 border-t border-[var(--hairline)]/50 mt-6 flex items-center justify-between">
         <span className="font-mono-tech text-[10px] uppercase tracking-wider text-muted-foreground">
           {category.productCount} items reviewed
         </span>
