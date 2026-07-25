@@ -1,6 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { ArrowUpRight } from "lucide-react";
 import { Newsletter } from "./UIComponents";
+import { motion } from "motion/react";
 
 const cols = [
   {
@@ -43,18 +44,30 @@ const cols = [
 
 export function Footer() {
   return (
-    <footer className="relative mt-32 border-t border-[var(--hairline)] bg-[var(--surface)]">
+    <footer className="relative mt-32 border-t border-[var(--hairline)] bg-[var(--surface)] overflow-hidden">
       <div className="absolute inset-x-0 top-0 h-px hairline-x" />
       <div className="max-w-7xl mx-auto px-6 lg:px-10 py-20">
         
         {/* Newsletter Section */}
-        <div className="mb-20">
+        <motion.div 
+          className="mb-20"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+        >
           <Newsletter />
-        </div>
+        </motion.div>
 
         <div className="grid grid-cols-1 lg:grid-cols-[1fr_2.5fr] gap-16 mb-16 items-start">
           {/* Brand Info */}
-          <div className="space-y-4">
+          <motion.div 
+            className="space-y-4"
+            initial={{ opacity: 0, x: -20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.1 }}
+          >
             <div className="flex items-center gap-3">
               <div className="relative w-8 h-8 rounded-lg flex items-center justify-center" style={{ background: "var(--gradient-accent)" }}>
                 <span className="font-display text-sm font-bold text-[oklch(0.13_0.03_270)]">Æ</span>
@@ -71,12 +84,18 @@ export function Footer() {
               <span>·</span>
               <Link to="/editorial-policy" className="hover:text-[var(--emerald-accent)] transition-colors">Editorial Integrity</Link>
             </div>
-          </div>
+          </motion.div>
 
           {/* Link columns */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-            {cols.map((col) => (
-              <div key={col.title}>
+            {cols.map((col, idx) => (
+              <motion.div 
+                key={col.title}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.4, delay: 0.1 * idx }}
+              >
                 <p className="font-mono-tech text-[10px] uppercase tracking-[0.25em] text-muted-foreground mb-4">
                   {col.title}
                 </p>
@@ -87,13 +106,15 @@ export function Footer() {
                         to={it.href}
                         className="group inline-flex items-center gap-1 text-sm text-foreground/80 hover:text-[var(--emerald-accent)] transition-colors"
                       >
-                        {it.label}
+                        <motion.span whileHover={{ x: 3 }} transition={{ type: "spring", stiffness: 400 }}>
+                          {it.label}
+                        </motion.span>
                         <ArrowUpRight className="size-3 opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition" />
                       </Link>
                     </li>
                   ))}
                 </ul>
-              </div>
+              </motion.div>
             ))}
           </div>
         </div>

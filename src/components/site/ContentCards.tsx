@@ -2,9 +2,17 @@ import { Link } from "@tanstack/react-router";
 import { Star, Award, Calendar, BookOpen, ExternalLink, ArrowRight } from "lucide-react";
 import type { Review, Guide, Brand } from "@/types";
 import { TiltCard, MouseGlow } from "./motion";
+import { motion } from "motion/react";
 
 export function ReviewCard({ review }: { review: Review }) {
   return (
+    <motion.div
+      initial={{ opacity: 0, y: 16 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-40px" }}
+      transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+      className="h-full"
+    >
     <TiltCard className="surface-card overflow-hidden group flex flex-col h-full relative" max={5}>
       <Link to={`/reviews/${review.slug}`} className="flex flex-col h-full">
         <div className="relative aspect-[16/10] overflow-hidden bg-[var(--surface-2)]">
@@ -59,11 +67,19 @@ export function ReviewCard({ review }: { review: Review }) {
         </div>
       </Link>
     </TiltCard>
+    </motion.div>
   );
 }
 
 export function GuideCard({ guide }: { guide: Guide }) {
   return (
+    <motion.div
+      initial={{ opacity: 0, y: 16 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-40px" }}
+      transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+      className="h-full"
+    >
     <TiltCard className="surface-card overflow-hidden group flex flex-col h-full relative" max={5}>
       <Link to={`/guides/${guide.slug}`} className="flex flex-col h-full">
         <div className="relative aspect-[16/10] overflow-hidden bg-[var(--surface-2)]">
@@ -108,11 +124,19 @@ export function GuideCard({ guide }: { guide: Guide }) {
         </div>
       </Link>
     </TiltCard>
+    </motion.div>
   );
 }
 
 export function BrandCard({ brand }: { brand: Brand }) {
   return (
+    <motion.div
+      initial={{ opacity: 0, y: 16 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-40px" }}
+      transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+      className="h-full"
+    >
     <TiltCard className="surface-card p-8 flex flex-col justify-between h-full min-h-[200px] relative group" max={5}>
       <div className="absolute -right-16 -top-16 size-48 rounded-full blur-3xl opacity-10 group-hover:opacity-20 transition-opacity" style={{ background: "var(--gradient-accent)" }} />
       
@@ -149,5 +173,6 @@ export function BrandCard({ brand }: { brand: Brand }) {
         </Link>
       </div>
     </TiltCard>
+    </motion.div>
   );
 }

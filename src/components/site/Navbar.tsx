@@ -16,6 +16,7 @@ import {
   Scale 
 } from "lucide-react";
 import { ThemeToggle } from "./ThemeToggle";
+import { motion, AnimatePresence, useReducedMotion } from "motion/react";
 
 const megaCategories = [
   { icon: Laptop, label: "Computing", desc: "Laptops & tablets", href: "/category/computing" },
@@ -41,6 +42,7 @@ export function Navbar() {
   const [searchOpen, setSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const navigate = useNavigate();
+  const shouldReduceMotion = useReducedMotion();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
@@ -157,214 +159,256 @@ export function Navbar() {
         </div>
 
         {/* Desktop Mega menu */}
-        <div
-          className={`absolute inset-x-0 top-full overflow-hidden transition-[max-height,opacity] duration-500 hidden lg:block ${
-            mega ? "max-h-[420px] opacity-100 border-b border-[var(--hairline)]" : "max-h-0 opacity-0 pointer-events-none"
-          }`}
-          onMouseEnter={() => setMega(true)}
-        >
-          <div className="mx-auto max-w-7xl px-6 lg:px-10 pb-8 pt-4 bg-background/95 backdrop-blur-xl">
-            <div
-              className="surface-card-2 p-8 grid grid-cols-1 lg:grid-cols-[1fr_1.4fr] gap-8"
-              style={{ boxShadow: "var(--shadow-elegant)" }}
+        <AnimatePresence>
+          {mega && (
+            <motion.div
+              initial={{ height: 0, opacity: 0 }}
+              animate={{ height: "auto", opacity: 1 }}
+              exit={{ height: 0, opacity: 0 }}
+              transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+              className="absolute inset-x-0 top-full overflow-hidden hidden lg:block border-b border-[var(--hairline)] bg-background/95 backdrop-blur-xl"
+              onMouseLeave={() => setMega(false)}
             >
-              <div>
-                <p className="font-mono-tech text-[10px] uppercase tracking-[0.25em] text-[var(--emerald-accent)] mb-4">
-                  Categories
-                </p>
-                <ul className="space-y-1">
-                  {megaCategories.map((c, i) => (
-                    <li
-                      key={c.label}
-                      className="opacity-0 translate-y-2"
-                      style={{ animation: mega ? `fadeInUp .5s ${0.05 * i}s forwards` : undefined }}
+              <div className="mx-auto max-w-7xl px-6 lg:px-10 pb-8 pt-4">
+                <div
+                  className="surface-card-2 p-8 grid grid-cols-1 lg:grid-cols-[1fr_1.4fr] gap-8"
+                  style={{ boxShadow: "var(--shadow-elegant)" }}
+                >
+                  <div>
+                    <p className="font-mono-tech text-[10px] uppercase tracking-[0.25em] text-[var(--emerald-accent)] mb-4">
+                      Categories
+                    </p>
+                    <motion.ul 
+                      initial="hidden"
+                      animate="visible"
+                      variants={{
+                        hidden: {},
+                        visible: { transition: { staggerChildren: 0.04 } }
+                      }}
+                      className="space-y-1"
                     >
+                      {megaCategories.map((c) => (
+                        <motion.li
+                          key={c.label}
+                          variants={{
+                            hidden: { opacity: 0, y: 10 },
+                            visible: { opacity: 1, y: 0, transition: { ease: "easeOut", duration: 0.25 } }
+                          }}
+                        >
+                          <Link
+                            to={c.href}
+                            className="group flex items-center gap-4 rounded-xl px-3 py-3 hover:bg-[color-mix(in_oklab,var(--emerald-accent)_8%,transparent)] transition-colors"
+                            onClick={() => setMega(false)}
+                          >
+                            <span className="grid place-items-center size-10 rounded-lg bg-[var(--surface-2)] border border-[var(--hairline)] text-[var(--emerald-accent)] group-hover:ring-emerald transition">
+                              <c.icon className="size-5" />
+                            </span>
+                            <span className="flex-1">
+                              <span className="block text-sm font-medium">{c.label}</span>
+                              <span className="block text-xs text-muted-foreground">{c.desc}</span>
+                            </span>
+                            <ArrowUpRight className="size-4 text-muted-foreground group-hover:text-[var(--emerald-accent)] transition" />
+                          </Link>
+                        </motion.li>
+                      ))}
+                    </motion.ul>
+                  </div>
+
+                  <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-[var(--surface-2)] via-[var(--surface)] to-[color-mix(in_oklab,var(--emerald-accent)_15%,var(--background))] border border-[var(--hairline)] p-8">
+                    <div className="absolute inset-0 bg-radial-glow opacity-60" />
+                    <div className="relative">
+                      <p className="font-mono-tech text-[10px] uppercase tracking-[0.25em] text-[var(--cyan-accent)] mb-3">
+                        Featured · 2026
+                      </p>
+                      <h3 className="font-display text-3xl font-semibold mb-2">genCART Laptop Air</h3>
+                      <p className="text-sm text-muted-foreground max-w-sm mb-6">
+                        M-class silicon, edge-to-edge OLED, all-day battery. Engineered as one.
+                      </p>
                       <Link
-                        to={c.href}
-                        className="group flex items-center gap-4 rounded-xl px-3 py-3 hover:bg-[color-mix(in_oklab,var(--emerald-accent)_8%,transparent)] transition-colors"
+                        to="/product/genCART-laptop-air"
+                        className="btn-ghost-glow inline-flex items-center gap-2 rounded-full px-4 py-2 text-xs font-semibold tracking-wide"
                         onClick={() => setMega(false)}
                       >
-                        <span className="grid place-items-center size-10 rounded-lg bg-[var(--surface-2)] border border-[var(--hairline)] text-[var(--emerald-accent)] group-hover:ring-emerald transition">
-                          <c.icon className="size-5" />
-                        </span>
-                        <span className="flex-1">
-                          <span className="block text-sm font-medium">{c.label}</span>
-                          <span className="block text-xs text-muted-foreground">{c.desc}</span>
-                        </span>
-                        <ArrowUpRight className="size-4 text-muted-foreground group-hover:text-[var(--emerald-accent)] transition" />
+                        Explore →
                       </Link>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-
-              <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-[var(--surface-2)] via-[var(--surface)] to-[color-mix(in_oklab,var(--emerald-accent)_15%,var(--background))] border border-[var(--hairline)] p-8">
-                <div className="absolute inset-0 bg-radial-glow opacity-60" />
-                <div className="relative">
-                  <p className="font-mono-tech text-[10px] uppercase tracking-[0.25em] text-[var(--cyan-accent)] mb-3">
-                    Featured · 2026
-                  </p>
-                  <h3 className="font-display text-3xl font-semibold mb-2">genCART Laptop Air</h3>
-                  <p className="text-sm text-muted-foreground max-w-sm mb-6">
-                    M-class silicon, edge-to-edge OLED, all-day battery. Engineered as one.
-                  </p>
-                  <Link
-                    to="/product/genCART-laptop-air"
-                    className="btn-ghost-glow inline-flex items-center gap-2 rounded-full px-4 py-2 text-xs font-semibold tracking-wide"
-                    onClick={() => setMega(false)}
-                  >
-                    Explore →
-                  </Link>
+                    </div>
+                    <div
+                      className="absolute -right-10 -bottom-10 size-60 rounded-full blur-3xl"
+                      style={{ background: "var(--gradient-accent)", opacity: 0.25 }}
+                    />
+                  </div>
                 </div>
-                <div
-                  className="absolute -right-10 -bottom-10 size-60 rounded-full blur-3xl"
-                  style={{ background: "var(--gradient-accent)", opacity: 0.25 }}
-                />
               </div>
-            </div>
-          </div>
-        </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </header>
 
       {/* Mobile Drawer (Slide-out) */}
-      <div
-        className={`fixed inset-0 z-40 bg-background/80 backdrop-blur-xl transition-opacity duration-300 lg:hidden ${
-          mobileMenuOpen ? "opacity-100" : "opacity-0 pointer-events-none"
-        }`}
-        onClick={() => setMobileMenuOpen(false)}
-      >
-        <div
-          className={`fixed inset-y-0 right-0 w-full sm:max-w-md bg-background border-l border-[var(--hairline)] pt-28 pb-8 px-8 flex flex-col justify-between transition-transform duration-300 ${
-            mobileMenuOpen ? "translate-x-0" : "translate-x-full"
-          }`}
-          onClick={(e) => e.stopPropagation()}
-        >
-          {/* Menu Items */}
-          <div className="space-y-6 overflow-y-auto max-h-[calc(100vh-250px)] pr-2">
-            <div className="space-y-4">
-              <p className="font-mono-tech text-[10px] uppercase tracking-[0.25em] text-[var(--emerald-accent)]">
-                Navigation
-              </p>
-              <div className="grid grid-cols-1 gap-2">
-                {navItems.map((item) => (
-                  <Link
-                    key={item.label}
-                    to={item.href}
-                    onClick={() => setMobileMenuOpen(false)}
-                    className="text-2xl font-display font-semibold hover:text-[var(--emerald-accent)] transition-colors py-2 flex items-center justify-between"
-                  >
-                    {item.label}
-                    <ArrowUpRight className="size-5 text-muted-foreground" />
-                  </Link>
-                ))}
-                <Link
-                  to="/login"
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="text-2xl font-display font-semibold hover:text-[var(--emerald-accent)] transition-colors py-2 flex items-center justify-between"
-                >
-                  Login
-                  <ArrowUpRight className="size-5 text-muted-foreground" />
-                </Link>
-              </div>
-            </div>
-
-            <div className="border-t border-[var(--hairline)] pt-6 space-y-4">
-              <p className="font-mono-tech text-[10px] uppercase tracking-[0.25em] text-[var(--cyan-accent)]">
-                Product Categories
-              </p>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                {megaCategories.map((c) => (
-                  <Link
-                    key={c.label}
-                    to={c.href}
-                    onClick={() => setMobileMenuOpen(false)}
-                    className="flex items-center gap-3 p-3 rounded-xl surface-card-2 hover:bg-[color-mix(in_oklab,var(--emerald-accent)_8%,transparent)] transition-colors"
-                  >
-                    <span className="grid place-items-center size-8 rounded-lg bg-background border border-[var(--hairline)] text-[var(--emerald-accent)]">
-                      <c.icon className="size-4" />
-                    </span>
-                    <span className="text-sm font-medium">{c.label}</span>
-                  </Link>
-                ))}
-              </div>
-            </div>
-          </div>
-
-          {/* Bottom Call to Action */}
-          <div className="space-y-4 border-t border-[var(--hairline)] pt-6">
-            <Link
-              to="/collections"
-              className="btn-accent w-full flex items-center justify-center gap-2 rounded-full py-3.5 text-sm font-semibold"
-              onClick={() => setMobileMenuOpen(false)}
+      <AnimatePresence>
+        {mobileMenuOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.25 }}
+            className="fixed inset-0 z-40 bg-background/80 backdrop-blur-xl lg:hidden"
+            onClick={() => setMobileMenuOpen(false)}
+          >
+            <motion.div
+              initial={{ x: "100%" }}
+              animate={{ x: 0 }}
+              exit={{ x: "100%" }}
+              transition={{ type: "spring", damping: 26, stiffness: 220 }}
+              className="fixed inset-y-0 right-0 w-full sm:max-w-md bg-background border-l border-[var(--hairline)] pt-28 pb-8 px-8 flex flex-col justify-between"
+              onClick={(e) => e.stopPropagation()}
             >
-              Shop All Collections
-              <ArrowUpRight className="size-4" />
-            </Link>
-            <p className="text-center text-xs text-muted-foreground">
-              genCART Affiliate E-Commerce Platform · 2026
-            </p>
-          </div>
-        </div>
-      </div>
+              {/* Menu Items */}
+              <div className="space-y-6 overflow-y-auto max-h-[calc(100vh-250px)] pr-2">
+                <div className="space-y-4">
+                  <p className="font-mono-tech text-[10px] uppercase tracking-[0.25em] text-[var(--emerald-accent)]">
+                    Navigation
+                  </p>
+                  <div className="grid grid-cols-1 gap-2">
+                    {navItems.map((item) => (
+                      <Link
+                        key={item.label}
+                        to={item.href}
+                        onClick={() => setMobileMenuOpen(false)}
+                        className="text-2xl font-display font-semibold hover:text-[var(--emerald-accent)] transition-colors py-2 flex items-center justify-between"
+                      >
+                        {item.label}
+                        <ArrowUpRight className="size-5 text-muted-foreground" />
+                      </Link>
+                    ))}
+                    <Link
+                      to="/login"
+                      onClick={() => setMobileMenuOpen(false)}
+                      className="text-2xl font-display font-semibold hover:text-[var(--emerald-accent)] transition-colors py-2 flex items-center justify-between"
+                    >
+                      Login
+                      <ArrowUpRight className="size-5 text-muted-foreground" />
+                    </Link>
+                  </div>
+                </div>
+
+                <div className="border-t border-[var(--hairline)] pt-6 space-y-4">
+                  <p className="font-mono-tech text-[10px] uppercase tracking-[0.25em] text-[var(--cyan-accent)]">
+                    Product Categories
+                  </p>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    {megaCategories.map((c) => (
+                      <Link
+                        key={c.label}
+                        to={c.href}
+                        onClick={() => setMobileMenuOpen(false)}
+                        className="flex items-center gap-3 p-3 rounded-xl surface-card-2 hover:bg-[color-mix(in_oklab,var(--emerald-accent)_8%,transparent)] transition-colors"
+                      >
+                        <span className="grid place-items-center size-8 rounded-lg bg-background border border-[var(--hairline)] text-[var(--emerald-accent)]">
+                          <c.icon className="size-4" />
+                        </span>
+                        <span className="text-sm font-medium">{c.label}</span>
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              </div>
+
+              {/* Bottom Call to Action */}
+              <div className="space-y-4 border-t border-[var(--hairline)] pt-6">
+                <Link
+                  to="/collections"
+                  className="btn-accent w-full flex items-center justify-center gap-2 rounded-full py-3.5 text-sm font-semibold"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  Shop All Collections
+                  <ArrowUpRight className="size-4" />
+                </Link>
+                <p className="text-center text-xs text-muted-foreground">
+                  genCART Affiliate E-Commerce Platform · 2026
+                </p>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* Floating Search Overlay */}
-      <div
-        className={`fixed inset-0 z-50 bg-background/95 backdrop-blur-2xl transition-all duration-300 flex flex-col justify-start pt-32 px-6 lg:px-10 ${
-          searchOpen ? "opacity-100" : "opacity-0 pointer-events-none"
-        }`}
-      >
-        <button
-          onClick={() => setSearchOpen(false)}
-          className="absolute top-6 right-6 p-3 rounded-full hover:bg-[var(--surface-2)] text-muted-foreground hover:text-foreground transition-colors cursor-pointer"
-          aria-label="Close search"
-        >
-          <X className="size-6" />
-        </button>
+      <AnimatePresence>
+        {searchOpen && (
+          <motion.div
+            initial={{ opacity: 0, scale: 1.015 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 1.015 }}
+            transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
+            className="fixed inset-0 z-50 bg-background/95 backdrop-blur-2xl flex flex-col justify-start pt-32 px-6 lg:px-10"
+          >
+            <button
+              onClick={() => setSearchOpen(false)}
+              className="absolute top-6 right-6 p-3 rounded-full hover:bg-[var(--surface-2)] text-muted-foreground hover:text-foreground transition-colors cursor-pointer"
+              aria-label="Close search"
+            >
+              <X className="size-6" />
+            </button>
 
-        <div className="max-w-2xl mx-auto w-full">
-          <form onSubmit={handleSearchSubmit} className="relative">
-            <Search className="absolute left-5 top-1/2 -translate-y-1/2 size-6 text-muted-foreground" />
-            <input
-              type="text"
-              placeholder="Search products, reviews, guides..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full bg-[var(--surface-2)] border border-[var(--hairline)] rounded-2xl py-5 pl-14 pr-6 text-lg placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-[var(--emerald-accent)] focus:border-transparent transition-all"
-              autoFocus={searchOpen}
-            />
-          </form>
+            <div className="max-w-2xl mx-auto w-full">
+              <form onSubmit={handleSearchSubmit} className="relative">
+                <Search className="absolute left-5 top-1/2 -translate-y-1/2 size-6 text-muted-foreground" />
+                <input
+                  type="text"
+                  placeholder="Search products, reviews, guides..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="w-full bg-[var(--surface-2)] border border-[var(--hairline)] rounded-2xl py-5 pl-14 pr-6 text-lg placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-[var(--emerald-accent)] focus:border-transparent transition-all"
+                  autoFocus
+                />
+              </form>
 
-          <div className="mt-8">
-            <h4 className="font-mono-tech text-[10px] uppercase tracking-[0.25em] text-muted-foreground mb-4">
-              Trending Searches
-            </h4>
-            <div className="flex flex-wrap gap-2">
-              {[
-                { term: "Laptop Air", icon: Laptop },
-                { term: "Buds Pro", icon: Headphones },
-                { term: "Watch X", icon: Watch },
-                { term: "Comparison Hub", icon: Scale },
-                { term: "Latest Reviews", icon: TrendingUp },
-                { term: "Best Deals", icon: Tag },
-              ].map((item) => (
-                <button
-                  key={item.term}
-                  onClick={() => {
-                    setSearchQuery(item.term);
-                    navigate({ to: "/search", search: { q: item.term } });
-                    setSearchOpen(false);
-                    setSearchQuery("");
+              <div className="mt-8">
+                <h4 className="font-mono-tech text-[10px] uppercase tracking-[0.25em] text-muted-foreground mb-4">
+                  Trending Searches
+                </h4>
+                <motion.div 
+                  initial="hidden"
+                  animate="visible"
+                  variants={{
+                    hidden: {},
+                    visible: { transition: { staggerChildren: 0.03 } }
                   }}
-                  className="flex items-center gap-2 rounded-xl px-4 py-2 text-sm bg-[var(--surface)] hover:bg-[var(--surface-2)] border border-[var(--hairline)] hover:border-muted-foreground/30 transition-all cursor-pointer"
+                  className="flex flex-wrap gap-2"
                 >
-                  <item.icon className="size-3.5 text-[var(--emerald-accent)]" />
-                  {item.term}
-                </button>
-              ))}
+                  {[
+                    { term: "Laptop Air", icon: Laptop },
+                    { term: "Buds Pro", icon: Headphones },
+                    { term: "Watch X", icon: Watch },
+                    { term: "Comparison Hub", icon: Scale },
+                    { term: "Latest Reviews", icon: TrendingUp },
+                    { term: "Best Deals", icon: Tag },
+                  ].map((item) => (
+                    <motion.button
+                      key={item.term}
+                      variants={{
+                        hidden: { opacity: 0, y: 10, scale: 0.95 },
+                        visible: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.2 } }
+                      }}
+                      onClick={() => {
+                        setSearchQuery(item.term);
+                        navigate({ to: "/search", search: { q: item.term } });
+                        setSearchOpen(false);
+                        setSearchQuery("");
+                      }}
+                      className="flex items-center gap-2 rounded-xl px-4 py-2 text-sm bg-[var(--surface)] hover:bg-[var(--surface-2)] border border-[var(--hairline)] hover:border-muted-foreground/30 transition-all cursor-pointer"
+                    >
+                      <item.icon className="size-3.5 text-[var(--emerald-accent)]" />
+                      {item.term}
+                    </motion.button>
+                  ))}
+                </motion.div>
+              </div>
             </div>
-          </div>
-        </div>
-      </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </>
   );
 }

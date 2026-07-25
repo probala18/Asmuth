@@ -1,23 +1,31 @@
-import { useEffect, useRef, type ReactNode } from "react";
+import { type ReactNode } from "react";
 import { useRouterState } from "@tanstack/react-router";
+import { motion, AnimatePresence, useReducedMotion } from "motion/react";
 
 export function PageTransition({ children }: { children: ReactNode }) {
   const location = useRouterState({ select: (s) => s.location.pathname });
-  const ref = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    el.classList.remove("page-enter-active");
-    // force reflow
-    void el.offsetHeight;
-    el.classList.add("page-enter-active");
-    if (typeof window !== "undefined") window.scrollTo(0, 0);
-  }, [location]);
+  const shouldReduceMotion = useReducedMotion();
 
   return (
-    <div ref={ref} key={location} className="page-enter page-enter-active">
-      {children}
-    </div>
+    <AnimatePresence mode="wait" initial={false}>
+      <motion.div
+        key={location}
+        initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 12 }}
+        animate={{ opacity: 1, y: 0 }}
+        exit={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: -12 }}
+        transition={{
+          duration: shouldReduceMotion ? 0.05 : 0.28,
+          ease: [0.215, 0.61, 0.355, 1], // Custom luxury cubic-bezier ease
+        }}
+        onAnimationComplete={() => {
+          if (typeof window !== "undefined") {
+            window.scrollTo(0, 0);
+          }
+        }}
+      >
+        {children}
+      </motion.div>
+    </AnimatePresence>
   );
 }
+

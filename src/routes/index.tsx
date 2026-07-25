@@ -1,4 +1,8 @@
+import { useEffect, useRef } from "react";
+import { motion } from "motion/react";
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { Marquee } from "@/components/ui/marquee";
+import { ShimmerButton } from "@/components/ui/shimmer-button";
 import {
   ArrowRight,
   ArrowUpRight,
@@ -67,15 +71,83 @@ function Index() {
   const buyingGuides = guides.slice(0, 2);
   const featuredBrands = brands.slice(0, 4);
 
+  const heroRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    let cleanup: (() => void) | undefined;
+
+    (async () => {
+      const { gsap } = await import("gsap");
+      const { ScrollTrigger } = await import("gsap/ScrollTrigger");
+      gsap.registerPlugin(ScrollTrigger);
+
+      const hero = heroRef.current;
+      if (!hero) return;
+
+      // Respect prefers-reduced-motion
+      const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      if (prefersReduced) return;
+
+      // 1. Staggered load animation timeline
+      const tl = gsap.timeline({ defaults: { ease: "power4.out" } });
+
+      const badge = hero.querySelector(".hero-badge");
+      const titleWrapper = hero.querySelector(".hero-title");
+      const desc = hero.querySelector(".hero-desc");
+      const buttons = hero.querySelectorAll(".hero-btn");
+      const social = hero.querySelector(".hero-social");
+      const scrollCue = hero.querySelector(".hero-scroll");
+
+      // Hide initially to prevent layout flash before GSAP starts
+      gsap.set([badge, desc, social, scrollCue], { opacity: 0 });
+      gsap.set(badge, { y: -20 });
+      gsap.set(desc, { y: 24 });
+      gsap.set(buttons, { opacity: 0, scale: 0.95 });
+      gsap.set(social, { y: 16 });
+      gsap.set(scrollCue, { y: -15 });
+
+      tl.to(badge, { opacity: 1, y: 0, duration: 0.6, delay: 0.25 })
+        .to(desc, { opacity: 1, y: 0, duration: 0.8 }, "-=0.2")
+        .to(buttons, { opacity: 1, scale: 1, duration: 0.6, stagger: 0.12, ease: "back.out(1.5)" }, "-=0.5")
+        .to(social, { opacity: 1, y: 0, duration: 0.6 }, "-=0.3")
+        .to(scrollCue, { opacity: 1, y: 0, duration: 0.5 }, "-=0.1");
+
+      // 2. Parallax and Fade on Scroll
+      const parallaxItems = hero.querySelectorAll(".hero-parallax-item");
+      const scrollTween = gsap.to(parallaxItems, {
+        y: (i, target) => {
+          const speed = parseFloat(target.getAttribute("data-parallax-speed") || "0.15");
+          return window.innerHeight * speed;
+        },
+        opacity: 0.05,
+        ease: "none",
+        scrollTrigger: {
+          trigger: hero,
+          start: "top top",
+          end: "bottom top",
+          scrub: 0.8,
+        }
+      });
+
+      cleanup = () => {
+        tl.kill();
+        scrollTween.scrollTrigger?.kill();
+        scrollTween.kill();
+      };
+    })();
+
+    return () => cleanup?.();
+  }, []);
+
   return (
     <>
       {/* 1. HERO SECTION */}
-      <section className="relative min-h-[92dvh] pt-28 pb-20 px-6 lg:px-10 overflow-hidden flex items-center">
+      <section ref={heroRef} className="relative min-h-[92dvh] pt-28 pb-20 px-6 lg:px-10 overflow-hidden flex items-center">
         <ThreeHero className="opacity-70" />
         <div className="absolute inset-0 bg-radial-glow" />
         <div className="absolute inset-0 bg-grid opacity-50" />
         <div className="relative max-w-5xl mx-auto text-center space-y-10 pt-10">
-          <div className="flex items-center justify-center gap-3">
+          <div className="hero-badge hero-parallax-item flex items-center justify-center gap-3" data-parallax-speed="0.08">
             <span className="relative flex size-2">
               <span className="absolute inline-flex h-full w-full rounded-full bg-[var(--emerald-accent)] opacity-75 animate-ping" />
               <span className="relative inline-flex rounded-full size-2 bg-[var(--emerald-accent)]" />
@@ -85,32 +157,34 @@ function Index() {
             </span>
           </div>
 
-          <SplitTextReveal
-            text="Discover Better. Choose Smarter."
-            as="h1"
-            className="font-display text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold leading-[0.98]"
-          />
+          <div className="hero-title hero-parallax-item" data-parallax-speed="0.04">
+            <SplitTextReveal
+              text="Discover Better. Choose Smarter."
+              as="h1"
+              className="font-display text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold leading-[0.98]"
+            />
+          </div>
 
-          <p className="text-muted-foreground text-lg lg:text-xl leading-relaxed max-w-2xl mx-auto">
+          <p className="hero-desc hero-parallax-item text-muted-foreground text-lg lg:text-xl leading-relaxed max-w-2xl mx-auto" data-parallax-speed="0.12">
             We research, compare, and curate the products worth your attention — so you can {" "}
             <HandUnderline><span className="text-foreground">spend less time</span></HandUnderline>{" "} 
-            
             searching and more time choosing with {" "}
             <HandUnderline><span className="text-foreground">confidence</span></HandUnderline>.
-            
           </p>
 
-          <div className="flex items-center justify-center gap-4 pt-2 flex-wrap">
-            <Link to="/collections" className="btn-accent inline-flex items-center gap-3 rounded-full px-7 py-3.5 text-sm font-semibold tracking-wide">
-              Explore Collection
-              <ArrowRight className="size-4" />
+          <div className="hero-buttons hero-parallax-item flex items-center justify-center gap-4 pt-2 flex-wrap" data-parallax-speed="0.18">
+            <Link to="/collections" className="hero-btn">
+              <ShimmerButton className="btn-accent">
+                Explore Collection
+                <ArrowRight className="size-4" />
+              </ShimmerButton>
             </Link>
-            <Link to="/best-of-2026" className="btn-ghost-glow rounded-full px-7 py-3.5 text-sm font-semibold inline-flex items-center gap-2">
+            <Link to="/best-of-2026" className="hero-btn btn-ghost-glow rounded-full px-7 py-3.5 text-sm font-semibold inline-flex items-center gap-2">
               Best of 2026
             </Link>
           </div>
 
-          <div className="flex items-center justify-center gap-6 pt-6">
+          <div className="hero-social hero-parallax-item flex items-center justify-center gap-6 pt-6" data-parallax-speed="0.22">
             <div className="flex -space-x-2">
               {[...Array(4)].map((_, i) => (
                 <span key={i} className="size-8 rounded-full border-2 border-background" style={{ background: i % 2 ? "var(--cyan-accent)" : "var(--emerald-accent)" }} />
@@ -125,7 +199,7 @@ function Index() {
           </div>
 
           {/* Scroll cue */}
-          <div className="flex flex-col items-center gap-2 pt-8">
+          <div className="hero-scroll hero-parallax-item flex flex-col items-center gap-2 pt-8" data-parallax-speed="0.28">
             <span className="font-mono-tech text-[10px] uppercase tracking-[0.3em] text-muted-foreground">Scroll</span>
             <span className="block h-10 w-px bg-gradient-to-b from-[var(--emerald-accent)] to-transparent" />
           </div>
@@ -133,20 +207,26 @@ function Index() {
       </section>
 
       {/* 2. LOGO MARQUEE */}
-      <section className="relative overflow-hidden py-10 border-y border-[var(--hairline)] bg-[var(--surface)]/40">
-        <div className="flex gap-16 animate-marquee whitespace-nowrap">
-          {[...Array(2)].map((_, k) => (
-            <div key={k} className="flex gap-16 items-center font-display text-3xl text-muted-foreground/60">
-              {["FUTURE COMMERCE", "·", "genCART 2026", "·", "ENGINEERED AS ONE", "·", "SIGNAL ABOVE NOISE", "·", "BUILT IN ORBIT", "·"].map((t, i) => (
-                <span key={i}>{t}</span>
-              ))}
-            </div>
+      <section className="relative overflow-hidden py-8 border-y border-[var(--hairline)] bg-[var(--surface)]/40">
+        <div className="pointer-events-none absolute inset-y-0 left-0 w-24 bg-gradient-to-r from-background to-transparent z-10" />
+        <div className="pointer-events-none absolute inset-y-0 right-0 w-24 bg-gradient-to-l from-background to-transparent z-10" />
+        <Marquee pauseOnHover className="[--duration:30s]">
+          {["FUTURE COMMERCE", "·", "genCART 2026", "·", "ENGINEERED AS ONE", "·", "SIGNAL ABOVE NOISE", "·", "BUILT IN ORBIT", "·"].map((t, i) => (
+            <span key={i} className="font-display text-2xl lg:text-3xl text-muted-foreground/60 tracking-wider whitespace-nowrap mx-4">
+              {t}
+            </span>
           ))}
-        </div>
+        </Marquee>
       </section>
 
       {/* 3. TRUST METRICS */}
-      <section className="px-6 lg:px-10 py-16">
+      <motion.section
+        className="px-6 lg:px-10 py-16"
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-60px" }}
+        transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+      >
         <div className="max-w-7xl mx-auto surface-card-2 p-8 lg:p-12">
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
             <TrustMetric value={25000} suffix="+" label="Products Researched" iconName="Box" />
@@ -155,7 +235,7 @@ function Index() {
             <TrustMetric value={98} suffix="%" label="Reader Satisfaction" iconName="Shield" />
           </div>
         </div>
-      </section>
+      </motion.section>
 
       {/* 4. FEATURED CATEGORIES */}
       <section className="px-6 lg:px-10 py-16">
@@ -304,26 +384,6 @@ function Index() {
         />
       </div>
 
-      {/* 9. TOP BRANDS */}
-      <section className="px-6 lg:px-10 py-16">
-        <div className="max-w-7xl mx-auto">
-          <RevealOnScroll className="space-y-3 text-center mb-12">
-            <p className="font-mono-tech text-[10px] uppercase tracking-[0.3em] text-[var(--emerald-accent)]">
-              Partner Directory
-            </p>
-            <h2 className="font-display text-4xl lg:text-5xl font-semibold">
-              Top <span className="text-accent-gradient">brand architectures</span>.
-            </h2>
-          </RevealOnScroll>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {featuredBrands.map((b) => (
-              <BrandCard key={b.slug} brand={b} />
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* 10. BUYING GUIDES */}
       <section className="px-6 lg:px-10 py-16">
         <div className="max-w-7xl mx-auto">
@@ -375,7 +435,13 @@ function Index() {
       </section>
 
       {/* 12. PRODUCT COMPARISON MINI */}
-      <section className="px-6 lg:px-10 py-16">
+      <motion.section
+        className="px-6 lg:px-10 py-16"
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-60px" }}
+        transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+      >
         <div className="max-w-4xl mx-auto">
           <RevealOnScroll className="text-center mb-12 space-y-3">
             <p className="font-mono-tech text-[10px] uppercase tracking-[0.3em] text-[var(--cyan-accent)]">
@@ -397,11 +463,18 @@ function Index() {
               { spec: "Weight", a: "1.24 kg", b: "2.13 kg", winner: "a" },
               { spec: "Starting Price", a: "$999", b: "$1,899", winner: "a" },
             ].map((row, i) => (
-              <div key={i} className="grid grid-cols-[1.2fr_2fr_2fr] items-center px-6 py-4 border-t border-[var(--hairline)] first:border-t-0">
+              <motion.div
+                key={i}
+                className="grid grid-cols-[1.2fr_2fr_2fr] items-center px-6 py-4 border-t border-[var(--hairline)] first:border-t-0"
+                initial={{ opacity: 0, x: -12 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.35, delay: i * 0.06, ease: [0.16, 1, 0.3, 1] }}
+              >
                 <span className="text-xs font-mono-tech uppercase tracking-wider text-muted-foreground">{row.spec}</span>
                 <span className={`text-sm ${row.winner === "a" ? "text-[var(--emerald-accent)] font-semibold" : ""}`}>{row.a}</span>
                 <span className={`text-sm ${row.winner === "b" ? "text-[var(--emerald-accent)] font-semibold" : ""}`}>{row.b}</span>
-              </div>
+              </motion.div>
             ))}
           </div>
           
@@ -411,7 +484,7 @@ function Index() {
             </Link>
           </div>
         </div>
-      </section>
+      </motion.section>
 
       {/* 13. EDITOR'S PICKS */}
       <section className="px-6 lg:px-10 py-16 bg-[var(--surface)]/30 border-y border-[var(--hairline)]">
@@ -454,7 +527,13 @@ function Index() {
       </section>
 
       {/* 15. TESTIMONIALS */}
-      <section className="px-6 lg:px-10 py-24">
+      <motion.section
+        className="px-6 lg:px-10 py-24"
+        initial={{ opacity: 0, scale: 0.97 }}
+        whileInView={{ opacity: 1, scale: 1 }}
+        viewport={{ once: true, margin: "-80px" }}
+        transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+      >
         <div className="max-w-5xl mx-auto surface-card-2 p-10 lg:p-16 text-center relative overflow-hidden">
           <div className="absolute inset-0 bg-radial-glow opacity-50" />
           <div className="relative">
@@ -467,10 +546,16 @@ function Index() {
             </p>
           </div>
         </div>
-      </section>
+      </motion.section>
 
       {/* BOTTOM CTA */}
-      <section className="px-6 lg:px-10 py-24">
+      <motion.section
+        className="px-6 lg:px-10 py-24"
+        initial={{ opacity: 0, y: 40 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-80px" }}
+        transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+      >
         <div className="max-w-7xl mx-auto rounded-3xl p-10 lg:p-20 text-center relative overflow-hidden shadow-2xl" style={{ background: "var(--gradient-accent)" }}>
           <h2 className="font-display text-4xl lg:text-6xl font-bold text-[oklch(0.13_0.03_270)] tracking-tight">
             Ready to upgrade <span className="italic">everything</span>?
@@ -478,16 +563,25 @@ function Index() {
           <p className="text-[oklch(0.13_0.03_270)]/80 max-w-xl mx-auto mt-4 font-medium text-sm">
             Browse the 2026 collection, or start with the editor's shortlist.
           </p>
-          <div className="flex gap-3 justify-center mt-8 flex-wrap">
-            <Link to="/collections" className="rounded-full px-7 py-3.5 text-sm font-semibold bg-background text-foreground hover:bg-[var(--surface)] transition-colors shadow-md">
-              Shop Collections
+          <motion.div
+            className="flex gap-3 justify-center mt-8 flex-wrap"
+            initial={{ opacity: 0, y: 16 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+          >
+            <Link to="/collections">
+              <ShimmerButton className="bg-background text-foreground hover:bg-[var(--surface)] shadow-md">
+                Shop Collections
+                <ArrowRight className="size-4" />
+              </ShimmerButton>
             </Link>
             <Link to="/best-of-2026" className="rounded-full px-7 py-3.5 text-sm font-semibold border border-[oklch(0.13_0.03_270)] text-[oklch(0.13_0.03_270)] hover:bg-[oklch(0.13_0.03_270)] hover:text-background transition-colors">
               Best of 2026
             </Link>
-          </div>
+          </motion.div>
         </div>
-      </section>
+      </motion.section>
     </>
   );
 }
