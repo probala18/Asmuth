@@ -4,8 +4,8 @@ import { SplitTextReveal } from "@/components/site/motion";
 export const Route = createFileRoute("/about")({
   head: () => ({
     meta: [
-      { title: "About Us — AETHER" },
-      { name: "description", content: "Learn about the mission, values, and editorial process behind AETHER." },
+      { title: "About Us — genCART" },
+      { name: "description", content: "Learn about the mission, values, and editorial process behind genCART." },
     ],
   }),
   component: AboutPage,
@@ -16,14 +16,14 @@ function AboutPage() {
     <article className="max-w-4xl mx-auto px-6 lg:px-10 pt-40 pb-20 space-y-12">
       <div className="space-y-4">
         <p className="font-mono-tech text-[10px] uppercase tracking-[0.3em] text-[var(--emerald-accent)]">The Mission</p>
-        <SplitTextReveal text="About AETHER" className="font-display text-5xl lg:text-7xl font-bold tracking-tight" />
+        <SplitTextReveal text="About genCART" className="font-display text-5xl lg:text-7xl font-bold tracking-tight" />
         <p className="text-xl text-muted-foreground leading-relaxed">
           We believe in physical tools designed for focus. We build independent editorial standardizations to test hardware, separate signal from noise, and help creators make informed choices.
         </p>
       </div>
 
       <div className="aspect-[16/7] rounded-3xl overflow-hidden bg-[var(--surface-2)] border border-[var(--hairline)]">
-        <img src="/assets/product-laptop.jpg" alt="AETHER Workspace" className="size-full object-cover" />
+        <img src="/assets/product-laptop.jpg" alt="genCART Workspace" className="size-full object-cover" />
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-10 pt-6">

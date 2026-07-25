@@ -1,11 +1,11 @@
-/* ─── ASMUTH — Product Data ────────────────────────────────── */
+/* ─── genCART — Product Data ────────────────────────────────── */
 import type { Product } from "@/types";
 
 export const products: Product[] = [
   {
-    slug: "aether-buds-pro",
-    name: "Aether Buds Pro",
-    brand: "Aether",
+    slug: "genCART-buds-pro",
+    name: "genCART Buds Pro",
+    brand: "genCART",
     category: "Audio",
     categorySlug: "audio",
     price: 129,
@@ -15,7 +15,7 @@ export const products: Product[] = [
     image: "/assets/product-headphones.jpg",
     badge: "bestseller",
     shortDescription: "Reference-grade tuning with adaptive ANC that disappears.",
-    description: "The Aether Buds Pro deliver studio-grade audio in an impossibly compact package. Featuring a custom 11mm driver with reference-grade tuning, adaptive ANC that adjusts 200 times per second, and 9.4 hours of battery with ANC on — the longest in their class.",
+    description: "The genCART Buds Pro deliver studio-grade audio in an impossibly compact package. Featuring a custom 11mm driver with reference-grade tuning, adaptive ANC that adjusts 200 times per second, and 9.4 hours of battery with ANC on — the longest in their class.",
     affiliateUrl: "https://amazon.com/dp/B0EXAMPLE1",
     specs: [
       { label: "Driver", value: "11mm custom dynamic" },
@@ -33,9 +33,9 @@ export const products: Product[] = [
     createdAt: "2026-01-15",
   },
   {
-    slug: "aether-watch-x",
-    name: "Aether Watch X",
-    brand: "Aether",
+    slug: "genCART-watch-x",
+    name: "genCART Watch X",
+    brand: "genCART",
     category: "Wearables",
     categorySlug: "wearables",
     price: 199,
@@ -45,7 +45,7 @@ export const products: Product[] = [
     image: "/assets/product-watch.jpg",
     badge: "editors-choice",
     shortDescription: "Quiet intelligence on your wrist — vitals, focus, and time.",
-    description: "The Aether Watch X redefines what a smartwatch should be. A 72-hour battery, AMOLED always-on display, and vitals tracking that rivals dedicated medical devices — wrapped in a titanium case that weighs less than your analog watch.",
+    description: "The genCART Watch X redefines what a smartwatch should be. A 72-hour battery, AMOLED always-on display, and vitals tracking that rivals dedicated medical devices — wrapped in a titanium case that weighs less than your analog watch.",
     affiliateUrl: "https://amazon.com/dp/B0EXAMPLE2",
     specs: [
       { label: "Display", value: "1.47\" AMOLED, AOD" },
@@ -62,9 +62,9 @@ export const products: Product[] = [
     createdAt: "2026-02-10",
   },
   {
-    slug: "aether-laptop-air",
-    name: "Aether Laptop Air",
-    brand: "Aether",
+    slug: "genCART-laptop-air",
+    name: "genCART Laptop Air",
+    brand: "genCART",
     category: "Computing",
     categorySlug: "computing",
     price: 999,
@@ -74,10 +74,10 @@ export const products: Product[] = [
     image: "/assets/product-laptop.jpg",
     badge: "editors-choice",
     shortDescription: "M-class silicon. Edge-to-edge OLED. 22-hour battery.",
-    description: "The Aether Laptop Air is the result of engineering everything as one. M-class silicon delivers desktop-grade performance, the edge-to-edge OLED display reproduces 100% of DCI-P3, and the 22-hour battery means you leave the charger at home.",
+    description: "The genCART Laptop Air is the result of engineering everything as one. M-class silicon delivers desktop-grade performance, the edge-to-edge OLED display reproduces 100% of DCI-P3, and the 22-hour battery means you leave the charger at home.",
     affiliateUrl: "https://amazon.com/dp/B0EXAMPLE3",
     specs: [
-      { label: "Chip", value: "Aether M-class · 12 core" },
+      { label: "Chip", value: "genCART M-class · 12 core" },
       { label: "Display", value: "14.2\" OLED · 120Hz" },
       { label: "Battery", value: "22 hours · all-day" },
       { label: "Memory", value: "16GB unified" },
@@ -92,9 +92,9 @@ export const products: Product[] = [
     createdAt: "2026-01-20",
   },
   {
-    slug: "aether-phone-15",
-    name: "Aether Phone 15",
-    brand: "Aether",
+    slug: "genCART-phone-15",
+    name: "genCART Phone 15",
+    brand: "genCART",
     category: "Mobile",
     categorySlug: "mobile",
     price: 799,
@@ -109,7 +109,7 @@ export const products: Product[] = [
     specs: [
       { label: "Display", value: "6.7\" LTPO OLED · 120Hz" },
       { label: "Camera", value: "50MP main + 12MP ultra" },
-      { label: "Chip", value: "Aether A-class" },
+      { label: "Chip", value: "genCART A-class" },
       { label: "Battery", value: "5000mAh · all-day" },
       { label: "Storage", value: "256GB" },
       { label: "Charging", value: "65W wired, 15W Qi2" },
@@ -120,9 +120,9 @@ export const products: Product[] = [
     createdAt: "2026-03-05",
   },
   {
-    slug: "aether-pad-pro",
-    name: "Aether Pad Pro",
-    brand: "Aether",
+    slug: "genCART-pad-pro",
+    name: "genCART Pad Pro",
+    brand: "genCART",
     category: "Computing",
     categorySlug: "computing",
     price: 649,
@@ -136,9 +136,9 @@ export const products: Product[] = [
     affiliateUrl: "https://amazon.com/dp/B0EXAMPLE5",
     specs: [
       { label: "Display", value: "11\" Liquid Retina · 120Hz" },
-      { label: "Chip", value: "Aether M-class" },
+      { label: "Chip", value: "genCART M-class" },
       { label: "Storage", value: "256GB" },
-      { label: "Stylus", value: "Aether Pen 2 support" },
+      { label: "Stylus", value: "genCART Pen 2 support" },
       { label: "Battery", value: "10 hours" },
       { label: "Weight", value: "466g" },
     ],
@@ -148,9 +148,9 @@ export const products: Product[] = [
     createdAt: "2026-02-28",
   },
   {
-    slug: "aether-lens-x",
-    name: "Aether Lens X",
-    brand: "Aether",
+    slug: "genCART-lens-x",
+    name: "genCART Lens X",
+    brand: "genCART",
     category: "Cameras",
     categorySlug: "cameras",
     price: 1299,
@@ -176,9 +176,9 @@ export const products: Product[] = [
     createdAt: "2026-04-12",
   },
   {
-    slug: "aether-studio-monitor",
-    name: "Aether Studio Monitor",
-    brand: "Aether",
+    slug: "genCART-studio-monitor",
+    name: "genCART Studio Monitor",
+    brand: "genCART",
     category: "Audio",
     categorySlug: "audio",
     price: 349,
@@ -201,9 +201,9 @@ export const products: Product[] = [
     createdAt: "2026-03-20",
   },
   {
-    slug: "aether-hub-mini",
-    name: "Aether Hub Mini",
-    brand: "Aether",
+    slug: "genCART-hub-mini",
+    name: "genCART Hub Mini",
+    brand: "genCART",
     category: "Smart Home",
     categorySlug: "smart-home",
     price: 79,

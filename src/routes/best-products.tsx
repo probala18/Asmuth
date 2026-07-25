@@ -6,7 +6,7 @@ import { categories, products } from "@/data";
 export const Route = createFileRoute("/best-products")({
   head: () => ({
     meta: [
-      { title: "Best Products & Editorial Picks — AETHER" },
+      { title: "Best Products & Editorial Picks — genCART" },
       { name: "description", content: "The absolute best tech products across computing, audio, wearables, and mobile. Tested in our labs." },
     ],
   }),
@@ -36,7 +36,7 @@ function BestProductsPage() {
           <p className="font-mono-tech text-[10px] uppercase tracking-[0.3em] text-[var(--emerald-accent)] mb-3">Gold Standards</p>
           <SplitTextReveal text="Best Tech Picks" className="font-display text-5xl lg:text-7xl font-bold tracking-tight" />
           <p className="mt-6 text-muted-foreground max-w-xl mx-auto">
-            The definitive AETHER ranking. Only products that achieve <HandUnderline>exceptional benchmarks</HandUnderline> in our laboratory are awarded.
+            The definitive genCART ranking. Only products that achieve <HandUnderline>exceptional benchmarks</HandUnderline> in our laboratory are awarded.
           </p>
         </div>
       </section>

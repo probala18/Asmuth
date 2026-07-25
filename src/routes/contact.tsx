@@ -6,10 +6,10 @@ import { SplitTextReveal, HandUnderline } from "@/components/site/motion";
 export const Route = createFileRoute("/contact")({
   head: () => ({
     meta: [
-      { title: "Contact — AETHER" },
-      { name: "description", content: "Get in touch with AETHER. Concierge service, editorial inquiries, partnerships." },
-      { property: "og:title", content: "Contact — AETHER" },
-      { property: "og:description", content: "Get in touch with the AETHER team." },
+      { title: "Contact — genCART" },
+      { name: "description", content: "Get in touch with genCART. Concierge service, editorial inquiries, partnerships." },
+      { property: "og:title", content: "Contact — genCART" },
+      { property: "og:description", content: "Get in touch with the genCART team." },
     ],
   }),
   component: ContactPage,
@@ -119,8 +119,8 @@ function ContactPage() {
           {/* Info cards */}
           <div className="space-y-4">
             {[
-              { Icon: Mail, label: "Email", value: "hello@aether.co" },
-              { Icon: MessageCircle, label: "Concierge", value: "+1 (800) AETHER-9" },
+              { Icon: Mail, label: "Email", value: "hello@genCART.co" },
+              { Icon: MessageCircle, label: "Concierge", value: "+1 (800) genCART-9" },
               { Icon: MapPin, label: "Studio", value: "San Francisco · New York · Berlin" },
             ].map((it) => (
               <div key={it.label} className="surface-card-2 p-6 flex items-center gap-4">

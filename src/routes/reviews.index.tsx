@@ -6,7 +6,7 @@ import { reviews } from "@/data";
 export const Route = createFileRoute("/reviews/")({
   head: () => ({
     meta: [
-      { title: "Expert Reviews — AETHER" },
+      { title: "Expert Reviews — genCART" },
       { name: "description", content: "In-depth, lab-tested expert reviews on premium tech. Independent editorial, zero sponsors." },
     ],
   }),

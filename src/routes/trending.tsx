@@ -7,7 +7,7 @@ import { products } from "@/data";
 export const Route = createFileRoute("/trending")({
   head: () => ({
     meta: [
-      { title: "Trending Premium Tech — AETHER" },
+      { title: "Trending Premium Tech — genCART" },
       { name: "description", content: "Explore the most popular and highly sought-after premium tech gear trending right now." },
     ],
   }),

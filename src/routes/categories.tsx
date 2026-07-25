@@ -6,10 +6,10 @@ import { categories } from "@/data";
 export const Route = createFileRoute("/categories")({
   head: () => ({
     meta: [
-      { title: "Categories — AETHER" },
-      { name: "description", content: "Browse every premium tech category at AETHER: computing, audio, wearables, mobile, gaming, smart home." },
-      { property: "og:title", content: "Categories — AETHER" },
-      { property: "og:description", content: "Browse every premium tech category at AETHER." },
+      { title: "Categories — genCART" },
+      { name: "description", content: "Browse every premium tech category at genCART: computing, audio, wearables, mobile, gaming, smart home." },
+      { property: "og:title", content: "Categories — genCART" },
+      { property: "og:description", content: "Browse every premium tech category at genCART." },
     ],
   }),
   component: CategoriesPage,

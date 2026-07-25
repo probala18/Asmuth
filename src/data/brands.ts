@@ -1,14 +1,14 @@
-/* ─── ASMUTH — Brand Data ────────────────────────────────────── */
+/* ─── genCART — Brand Data ────────────────────────────────────── */
 import type { Brand } from "@/types";
 
 export const brands: Brand[] = [
   {
-    slug: "aether",
-    name: "Aether",
-    logo: "Aether Logo",
+    slug: "genCART",
+    name: "genCART",
+    logo: "genCART Logo",
     description: "Architects of quiet, high-performance physical computing.",
     productCount: 8,
-    website: "https://aether.design",
+    website: "https://genCART.design",
     featured: true,
   },
   {

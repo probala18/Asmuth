@@ -60,11 +60,11 @@ export function Footer() {
                 <span className="font-display text-sm font-bold text-[oklch(0.13_0.03_270)]">Æ</span>
               </div>
               <span className="font-display text-lg font-semibold tracking-tight">
-                AETHER<span className="text-[var(--emerald-accent)] text-[10px] align-top ml-0.5">®</span>
+                genCART<span className="text-[var(--emerald-accent)] text-[10px] align-top ml-0.5">®</span>
               </span>
             </div>
             <p className="text-muted-foreground text-xs leading-relaxed max-w-xs">
-              ASMUTH-powered editorial shopping platform. Independent testing, expert reviews, and reference performance picks.
+              genCART-powered editorial shopping platform. Independent testing, expert reviews, and reference performance picks.
             </p>
             <div className="text-[10px] text-muted-foreground font-mono-tech flex flex-wrap gap-x-3 gap-y-1">
               <Link to="/dmca" className="hover:text-[var(--emerald-accent)] transition-colors">DMCA Notice</Link>
@@ -103,13 +103,13 @@ export function Footer() {
           <p
             className="font-display font-bold text-[clamp(4rem,18vw,16rem)] leading-none tracking-tighter select-none text-accent-gradient opacity-90 text-center lg:text-left"
           >
-            AETHER
+            genCART
           </p>
         </div>
 
         <div className="mt-10 flex flex-col md:flex-row items-center justify-between gap-4 pt-8 border-t border-[var(--hairline)]">
           <p className="text-xs text-muted-foreground font-mono-tech text-center md:text-left">
-            © 2026 Aether Industries — Future Commerce. All rights reserved.
+            © 2026 genCART Industries — Future Commerce. All rights reserved.
           </p>
           <p className="text-xs text-muted-foreground font-mono-tech flex items-center justify-center">
             <span className="inline-block size-1.5 rounded-full bg-[var(--emerald-accent)] mr-2 align-middle animate-pulse" />

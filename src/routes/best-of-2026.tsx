@@ -5,9 +5,9 @@ import laptopImg from "@/assets/product-laptop.jpg";
 export const Route = createFileRoute("/best-of-2026")({
   head: () => ({
     meta: [
-      { title: "Best Products of 2026 — AETHER" },
-      { name: "description", content: "The definitive AETHER ranking of the best premium tech of 2026 — laptops, audio, phones, wearables, and more." },
-      { property: "og:title", content: "Best Products of 2026 — AETHER" },
+      { title: "Best Products of 2026 — genCART" },
+      { name: "description", content: "The definitive genCART ranking of the best premium tech of 2026 — laptops, audio, phones, wearables, and more." },
+      { property: "og:title", content: "Best Products of 2026 — genCART" },
       { property: "og:description", content: "The definitive ranking of the best premium tech of 2026." },
       { property: "og:image", content: laptopImg },
       { property: "twitter:image", content: laptopImg },
@@ -17,11 +17,11 @@ export const Route = createFileRoute("/best-of-2026")({
 });
 
 const picks = [
-  { tag: "Best Laptop", title: "Aether Laptop Air", subtitle: "Engineered as one. Edge-to-edge OLED, 22h battery.", body: "We tested 14 laptops in the $800-1200 bracket. The Air wins on every axis we measure — performance per watt, display calibration accuracy, battery endurance, and build precision. The only laptop in the bracket whose successor we wouldn't immediately replace it with.", cta: "Read review →" },
-  { tag: "Best Headphones", title: "Aether Buds Pro", subtitle: "Reference-grade tuning, ANC that disappears.", body: "Compared head-to-head against six flagship in-ear models. The Buds Pro produce the flattest frequency response in the category and the only ANC implementation that doesn't add audible pressure. Battery life landed at 9.4h with ANC on — best in class.", cta: "See specs →" },
-  { tag: "Best Wearable", title: "Aether Watch X", subtitle: "Quiet intelligence, all-day battery.", body: "Most smartwatches are notification machines. The Watch X is a vitals instrument that happens to be a watch. The 72-hour battery and AMOLED always-on are quietly the best in the category.", cta: "Explore →" },
-  { tag: "Best Phone", title: "Aether Phone 15", subtitle: "Flagship signal — without flagship friction.", body: "Camera processing has been the deciding factor for the last three flagship cycles. The Phone 15 ships the only computational pipeline that we couldn't tell apart from a mirrorless body under standard lab conditions.", cta: "Read review →" },
-  { tag: "Best Value", title: "Aether Pad Pro", subtitle: "Pro tablet at consumer money.", body: "$649 puts this in mid-tier territory, but everything from the laminated 120Hz display to the M-class chip is firmly pro-tier. The cheapest serious tablet we'd actually recommend to a working creator.", cta: "Compare →" },
+  { tag: "Best Laptop", title: "genCART Laptop Air", subtitle: "Engineered as one. Edge-to-edge OLED, 22h battery.", body: "We tested 14 laptops in the $800-1200 bracket. The Air wins on every axis we measure — performance per watt, display calibration accuracy, battery endurance, and build precision. The only laptop in the bracket whose successor we wouldn't immediately replace it with.", cta: "Read review →" },
+  { tag: "Best Headphones", title: "genCART Buds Pro", subtitle: "Reference-grade tuning, ANC that disappears.", body: "Compared head-to-head against six flagship in-ear models. The Buds Pro produce the flattest frequency response in the category and the only ANC implementation that doesn't add audible pressure. Battery life landed at 9.4h with ANC on — best in class.", cta: "See specs →" },
+  { tag: "Best Wearable", title: "genCART Watch X", subtitle: "Quiet intelligence, all-day battery.", body: "Most smartwatches are notification machines. The Watch X is a vitals instrument that happens to be a watch. The 72-hour battery and AMOLED always-on are quietly the best in the category.", cta: "Explore →" },
+  { tag: "Best Phone", title: "genCART Phone 15", subtitle: "Flagship signal — without flagship friction.", body: "Camera processing has been the deciding factor for the last three flagship cycles. The Phone 15 ships the only computational pipeline that we couldn't tell apart from a mirrorless body under standard lab conditions.", cta: "Read review →" },
+  { tag: "Best Value", title: "genCART Pad Pro", subtitle: "Pro tablet at consumer money.", body: "$649 puts this in mid-tier territory, but everything from the laminated 120Hz display to the M-class chip is firmly pro-tier. The cheapest serious tablet we'd actually recommend to a working creator.", cta: "Compare →" },
 ];
 
 function BestOf() {

@@ -13,9 +13,9 @@ export const Route = createFileRoute("/guides/$slug")({
     const guide = getGuide(params.slug);
     return {
       meta: [
-        { title: guide ? `${guide.title} · AETHER` : "Buying Guide · AETHER" },
+        { title: guide ? `${guide.title} · genCART` : "Buying Guide · genCART" },
         { name: "description", content: guide ? guide.excerpt : "Expert buying guide and setups." },
-        { property: "og:title", content: guide ? `${guide.title} · AETHER` : "Buying Guide · AETHER" },
+        { property: "og:title", content: guide ? `${guide.title} · genCART` : "Buying Guide · genCART" },
         { property: "og:description", content: guide ? guide.excerpt : "Expert buying guide." },
         { property: "og:image", content: guide?.image },
       ],

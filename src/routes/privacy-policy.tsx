@@ -4,8 +4,8 @@ import { SplitTextReveal } from "@/components/site/motion";
 export const Route = createFileRoute("/privacy-policy")({
   head: () => ({
     meta: [
-      { title: "Privacy Policy — AETHER" },
-      { name: "description", content: "Details on how AETHER protects and handles user data." },
+      { title: "Privacy Policy — genCART" },
+      { name: "description", content: "Details on how genCART protects and handles user data." },
     ],
   }),
   component: PrivacyPolicyPage,
@@ -18,7 +18,7 @@ function PrivacyPolicyPage() {
         <p className="font-mono-tech text-[10px] uppercase tracking-[0.3em] text-[var(--emerald-accent)]">Legal</p>
         <SplitTextReveal text="Privacy Policy" className="font-display text-5xl lg:text-7xl font-bold tracking-tight" />
         <p className="text-xl text-muted-foreground leading-relaxed">
-          How AETHER handles user information. We collect minimal data, focusing entirely on a fast, telemetry-free experience.
+          How genCART handles user information. We collect minimal data, focusing entirely on a fast, telemetry-free experience.
         </p>
       </div>
 
@@ -26,7 +26,7 @@ function PrivacyPolicyPage() {
         <div className="space-y-3">
           <h3 className="font-display text-2xl font-semibold text-foreground">Data Collection</h3>
           <p>
-            We do not require accounts to browse AETHER. If you sign up for our newsletter, we collect only your email address. We do not use invasive tracking pixels or cross-site tracking scripts.
+            We do not require accounts to browse genCART. If you sign up for our newsletter, we collect only your email address. We do not use invasive tracking pixels or cross-site tracking scripts.
           </p>
         </div>
 

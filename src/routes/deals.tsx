@@ -10,9 +10,9 @@ import phoneImg from "@/assets/product-phone.jpg";
 export const Route = createFileRoute("/deals")({
   head: () => ({
     meta: [
-      { title: "Deals & Offers — AETHER" },
+      { title: "Deals & Offers — genCART" },
       { name: "description", content: "Hand-vetted deals on premium tech. Editor-approved discounts you'll actually want." },
-      { property: "og:title", content: "Deals & Offers — AETHER" },
+      { property: "og:title", content: "Deals & Offers — genCART" },
       { property: "og:description", content: "Hand-vetted deals on premium tech." },
     ],
   }),
@@ -20,12 +20,12 @@ export const Route = createFileRoute("/deals")({
 });
 
 const deals = [
-  { slug: "aether-laptop-air", name: "Aether Laptop Air", img: laptopImg, was: 1199, now: 999, off: 17, hours: 4 },
-  { slug: "aether-buds-pro", name: "Aether Buds Pro", img: headphonesImg, was: 159, now: 129, off: 19, hours: 8 },
-  { slug: "aether-watch-x", name: "Aether Watch X", img: watchImg, was: 249, now: 199, off: 20, hours: 12 },
-  { slug: "aether-phone-15", name: "Aether Phone 15", img: phoneImg, was: 899, now: 799, off: 11, hours: 6 },
-  { slug: "aether-pad-pro", name: "Aether Pad Pro", img: "/assets/product-tablet.png", was: 749, now: 649, off: 13, hours: 20 },
-  { slug: "aether-lens-x", name: "Aether Lens X", img: "/assets/product-camera.png", was: 1499, now: 1299, off: 13, hours: 16 },
+  { slug: "genCART-laptop-air", name: "genCART Laptop Air", img: laptopImg, was: 1199, now: 999, off: 17, hours: 4 },
+  { slug: "genCART-buds-pro", name: "genCART Buds Pro", img: headphonesImg, was: 159, now: 129, off: 19, hours: 8 },
+  { slug: "genCART-watch-x", name: "genCART Watch X", img: watchImg, was: 249, now: 199, off: 20, hours: 12 },
+  { slug: "genCART-phone-15", name: "genCART Phone 15", img: phoneImg, was: 899, now: 799, off: 11, hours: 6 },
+  { slug: "genCART-pad-pro", name: "genCART Pad Pro", img: "/assets/product-tablet.png", was: 749, now: 649, off: 13, hours: 20 },
+  { slug: "genCART-lens-x", name: "genCART Lens X", img: "/assets/product-camera.png", was: 1499, now: 1299, off: 13, hours: 16 },
 ];
 
 function Countdown({ hours }: { hours: number }) {

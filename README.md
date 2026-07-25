@@ -1,6 +1,6 @@
-# Asmuth
+# genCART
 
-Asmuth is a premium editorial e-commerce website built with React, TypeScript, Tailwind CSS, and TanStack Start. It combines product discovery, reviews, guides, and shopping navigation into a polished responsive experience.
+genCART is a premium editorial e-commerce website built with React, TypeScript, Tailwind CSS, and TanStack Start. It combines product discovery, reviews, guides, and shopping navigation into a polished responsive experience.
 
 ## Features
 
@@ -32,7 +32,7 @@ Asmuth is a premium editorial e-commerce website built with React, TypeScript, T
 ### Install dependencies
 
 ```bash
-cd c:\Users\BALASUNDAR M\Downloads\e-commerce\Asmuth
+cd c:\Users\BALASUNDAR M\Downloads\e-commerce\genCART
 npm install
 ```
 

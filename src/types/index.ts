@@ -1,4 +1,4 @@
-/* ─── ASMUTH — Core Types ──────────────────────────────────── */
+/* ─── genCART — Core Types ──────────────────────────────────── */
 
 export interface Product {
   slug: string;

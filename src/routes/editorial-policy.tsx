@@ -4,8 +4,8 @@ import { SplitTextReveal } from "@/components/site/motion";
 export const Route = createFileRoute("/editorial-policy")({
   head: () => ({
     meta: [
-      { title: "Editorial Policy — AETHER" },
-      { name: "description", content: "Learn about the standards of accuracy, independence, and transparency that guide AETHER." },
+      { title: "Editorial Policy — genCART" },
+      { name: "description", content: "Learn about the standards of accuracy, independence, and transparency that guide genCART." },
     ],
   }),
   component: EditorialPolicyPage,
@@ -18,7 +18,7 @@ function EditorialPolicyPage() {
         <p className="font-mono-tech text-[10px] uppercase tracking-[0.3em] text-[var(--emerald-accent)]">Integrity</p>
         <SplitTextReveal text="Editorial Policy" className="font-display text-5xl lg:text-7xl font-bold tracking-tight" />
         <p className="text-xl text-muted-foreground leading-relaxed">
-          AETHER stands for absolute editorial clarity. Our policy outlines our values, correction procedures, and independence principles.
+          genCART stands for absolute editorial clarity. Our policy outlines our values, correction procedures, and independence principles.
         </p>
       </div>
 
@@ -26,7 +26,7 @@ function EditorialPolicyPage() {
         <div className="space-y-3">
           <h3 className="font-display text-2xl font-semibold text-foreground">Independence and Autonomy</h3>
           <p>
-            AETHER editors and writers have complete control over all reviews, articles, and guides. We do not pitch ideas to companies prior to testing, and we never show drafts of our coverage to any external entity before publication. If a product fails our laboratory benchmarks, we report it exactly as is.
+            genCART editors and writers have complete control over all reviews, articles, and guides. We do not pitch ideas to companies prior to testing, and we never show drafts of our coverage to any external entity before publication. If a product fails our laboratory benchmarks, we report it exactly as is.
           </p>
         </div>
 

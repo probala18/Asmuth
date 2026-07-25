@@ -12,9 +12,9 @@ export const Route = createFileRoute("/reviews/$slug")({
     const review = getReview(params.slug);
     return {
       meta: [
-        { title: review ? `${review.title} · AETHER` : "Expert Review · AETHER" },
+        { title: review ? `${review.title} · genCART` : "Expert Review · genCART" },
         { name: "description", content: review ? review.excerpt : "In-depth expert review and benchmarks." },
-        { property: "og:title", content: review ? `${review.title} · AETHER` : "Expert Review · AETHER" },
+        { property: "og:title", content: review ? `${review.title} · genCART` : "Expert Review · genCART" },
         { property: "og:description", content: review ? review.excerpt : "In-depth expert review." },
         { property: "og:image", content: review?.image },
       ],

@@ -9,8 +9,8 @@ import type { Product } from "@/types";
 export const Route = createFileRoute("/recently-viewed")({
   head: () => ({
     meta: [
-      { title: "Recently Viewed — AETHER" },
-      { name: "description", content: "View products you have recently browsed on AETHER." },
+      { title: "Recently Viewed — genCART" },
+      { name: "description", content: "View products you have recently browsed on genCART." },
     ],
   }),
   component: RecentlyViewedPage,
@@ -21,17 +21,17 @@ function RecentlyViewedPage() {
 
   useEffect(() => {
     try {
-      const stored = localStorage.getItem("aether-recently-viewed");
+      const stored = localStorage.getItem("genCART-recently-viewed");
       if (stored) {
         const slugs = JSON.parse(stored) as string[];
         const items = slugs.map((s) => getProduct(s)).filter((p): p is Product => !!p);
         setHistoryItems(items);
       } else {
         // Fallback to recent products
-        const defaults = ["aether-watch-x", "aether-buds-pro"];
+        const defaults = ["genCART-watch-x", "genCART-buds-pro"];
         const items = defaults.map((s) => getProduct(s)).filter((p): p is Product => !!p);
         setHistoryItems(items);
-        localStorage.setItem("aether-recently-viewed", JSON.stringify(defaults));
+        localStorage.setItem("genCART-recently-viewed", JSON.stringify(defaults));
       }
     } catch (e) {
       console.error(e);
@@ -39,7 +39,7 @@ function RecentlyViewedPage() {
   }, []);
 
   const handleClear = () => {
-    localStorage.removeItem("aether-recently-viewed");
+    localStorage.removeItem("genCART-recently-viewed");
     setHistoryItems([]);
   };
 

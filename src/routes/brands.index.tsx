@@ -6,8 +6,8 @@ import { brands } from "@/data/brands";
 export const Route = createFileRoute("/brands/")({
   head: () => ({
     meta: [
-      { title: "Partner Brands — AETHER" },
-      { name: "description", content: "Discover the premium hardware and software brands curated on AETHER." },
+      { title: "Partner Brands — genCART" },
+      { name: "description", content: "Discover the premium hardware and software brands curated on genCART." },
     ],
   }),
   component: BrandsIndexPage,

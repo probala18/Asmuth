@@ -4,8 +4,8 @@ import { SplitTextReveal } from "@/components/site/motion";
 export const Route = createFileRoute("/affiliate-disclosure")({
   head: () => ({
     meta: [
-      { title: "Affiliate Disclosure — AETHER" },
-      { name: "description", content: "Details on how AETHER uses affiliate links to fund our lab and testing team." },
+      { title: "Affiliate Disclosure — genCART" },
+      { name: "description", content: "Details on how genCART uses affiliate links to fund our lab and testing team." },
     ],
   }),
   component: AffiliateDisclosurePage,
@@ -18,7 +18,7 @@ function AffiliateDisclosurePage() {
         <p className="font-mono-tech text-[10px] uppercase tracking-[0.3em] text-[var(--emerald-accent)]">Transparency</p>
         <SplitTextReveal text="Affiliate Disclosure" className="font-display text-5xl lg:text-7xl font-bold tracking-tight" />
         <p className="text-xl text-muted-foreground leading-relaxed">
-          How AETHER funds independent reviews. We believe in complete financial transparency with our readers.
+          How genCART funds independent reviews. We believe in complete financial transparency with our readers.
         </p>
       </div>
 
@@ -26,21 +26,21 @@ function AffiliateDisclosurePage() {
         <div className="space-y-3">
           <h3 className="font-display text-2xl font-semibold text-foreground">How We Earn Commission</h3>
           <p>
-            When you click a link on AETHER to purchase a product from Amazon or other retail partners, we receive a small commission from that sale. This does not increase the price you pay; the retailer shares a portion of their standard margin with us as a referral partner.
+            When you click a link on genCART to purchase a product from Amazon or other retail partners, we receive a small commission from that sale. This does not increase the price you pay; the retailer shares a portion of their standard margin with us as a referral partner.
           </p>
         </div>
 
         <div className="space-y-3">
           <h3 className="font-display text-2xl font-semibold text-foreground">Amazon Associate Program</h3>
           <p>
-            AETHER is a participant in the Amazon Services LLC Associates Program, an affiliate advertising program designed to provide a means for sites to earn advertising fees by advertising and linking to Amazon.com.
+            genCART is a participant in the Amazon Services LLC Associates Program, an affiliate advertising program designed to provide a means for sites to earn advertising fees by advertising and linking to Amazon.com.
           </p>
         </div>
 
         <div className="space-y-3">
           <h3 className="font-display text-2xl font-semibold text-foreground">Separation of Editorial and Affiliate Business</h3>
           <p>
-            Our writers, benchmark engineers, and laboratory testers do not know which affiliate programs AETHER has or what commission rates are earned from various stores. The editorial evaluation of a product's performance is conducted without commercial influence.
+            Our writers, benchmark engineers, and laboratory testers do not know which affiliate programs genCART has or what commission rates are earned from various stores. The editorial evaluation of a product's performance is conducted without commercial influence.
           </p>
         </div>
       </div>

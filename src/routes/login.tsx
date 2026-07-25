@@ -6,8 +6,8 @@ import { Mail, Lock, User, Eye, EyeOff, ArrowRight, CheckCircle2, XCircle } from
 export const Route = createFileRoute("/login")({
   head: () => ({
     meta: [
-      { title: "Login · Asmuth" },
-      { name: "description", content: "Sign in or create an account to access your Asmuth experience." },
+      { title: "Login · genCART" },
+      { name: "description", content: "Sign in or create an account to access your genCART experience." },
     ],
   }),
   component: LoginPage,
@@ -467,7 +467,7 @@ function LoginPage() {
           <h1 className="auth-title">Welcome back</h1>
           <p className="auth-subtitle">
             {isSignUp 
-              ? "Create your account to get started with Asmuth"
+              ? "Create your account to get started with genCART"
               : "Sign in to your account to continue"
             }
           </p>
@@ -592,12 +592,12 @@ function LoginPage() {
         <div className="auth-right">
           <div className="right-content">
             <h2 className="right-title">
-              {isSignUp ? "Join Asmuth" : "Welcome Back"}
+              {isSignUp ? "Join genCART" : "Welcome Back"}
             </h2>
             <p className="right-description">
               {isSignUp
                 ? "Create your account and discover a world of possibilities. Get started in seconds."
-                : "Access your account and continue your journey with us. Experience the best of Asmuth."
+                : "Access your account and continue your journey with us. Experience the best of genCART."
               }
             </p>
             <div className="right-features">

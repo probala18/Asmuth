@@ -5,7 +5,7 @@ import { SplitTextReveal } from "@/components/site/motion";
 export const Route = createFileRoute("/how-we-review")({
   head: () => ({
     meta: [
-      { title: "How We Review — AETHER" },
+      { title: "How We Review — genCART" },
       { name: "description", content: "Our laboratory testing standards, benchmarks, and editorial guidelines." },
     ],
   }),
@@ -46,7 +46,7 @@ function HowWeReviewPage() {
             {
               step: "04",
               title: "Scoring & Review",
-              desc: "Our review scoring is entirely mathematical. Individual categories are weighted to calculate the final Aether Rating.",
+              desc: "Our review scoring is entirely mathematical. Individual categories are weighted to calculate the final genCART Rating.",
             },
           ].map((s) => (
             <div key={s.step} className="space-y-2 relative pl-6 border-l border-[var(--emerald-accent)]">

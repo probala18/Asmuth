@@ -15,8 +15,8 @@ export const Route = createFileRoute("/search")({
   },
   head: ({ search }) => ({
     meta: [
-      { title: search.q ? `Search results for "${search.q}" — AETHER` : "Search — AETHER" },
-      { name: "description", content: "Search premium tech reviews, specifications, and buying guides on AETHER." },
+      { title: search.q ? `Search results for "${search.q}" — genCART` : "Search — genCART" },
+      { name: "description", content: "Search premium tech reviews, specifications, and buying guides on genCART." },
     ],
   }),
   component: SearchPage,

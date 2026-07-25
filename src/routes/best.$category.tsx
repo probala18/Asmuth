@@ -11,7 +11,7 @@ export const Route = createFileRoute("/best/$category")({
     const cat = categories.find((c) => c.slug === params.category);
     return {
       meta: [
-        { title: cat ? `Best ${cat.name} of 2026 — AETHER` : "Best Products — AETHER" },
+        { title: cat ? `Best ${cat.name} of 2026 — genCART` : "Best Products — genCART" },
         { name: "description", content: cat ? `Laboratory benchmarks and rankings of the best ${cat.name.toLowerCase()} products.` : "Best products." },
       ],
     };

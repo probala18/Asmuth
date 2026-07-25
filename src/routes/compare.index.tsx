@@ -8,7 +8,7 @@ import { products } from "@/data";
 export const Route = createFileRoute("/compare/")({
   head: () => ({
     meta: [
-      { title: "Compare Tech side-by-side — AETHER" },
+      { title: "Compare Tech side-by-side — genCART" },
       { name: "description", content: "Compare premium laptops, headphones, monitors, and wearables side-by-side. Unbiased specs, clear winner." },
     ],
   }),

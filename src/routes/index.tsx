@@ -47,9 +47,9 @@ import {
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "AETHER — Premium Tech, Editorially Curated" },
+      { title: "genCART — Premium Tech, Editorially Curated" },
       { name: "description", content: "Future Commerce. Editorial reviews, in-depth buying guides, and signal-grade tech picks for 2026." },
-      { property: "og:title", content: "AETHER — Premium Tech, Editorially Curated" },
+      { property: "og:title", content: "genCART — Premium Tech, Editorially Curated" },
       { property: "og:description", content: "Future Commerce. Editorial reviews and signal-grade tech picks." },
     ],
   }),
@@ -137,7 +137,7 @@ function Index() {
         <div className="flex gap-16 animate-marquee whitespace-nowrap">
           {[...Array(2)].map((_, k) => (
             <div key={k} className="flex gap-16 items-center font-display text-3xl text-muted-foreground/60">
-              {["FUTURE COMMERCE", "·", "AETHER 2026", "·", "ENGINEERED AS ONE", "·", "SIGNAL ABOVE NOISE", "·", "BUILT IN ORBIT", "·"].map((t, i) => (
+              {["FUTURE COMMERCE", "·", "genCART 2026", "·", "ENGINEERED AS ONE", "·", "SIGNAL ABOVE NOISE", "·", "BUILT IN ORBIT", "·"].map((t, i) => (
                 <span key={i}>{t}</span>
               ))}
             </div>
@@ -433,7 +433,7 @@ function Index() {
         </div>
       </section>
 
-      {/* 14. WHY TRUST AETHER */}
+      {/* 14. WHY TRUST genCART */}
       <section className="px-6 lg:px-10 py-24">
         <div className="max-w-5xl mx-auto">
           <div className="mb-16">
@@ -459,7 +459,7 @@ function Index() {
           <div className="absolute inset-0 bg-radial-glow opacity-50" />
           <div className="relative">
             <span className="font-display text-2xl lg:text-3xl leading-snug max-w-3xl mx-auto block mb-6">
-              "AETHER is the only place I check before any tech purchase. The reviews are the reviews
+              "genCART is the only place I check before any tech purchase. The reviews are the reviews
               I'd write — if I had three weeks per product."
             </span>
             <p className="font-mono-tech text-[10px] uppercase tracking-[0.3em] text-[var(--emerald-accent)]">

@@ -6,7 +6,7 @@ import { guides } from "@/data/guides";
 export const Route = createFileRoute("/guides/")({
   head: () => ({
     meta: [
-      { title: "Buying Guides & Manuals — AETHER" },
+      { title: "Buying Guides & Manuals — genCART" },
       { name: "description", content: "Expert buying guides, workspaces breakdowns, and hardware manuals for builders and developers." },
     ],
   }),

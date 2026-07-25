@@ -1,10 +1,10 @@
-/* ─── ASMUTH — FAQ Data ──────────────────────────────────────── */
+/* ─── genCART — FAQ Data ──────────────────────────────────────── */
 import type { FaqItem } from "@/types";
 
 export const faqs: FaqItem[] = [
   {
     question: "How do you test and review products?",
-    answer: "Every product reviewed on ASMUTH undergoes at least two weeks of daily usage in real-world scenarios. We do not accept sponsored reviews or payments to influence our ratings. We test items under standard lab conditions and practical daily environments.",
+    answer: "Every product reviewed on genCART undergoes at least two weeks of daily usage in real-world scenarios. We do not accept sponsored reviews or payments to influence our ratings. We test items under standard lab conditions and practical daily environments.",
     category: "General",
   },
   {

@@ -9,8 +9,8 @@ import type { Product } from "@/types";
 export const Route = createFileRoute("/wishlist")({
   head: () => ({
     meta: [
-      { title: "Your Wishlist — AETHER" },
-      { name: "description", content: "View and manage your bookmarked premium tech products on AETHER." },
+      { title: "Your Wishlist — genCART" },
+      { name: "description", content: "View and manage your bookmarked premium tech products on genCART." },
     ],
   }),
   component: WishlistPage,
@@ -22,17 +22,17 @@ function WishlistPage() {
   useEffect(() => {
     // Read wishlist from localStorage
     try {
-      const stored = localStorage.getItem("aether-wishlist");
+      const stored = localStorage.getItem("genCART-wishlist");
       if (stored) {
         const slugs = JSON.parse(stored) as string[];
         const items = slugs.map((s) => getProduct(s)).filter((p): p is Product => !!p);
         setWishlistItems(items);
       } else {
         // Mock default item if localStorage is empty to show how it works
-        const defaults = ["aether-laptop-air", "aether-buds-pro"];
+        const defaults = ["genCART-laptop-air", "genCART-buds-pro"];
         const items = defaults.map((s) => getProduct(s)).filter((p): p is Product => !!p);
         setWishlistItems(items);
-        localStorage.setItem("aether-wishlist", JSON.stringify(defaults));
+        localStorage.setItem("genCART-wishlist", JSON.stringify(defaults));
       }
     } catch (e) {
       console.error(e);
@@ -40,17 +40,17 @@ function WishlistPage() {
   }, []);
 
   const handleClear = () => {
-    localStorage.removeItem("aether-wishlist");
+    localStorage.removeItem("genCART-wishlist");
     setWishlistItems([]);
   };
 
   const handleRemove = (slug: string) => {
     try {
-      const stored = localStorage.getItem("aether-wishlist");
+      const stored = localStorage.getItem("genCART-wishlist");
       if (stored) {
         const slugs = JSON.parse(stored) as string[];
         const filteredSlugs = slugs.filter((s) => s !== slug);
-        localStorage.setItem("aether-wishlist", JSON.stringify(filteredSlugs));
+        localStorage.setItem("genCART-wishlist", JSON.stringify(filteredSlugs));
         setWishlistItems(wishlistItems.filter((i) => i.slug !== slug));
       }
     } catch (e) {

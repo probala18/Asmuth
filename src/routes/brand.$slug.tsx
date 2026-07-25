@@ -13,7 +13,7 @@ export const Route = createFileRoute("/brand/$slug")({
     const brand = getBrand(params.slug);
     return {
       meta: [
-        { title: brand ? `${brand.name} — Brand Profile · AETHER` : "Brand Detail · AETHER" },
+        { title: brand ? `${brand.name} — Brand Profile · genCART` : "Brand Detail · genCART" },
         { name: "description", content: brand ? brand.description : "View products by this brand." },
       ],
     };
@@ -85,7 +85,7 @@ function BrandDetailPage() {
         <div className="max-w-7xl mx-auto">
           <div className="mb-8">
             <h3 className="font-display text-2xl font-semibold">Catalog ({brandProducts.length})</h3>
-            <p className="text-sm text-muted-foreground mt-1">Products manufactured by {brand.name} featured on AETHER.</p>
+            <p className="text-sm text-muted-foreground mt-1">Products manufactured by {brand.name} featured on genCART.</p>
           </div>
 
           {brandProducts.length > 0 ? (

@@ -83,11 +83,11 @@ export function Navbar() {
           <Link to="/" className="flex items-center gap-3 group z-50" onClick={() => setMobileMenuOpen(false)}>
             <img
               src="/assets/logo.png"
-              alt="Asmuth logo"
+              alt="genCART logo"
               className="h-9 w-9 rounded-full border border-hairline bg-surface object-cover"
             />
             <span className="font-display text-xl font-semibold tracking-tight">
-              Asmuth<span className="text-emerald-accent text-xs align-top ml-0.5">®</span>
+              genCART<span className="text-emerald-accent text-xs align-top ml-0.5">®</span>
             </span>
           </Link>
 
@@ -204,12 +204,12 @@ export function Navbar() {
                   <p className="font-mono-tech text-[10px] uppercase tracking-[0.25em] text-[var(--cyan-accent)] mb-3">
                     Featured · 2026
                   </p>
-                  <h3 className="font-display text-3xl font-semibold mb-2">Aether Laptop Air</h3>
+                  <h3 className="font-display text-3xl font-semibold mb-2">genCART Laptop Air</h3>
                   <p className="text-sm text-muted-foreground max-w-sm mb-6">
                     M-class silicon, edge-to-edge OLED, all-day battery. Engineered as one.
                   </p>
                   <Link
-                    to="/product/aether-laptop-air"
+                    to="/product/genCART-laptop-air"
                     className="btn-ghost-glow inline-flex items-center gap-2 rounded-full px-4 py-2 text-xs font-semibold tracking-wide"
                     onClick={() => setMega(false)}
                   >
@@ -301,7 +301,7 @@ export function Navbar() {
               <ArrowUpRight className="size-4" />
             </Link>
             <p className="text-center text-xs text-muted-foreground">
-              AETHER Affiliate E-Commerce Platform · 2026
+              genCART Affiliate E-Commerce Platform · 2026
             </p>
           </div>
         </div>

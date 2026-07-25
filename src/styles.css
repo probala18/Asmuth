@@ -5,7 +5,7 @@
 @custom-variant dark (&:is(.dark, .dark *));
 
 /*
- * AETHER — Dual theme
+ * genCART — Dual theme
  * Light: warm editorial ivory + ink + indigo/amber accents
  * Dark : deep-space navy + emerald + cyan (preserved from prior build)
  */
@@ -351,7 +351,7 @@
 .fade-in-up { animation: fadeInUp .8s cubic-bezier(.2,.8,.2,1) both; }
 
 /* ============================================================
-   AETHER Extended Animation Keyframes
+   genCART Extended Animation Keyframes
    ============================================================ */
 
 /* Fade + Scale entry (light theme page loads) */

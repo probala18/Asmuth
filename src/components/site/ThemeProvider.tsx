@@ -4,7 +4,7 @@ type Theme = "light" | "dark";
 type Ctx = { theme: Theme; toggle: () => void; setTheme: (t: Theme) => void };
 
 const ThemeCtx = createContext<Ctx | null>(null);
-const STORAGE_KEY = "aether-theme";
+const STORAGE_KEY = "genCART-theme";
 
 function applyTheme(t: Theme) {
   if (typeof document === "undefined") return;

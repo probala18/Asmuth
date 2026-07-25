@@ -15,7 +15,7 @@ export const Route = createFileRoute("/compare/$slug")({
     if (curated) {
       return {
         meta: [
-          { title: `${curated.title} — Comparison · AETHER` },
+          { title: `${curated.title} — Comparison · genCART` },
           { name: "description", content: curated.excerpt },
         ],
       };
@@ -29,7 +29,7 @@ export const Route = createFileRoute("/compare/$slug")({
       if (prodA && prodB) {
         return {
           meta: [
-            { title: `${prodA.name} vs ${prodB.name} — Specs Match · AETHER` },
+            { title: `${prodA.name} vs ${prodB.name} — Specs Match · genCART` },
             { name: "description", content: `Compare ${prodA.name} and ${prodB.name} specs, prices, and features side-by-side.` },
           ],
         };
@@ -37,7 +37,7 @@ export const Route = createFileRoute("/compare/$slug")({
     }
 
     return {
-      meta: [{ title: "Product Comparison — AETHER" }],
+      meta: [{ title: "Product Comparison — genCART" }],
     };
   },
   loader: ({ params }) => {

@@ -1,4 +1,4 @@
-/* ─── ASMUTH — Guide Data ────────────────────────────────────── */
+/* ─── genCART — Guide Data ────────────────────────────────────── */
 import type { Guide } from "@/types";
 
 export const guides: Guide[] = [
@@ -30,7 +30,7 @@ export const guides: Guide[] = [
         content: "Instead of staring at distracting menu bar clocks, use a smart wearable to track focus intervals, monitor heart rate variance, and schedule movement breaks quietly on your wrist.",
       },
     ],
-    relatedProducts: ["aether-laptop-air", "aether-buds-pro", "aether-watch-x"],
+    relatedProducts: ["genCART-laptop-air", "genCART-buds-pro", "genCART-watch-x"],
   },
   {
     slug: "high-fidelity-audio-guide",
@@ -56,7 +56,7 @@ export const guides: Guide[] = [
         content: "When working outside the studio, carry dual systems: reference open-back headphones for high-fidelity mixing, and adaptive ANC wireless earbuds to verify how your mixes translate to real-world consumer devices.",
       },
     ],
-    relatedProducts: ["aether-studio-monitor", "aether-buds-pro"],
+    relatedProducts: ["genCART-studio-monitor", "genCART-buds-pro"],
   },
 ];
 

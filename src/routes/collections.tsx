@@ -9,10 +9,10 @@ import phoneImg from "@/assets/product-phone.jpg";
 export const Route = createFileRoute("/collections")({
   head: () => ({
     meta: [
-      { title: "Curated Collections — AETHER" },
-      { name: "description", content: "Editor-curated AETHER collections: workstations, immersive audio, ambient living, and more." },
-      { property: "og:title", content: "Curated Collections — AETHER" },
-      { property: "og:description", content: "Editor-curated AETHER collections for every workflow." },
+      { title: "Curated Collections — genCART" },
+      { name: "description", content: "Editor-curated genCART collections: workstations, immersive audio, ambient living, and more." },
+      { property: "og:title", content: "Curated Collections — genCART" },
+      { property: "og:description", content: "Editor-curated genCART collections for every workflow." },
       { property: "og:image", content: "/og-collections.jpg" },
     ],
   }),

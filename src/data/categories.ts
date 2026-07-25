@@ -1,4 +1,4 @@
-/* ─── ASMUTH — Category Data ────────────────────────────────── */
+/* ─── genCART — Category Data ────────────────────────────────── */
 import type { Category } from "@/types";
 
 export const categories: Category[] = [

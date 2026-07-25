@@ -8,9 +8,9 @@ import watchImg from "@/assets/product-watch.jpg";
 export const Route = createFileRoute("/products/laptop-air")({
   head: () => ({
     meta: [
-      { title: "Aether Laptop Air — AETHER" },
-      { name: "description", content: "Aether Laptop Air: M-class silicon, edge-to-edge OLED, 22-hour battery. Engineered as one." },
-      { property: "og:title", content: "Aether Laptop Air — AETHER" },
+      { title: "genCART Laptop Air — genCART" },
+      { name: "description", content: "genCART Laptop Air: M-class silicon, edge-to-edge OLED, 22-hour battery. Engineered as one." },
+      { property: "og:title", content: "genCART Laptop Air — genCART" },
       { property: "og:description", content: "M-class silicon, edge-to-edge OLED, 22-hour battery." },
       { property: "og:image", content: laptopImg },
       { property: "twitter:image", content: laptopImg },
@@ -26,13 +26,13 @@ function ProductDetail() {
         <div className="absolute inset-0 bg-radial-glow opacity-60" />
         <div className="relative max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-[1.1fr_1fr] gap-12 items-center">
           <TiltCard className="relative aspect-square rounded-3xl overflow-hidden surface-card" max={4}>
-            <img src={laptopImg} alt="Aether Laptop Air" className="size-full object-cover" />
+            <img src={laptopImg} alt="genCART Laptop Air" className="size-full object-cover" />
             <div className="absolute inset-0 bg-radial-glow opacity-50" />
           </TiltCard>
 
           <div className="space-y-6">
             <p className="font-mono-tech text-[10px] uppercase tracking-[0.3em] text-[var(--emerald-accent)]">Computing · 2026 Edition</p>
-            <SplitTextReveal text="Aether Laptop Air" className="font-display text-5xl lg:text-7xl font-bold tracking-tight" />
+            <SplitTextReveal text="genCART Laptop Air" className="font-display text-5xl lg:text-7xl font-bold tracking-tight" />
             <p className="text-muted-foreground text-lg max-w-md">
               M-class silicon. Edge-to-edge OLED. 22-hour battery. <HandUnderline>Engineered as one.</HandUnderline>
             </p>
@@ -84,7 +84,7 @@ function ProductDetail() {
           <h2 className="font-display text-3xl font-semibold mb-8">Specifications</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {[
-              { Icon: Cpu, k: "Chip", v: "Aether M-class · 12 core" },
+              { Icon: Cpu, k: "Chip", v: "genCART M-class · 12 core" },
               { Icon: Monitor, k: "Display", v: "14.2\" OLED · 120Hz" },
               { Icon: Battery, k: "Battery", v: "22 hours · all-day" },
             ].map((s) => (
@@ -104,9 +104,9 @@ function ProductDetail() {
           <h2 className="font-display text-3xl font-semibold mb-8">You might also like</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {[
-              { name: "Aether Buds Pro", img: headphonesImg, price: "$129" },
-              { name: "Aether Watch X", img: watchImg, price: "$199" },
-              { name: "Aether Pad Pro", img: laptopImg, price: "$649" },
+              { name: "genCART Buds Pro", img: headphonesImg, price: "$129" },
+              { name: "genCART Watch X", img: watchImg, price: "$199" },
+              { name: "genCART Pad Pro", img: laptopImg, price: "$649" },
             ].map((p) => (
               <TiltCard key={p.name} className="surface-card overflow-hidden">
                 <div className="aspect-[5/4] overflow-hidden"><img src={p.img} alt={p.name} loading="lazy" className="size-full object-cover" /></div>

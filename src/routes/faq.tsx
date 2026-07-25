@@ -7,8 +7,8 @@ import { faqs } from "@/data/faqs";
 export const Route = createFileRoute("/faq")({
   head: () => ({
     meta: [
-      { title: "Frequently Asked Questions — AETHER" },
-      { name: "description", content: "Answers to common questions about AETHER, reviews, affiliate links, and editorial process." },
+      { title: "Frequently Asked Questions — genCART" },
+      { name: "description", content: "Answers to common questions about genCART, reviews, affiliate links, and editorial process." },
     ],
   }),
   component: FaqPage,

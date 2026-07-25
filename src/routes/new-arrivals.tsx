@@ -7,8 +7,8 @@ import { products } from "@/data";
 export const Route = createFileRoute("/new-arrivals")({
   head: () => ({
     meta: [
-      { title: "New Arrivals — AETHER" },
-      { name: "description", content: "Discover the latest premium tech releases added to AETHER's catalog." },
+      { title: "New Arrivals — genCART" },
+      { name: "description", content: "Discover the latest premium tech releases added to genCART's catalog." },
     ],
   }),
   component: NewArrivalsPage,

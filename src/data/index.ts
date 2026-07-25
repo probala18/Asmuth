@@ -1,4 +1,4 @@
-/* ─── ASMUTH — Core Data Layer Export ───────────────────────── */
+/* ─── genCART — Core Data Layer Export ───────────────────────── */
 export * from "./products";
 export * from "./categories";
 export * from "./brands";

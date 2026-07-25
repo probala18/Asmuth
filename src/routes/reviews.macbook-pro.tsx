@@ -7,9 +7,9 @@ import phoneImg from "@/assets/product-phone.jpg";
 export const Route = createFileRoute("/reviews/macbook-pro")({
   head: () => ({
     meta: [
-      { title: "MacBook Pro M3 Max — Expert Review · AETHER" },
+      { title: "MacBook Pro M3 Max — Expert Review · genCART" },
       { name: "description", content: "Three weeks with the MacBook Pro M3 Max. Performance benchmarks, battery, display, value — and how it compares." },
-      { property: "og:title", content: "MacBook Pro M3 Max — Expert Review · AETHER" },
+      { property: "og:title", content: "MacBook Pro M3 Max — Expert Review · genCART" },
       { property: "og:description", content: "Three weeks with the MacBook Pro M3 Max — the editor's full review." },
       { property: "og:image", content: laptopImg },
       { property: "twitter:image", content: laptopImg },
@@ -137,8 +137,8 @@ function ReviewPage() {
           <h2 className="font-display text-3xl font-semibold mb-8">More reviews</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {[
-              { t: "Aether Laptop Air", img: laptopImg },
-              { t: "Aether Phone 15", img: phoneImg },
+              { t: "genCART Laptop Air", img: laptopImg },
+              { t: "genCART Phone 15", img: phoneImg },
               { t: "Dell XPS 16", img: laptopImg },
             ].map((r) => (
               <TiltCard key={r.t} className="surface-card overflow-hidden">
