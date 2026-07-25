@@ -14,6 +14,7 @@ import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { SmoothScroll } from "../components/site/SmoothScroll";
 import { Navbar } from "../components/site/Navbar";
+import { LoggedInNavbar } from "../components/dashboard/LoggedInNavbar";
 import { Footer } from "../components/site/Footer";
 import { PageTransition } from "../components/site/PageTransition";
 import { ThemeProvider } from "../components/site/ThemeProvider";
@@ -114,14 +115,16 @@ function RootShell({ children }: { children: ReactNode }) {
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
   const location = useRouterState({ select: (s) => s.location.pathname });
-  const isDashboard = location.startsWith("/dashboard");
+  
+  // Show LoggedInNavbar on /dashboard or when logged in session is active
+  const isDashboardRoute = location.startsWith("/dashboard");
 
   return (
     <QueryClientProvider client={queryClient}>
       <ThemeProvider>
         <SmoothScroll>
           <div className="cine-progress" aria-hidden />
-          {!isDashboard && <Navbar />}
+          {isDashboardRoute ? <LoggedInNavbar /> : <Navbar />}
           <ScrollChoreography>
             <PageTransition>
               <main className="relative">

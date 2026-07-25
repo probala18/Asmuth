@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { createFileRoute } from "@tanstack/react-router";
-import { LoggedInNavbar } from "@/components/dashboard/LoggedInNavbar";
 import {
   DashboardHeroSection,
   DealsAndOffersSection,
@@ -59,9 +58,6 @@ function DashboardPage() {
           initialPreferences={prefs}
         />
       )}
-
-      {/* Logged-in Floating Navbar */}
-      <LoggedInNavbar />
 
       <main className="relative space-y-2">
         {/* 1. Hero: Category Sidebar + Banner + User Card */}
