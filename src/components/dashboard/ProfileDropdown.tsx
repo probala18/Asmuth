@@ -1,8 +1,9 @@
 import { Link, useNavigate } from "@tanstack/react-router";
 import { motion, AnimatePresence } from "motion/react";
-import { User, Bookmark, Scale, Sparkles, Settings, LogOut } from "lucide-react";
+import { User, Bookmark, Scale, Sparkles, Settings, LogOut, SlidersHorizontal } from "lucide-react";
 import { dashboardData } from "@/data/personalizedDashboardData";
 import { supabase } from "@/supabase";
+import { resetOnboardingPreferences } from "@/lib/preferences";
 
 interface ProfileDropdownProps {
   isOpen: boolean;
@@ -16,6 +17,12 @@ export function ProfileDropdown({ isOpen, onClose }: ProfileDropdownProps) {
     onClose();
     await supabase.auth.signOut();
     navigate({ to: "/" });
+  };
+
+  const handleEditPreferences = () => {
+    onClose();
+    resetOnboardingPreferences();
+    window.location.reload();
   };
 
   const menuItems = [
@@ -65,6 +72,18 @@ export function ProfileDropdown({ isOpen, onClose }: ProfileDropdownProps) {
                 </Link>
               );
             })}
+
+            {/* Edit Preferences */}
+            <div className="pt-1 border-t border-[var(--hairline)]">
+              <button
+                type="button"
+                onClick={handleEditPreferences}
+                className="w-full flex items-center gap-3 px-3 py-2 rounded-xl text-xs font-medium text-foreground/80 hover:text-[var(--cyan-accent)] hover:bg-[var(--surface)] transition-all"
+              >
+                <SlidersHorizontal className="size-4" />
+                Edit Preferences
+              </button>
+            </div>
 
             {/* Logout button */}
             <div className="pt-1 border-t border-[var(--hairline)]">

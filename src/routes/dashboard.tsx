@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import { LoggedInNavbar } from "@/components/dashboard/LoggedInNavbar";
 import {
@@ -8,6 +9,8 @@ import {
   PopularProductsSection,
 } from "@/components/dashboard/PersonalizedDashboardHero";
 import { PersonalizedRecommendations } from "@/components/dashboard/PersonalizedRecommendations";
+import { PersonalizationOnboarding } from "@/components/dashboard/PersonalizationOnboarding";
+import { getUserPreferences, type UserPreferences } from "@/lib/preferences";
 import { products } from "@/data";
 
 export const Route = createFileRoute("/dashboard")({
@@ -21,6 +24,22 @@ export const Route = createFileRoute("/dashboard")({
 });
 
 function DashboardPage() {
+  const [prefs, setPrefs] = useState<UserPreferences | null>(null);
+  const [showOnboarding, setShowOnboarding] = useState(false);
+
+  useEffect(() => {
+    const current = getUserPreferences();
+    setPrefs(current);
+    if (!current.onboardingCompleted) {
+      setShowOnboarding(true);
+    }
+  }, []);
+
+  const handleOnboardingComplete = (updatedPrefs: UserPreferences) => {
+    setPrefs(updatedPrefs);
+    setShowOnboarding(false);
+  };
+
   // Group products by category for the browser sections
   const computingProducts = products.filter((p) => p.categorySlug === "computing");
   const audioProducts = products.filter((p) => p.categorySlug === "audio");
@@ -28,8 +47,19 @@ function DashboardPage() {
     (p) => p.categorySlug === "mobile" || p.categorySlug === "wearables" || p.categorySlug === "cameras"
   );
 
+  // Show nothing until preferences are loaded
+  if (prefs === null) return null;
+
   return (
     <div className="min-h-screen bg-background text-foreground relative">
+      {/* Personalization Onboarding — only on first login */}
+      {showOnboarding && (
+        <PersonalizationOnboarding
+          onComplete={handleOnboardingComplete}
+          initialPreferences={prefs}
+        />
+      )}
+
       {/* Logged-in Floating Navbar */}
       <LoggedInNavbar />
 
@@ -37,10 +67,13 @@ function DashboardPage() {
         {/* 1. Hero: Category Sidebar + Banner + User Card */}
         <DashboardHeroSection />
 
-        {/* 2. Deals & Offers: Countdown + Discount Products */}
+        {/* 2. Recommended For You — Preference-driven */}
+        <PersonalizedRecommendations />
+
+        {/* 3. Deals & Offers: Countdown + Discount Products */}
         <DealsAndOffersSection />
 
-        {/* 3. Category Browser: Computing */}
+        {/* 4. Category Browser: Computing */}
         <CategoryBrowserSection
           title="Computing & productivity"
           categorySlug="computing"
@@ -48,7 +81,7 @@ function DashboardPage() {
           categoryProducts={computingProducts}
         />
 
-        {/* 4. Category Browser: Audio */}
+        {/* 5. Category Browser: Audio */}
         <CategoryBrowserSection
           title="Audio & sound"
           categorySlug="audio"
@@ -56,10 +89,10 @@ function DashboardPage() {
           categoryProducts={audioProducts}
         />
 
-        {/* 5. Promotional Banners */}
+        {/* 6. Promotional Banners */}
         <PromotionalBannersSection />
 
-        {/* 6. Category Browser: Mobile, Wearables & Cameras */}
+        {/* 7. Category Browser: Mobile, Wearables & Cameras */}
         <CategoryBrowserSection
           title="Consumer electronics & gadgets"
           categorySlug="mobile"
@@ -67,11 +100,8 @@ function DashboardPage() {
           categoryProducts={mobileWearableProducts}
         />
 
-        {/* 7. Popular Products Carousel */}
+        {/* 8. Popular Products Carousel */}
         <PopularProductsSection />
-
-        {/* 8. Personalized Recommendations */}
-        <PersonalizedRecommendations />
       </main>
     </div>
   );
