@@ -48,6 +48,8 @@ import {
   testimonials,
 } from "@/data";
 
+import { CinematicHero } from "@/components/site/CinematicHero";
+
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
@@ -69,142 +71,11 @@ function Index() {
   const bestSellers = products.filter((p) => p.isBestSeller).slice(0, 3);
   const latestReviews = reviews.slice(0, 3);
   const buyingGuides = guides.slice(0, 2);
-  const featuredBrands = brands.slice(0, 4);
-
-  const heroRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    let cleanup: (() => void) | undefined;
-
-    (async () => {
-      const { gsap } = await import("gsap");
-      const { ScrollTrigger } = await import("gsap/ScrollTrigger");
-      gsap.registerPlugin(ScrollTrigger);
-
-      const hero = heroRef.current;
-      if (!hero) return;
-
-      // Respect prefers-reduced-motion
-      const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-      if (prefersReduced) return;
-
-      // 1. Staggered load animation timeline
-      const tl = gsap.timeline({ defaults: { ease: "power4.out" } });
-
-      const badge = hero.querySelector(".hero-badge");
-      const titleWrapper = hero.querySelector(".hero-title");
-      const desc = hero.querySelector(".hero-desc");
-      const buttons = hero.querySelectorAll(".hero-btn");
-      const social = hero.querySelector(".hero-social");
-      const scrollCue = hero.querySelector(".hero-scroll");
-
-      // Hide initially to prevent layout flash before GSAP starts
-      gsap.set([badge, desc, social, scrollCue], { opacity: 0 });
-      gsap.set(badge, { y: -20 });
-      gsap.set(desc, { y: 24 });
-      gsap.set(buttons, { opacity: 0, scale: 0.95 });
-      gsap.set(social, { y: 16 });
-      gsap.set(scrollCue, { y: -15 });
-
-      tl.to(badge, { opacity: 1, y: 0, duration: 0.6, delay: 0.25 })
-        .to(desc, { opacity: 1, y: 0, duration: 0.8 }, "-=0.2")
-        .to(buttons, { opacity: 1, scale: 1, duration: 0.6, stagger: 0.12, ease: "back.out(1.5)" }, "-=0.5")
-        .to(social, { opacity: 1, y: 0, duration: 0.6 }, "-=0.3")
-        .to(scrollCue, { opacity: 1, y: 0, duration: 0.5 }, "-=0.1");
-
-      // 2. Parallax and Fade on Scroll
-      const parallaxItems = hero.querySelectorAll(".hero-parallax-item");
-      const scrollTween = gsap.to(parallaxItems, {
-        y: (i, target) => {
-          const speed = parseFloat(target.getAttribute("data-parallax-speed") || "0.15");
-          return window.innerHeight * speed;
-        },
-        opacity: 0.05,
-        ease: "none",
-        scrollTrigger: {
-          trigger: hero,
-          start: "top top",
-          end: "bottom top",
-          scrub: 0.8,
-        }
-      });
-
-      cleanup = () => {
-        tl.kill();
-        scrollTween.scrollTrigger?.kill();
-        scrollTween.kill();
-      };
-    })();
-
-    return () => cleanup?.();
-  }, []);
 
   return (
     <>
-      {/* 1. HERO SECTION */}
-      <section ref={heroRef} className="relative min-h-[92dvh] pt-28 pb-20 px-6 lg:px-10 overflow-hidden flex items-center">
-        <ThreeHero className="opacity-70" />
-        <div className="absolute inset-0 bg-radial-glow" />
-        <div className="absolute inset-0 bg-grid opacity-50" />
-        <div className="relative max-w-5xl mx-auto text-center space-y-10 pt-10">
-          <div className="hero-badge hero-parallax-item flex items-center justify-center gap-3" data-parallax-speed="0.08">
-            <span className="relative flex size-2">
-              <span className="absolute inline-flex h-full w-full rounded-full bg-[var(--emerald-accent)] opacity-75 animate-ping" />
-              <span className="relative inline-flex rounded-full size-2 bg-[var(--emerald-accent)]" />
-            </span>
-            <span className="font-mono-tech text-[10px] uppercase tracking-[0.3em] text-[var(--emerald-accent)]">
-              Premium Collection · 2026
-            </span>
-          </div>
-
-          <div className="hero-title hero-parallax-item" data-parallax-speed="0.04">
-            <SplitTextReveal
-              text="Discover Better. Choose Smarter."
-              as="h1"
-              className="font-display text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold leading-[0.98]"
-            />
-          </div>
-
-          <p className="hero-desc hero-parallax-item text-muted-foreground text-lg lg:text-xl leading-relaxed max-w-2xl mx-auto" data-parallax-speed="0.12">
-            We research, compare, and curate the products worth your attention — so you can {" "}
-            <HandUnderline><span className="text-foreground">spend less time</span></HandUnderline>{" "} 
-            searching and more time choosing with {" "}
-            <HandUnderline><span className="text-foreground">confidence</span></HandUnderline>.
-          </p>
-
-          <div className="hero-buttons hero-parallax-item flex items-center justify-center gap-4 pt-2 flex-wrap" data-parallax-speed="0.18">
-            <Link to="/collections" className="hero-btn">
-              <ShimmerButton className="btn-accent">
-                Explore Collection
-                <ArrowRight className="size-4" />
-              </ShimmerButton>
-            </Link>
-            <Link to="/best-of-2026" className="hero-btn btn-ghost-glow rounded-full px-7 py-3.5 text-sm font-semibold inline-flex items-center gap-2">
-              Best of 2026
-            </Link>
-          </div>
-
-          <div className="hero-social hero-parallax-item flex items-center justify-center gap-6 pt-6" data-parallax-speed="0.22">
-            <div className="flex -space-x-2">
-              {[...Array(4)].map((_, i) => (
-                <span key={i} className="size-8 rounded-full border-2 border-background" style={{ background: i % 2 ? "var(--cyan-accent)" : "var(--emerald-accent)" }} />
-              ))}
-            </div>
-            <div className="text-left">
-              <div className="flex items-center gap-1 text-[var(--emerald-accent)]">
-                {[...Array(5)].map((_, i) => <Star key={i} className="size-3.5 fill-current" />)}
-              </div>
-              <p className="text-xs text-muted-foreground mt-1">2.5M+ trusted by enthusiasts</p>
-            </div>
-          </div>
-
-          {/* Scroll cue */}
-          <div className="hero-scroll hero-parallax-item flex flex-col items-center gap-2 pt-8" data-parallax-speed="0.28">
-            <span className="font-mono-tech text-[10px] uppercase tracking-[0.3em] text-muted-foreground">Scroll</span>
-            <span className="block h-10 w-px bg-gradient-to-b from-[var(--emerald-accent)] to-transparent" />
-          </div>
-        </div>
-      </section>
+      {/* 1. CINEMATIC VIDEO HERO SECTION */}
+      <CinematicHero />
 
       {/* 2. LOGO MARQUEE */}
       <section className="relative overflow-hidden py-8 border-y border-[var(--hairline)] bg-[var(--surface)]/40">
