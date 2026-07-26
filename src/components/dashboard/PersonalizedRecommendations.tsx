@@ -5,6 +5,7 @@ import { ProductCard } from "@/components/site/ProductCards";
 import { products } from "@/data";
 import { getUserPreferences } from "@/lib/preferences";
 import { getRecommendedProducts } from "@/lib/recommendations";
+import { ChevronRight } from "lucide-react";
 
 export function PersonalizedRecommendations() {
   const sectionRef = useRef<HTMLDivElement>(null);
@@ -14,7 +15,6 @@ export function PersonalizedRecommendations() {
     return getRecommendedProducts(prefs, products).slice(0, 6);
   }, []);
 
-  // GSAP ScrollTrigger section reveal
   useEffect(() => {
     let cleanup: (() => void) | undefined;
     let isMounted = true;
@@ -32,9 +32,9 @@ export function PersonalizedRecommendations() {
 
       const anim = gsap.from(section.querySelectorAll(".rec-card"), {
         opacity: 0,
-        y: 40,
-        stagger: 0.1,
-        duration: 0.7,
+        y: 24,
+        stagger: 0.08,
+        duration: 0.6,
         ease: "power3.out",
         scrollTrigger: {
           trigger: section,
@@ -62,22 +62,30 @@ export function PersonalizedRecommendations() {
       id="recommendations-section"
       ref={sectionRef}
       data-no-batch
-      className="px-4 sm:px-6 lg:px-10 py-12"
+      className="px-4 sm:px-6 lg:px-10 py-10"
     >
       <div className="max-w-7xl mx-auto space-y-8">
-        {/* Section Header — Clean, no explanatory subtitle */}
-        <motion.h2
+        <motion.div
           initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-40px" }}
           transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-          className="font-display text-2xl sm:text-3xl font-bold tracking-tight text-foreground"
+          className="flex items-end justify-between gap-4"
         >
-          Recommended for you
-        </motion.h2>
+          <div>
+            <p className="font-mono-tech text-[10px] uppercase tracking-[0.3em] text-[var(--emerald-accent)]">
+              Recommended for you
+            </p>
+            <h2 className="font-display text-2xl sm:text-3xl font-bold tracking-tight text-foreground">
+              Discover what deserves your attention
+            </h2>
+          </div>
+          <span className="hidden sm:inline-flex items-center gap-2 text-sm text-muted-foreground">
+            Fresh editorial picks <ChevronRight className="size-4" />
+          </span>
+        </motion.div>
 
-        {/* Product Cards Grid — Uses existing ProductCard component */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6">
           {recommendedProducts.map((product) => (
             <div key={product.slug} className="rec-card">
               <ProductCard product={product} />

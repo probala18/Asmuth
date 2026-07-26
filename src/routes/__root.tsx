@@ -12,6 +12,7 @@ import { useEffect, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
+import { useAuthSession } from "../lib/auth";
 import { SmoothScroll } from "../components/site/SmoothScroll";
 import { Navbar } from "../components/site/Navbar";
 import { LoggedInNavbar } from "../components/dashboard/LoggedInNavbar";
@@ -55,7 +56,10 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
         </p>
         <div className="mt-6 flex flex-wrap justify-center gap-2">
           <button
-            onClick={() => { router.invalidate(); reset(); }}
+            onClick={() => {
+              router.invalidate();
+              reset();
+            }}
             className="btn-accent rounded-full px-5 py-2.5 text-sm font-semibold"
           >
             Try again
@@ -115,19 +119,19 @@ function RootShell({ children }: { children: ReactNode }) {
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
   const location = useRouterState({ select: (s) => s.location.pathname });
-  
-  // Show LoggedInNavbar on /dashboard or when logged in session is active
-  const isDashboardRoute = location.startsWith("/dashboard");
+  const { isAuthenticated, isAuthLoading } = useAuthSession();
+
+  const showLoggedInShell = !isAuthLoading && isAuthenticated;
 
   return (
     <QueryClientProvider client={queryClient}>
       <ThemeProvider>
         <SmoothScroll>
           <div className="cine-progress" aria-hidden />
-          {isDashboardRoute ? <LoggedInNavbar /> : <Navbar />}
+          {showLoggedInShell ? <LoggedInNavbar /> : <Navbar />}
           <ScrollChoreography>
             <PageTransition>
-              <main className="relative">
+              <main className="relative" data-route={location}>
                 <Outlet />
               </main>
             </PageTransition>

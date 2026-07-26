@@ -1,22 +1,32 @@
 import { useEffect, type ReactNode } from "react";
 
+let lenisInstance: any = null;
+let gsapTickerCallback: ((time: number) => void) | null = null;
+let localRafId = 0;
+
 export function SmoothScroll({ children }: { children: ReactNode }) {
   useEffect(() => {
-    if (typeof window === "undefined") return;
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    if (typeof window === "undefined") return undefined;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return undefined;
+    if (lenisInstance) return undefined;
 
-    let lenisInstance: any = null;
-    let gsapTickerCallback: ((time: number) => void) | null = null;
-    let localRafId = 0;
+    let isActive = true;
+    let instance: any = null;
 
-    (async () => {
+    const init = async () => {
       const { default: Lenis } = await import("lenis");
-      
-      const instance = new Lenis({
+
+      instance = new Lenis({
         duration: 1.2,
         easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
         smoothWheel: true,
       });
+
+      if (!isActive) {
+        instance.destroy();
+        return;
+      }
+
       lenisInstance = instance;
 
       try {
@@ -28,33 +38,44 @@ export function SmoothScroll({ children }: { children: ReactNode }) {
           ScrollTrigger.update();
         });
 
-        // Use GSAP ticker as the single animation loop
         gsapTickerCallback = (time: number) => {
           instance.raf(time * 1000);
         };
         gsap.ticker.add(gsapTickerCallback);
         gsap.ticker.lagSmoothing(0);
-      } catch (err) {
-        // Fallback to native requestAnimationFrame loop if GSAP fails to load
+      } catch {
         const loop = (time: number) => {
           instance.raf(time);
-          localRafId = requestAnimationFrame(loop);
+          localRafId = window.requestAnimationFrame(loop);
         };
-        localRafId = requestAnimationFrame(loop);
+        localRafId = window.requestAnimationFrame(loop);
       }
-    })();
+    };
+
+    void init();
 
     return () => {
-      if (lenisInstance) {
-        lenisInstance.destroy();
+      isActive = false;
+
+      if (instance && lenisInstance === instance) {
+        instance.destroy();
+        lenisInstance = null;
       }
+
       if (localRafId) {
-        cancelAnimationFrame(localRafId);
+        window.cancelAnimationFrame(localRafId);
+        localRafId = 0;
       }
+
       if (gsapTickerCallback) {
-        import("gsap").then(({ gsap }) => {
-          if (gsapTickerCallback) gsap.ticker.remove(gsapTickerCallback);
-        }).catch(() => {});
+        void import("gsap")
+          .then(({ gsap }) => {
+            if (gsapTickerCallback) {
+              gsap.ticker.remove(gsapTickerCallback);
+            }
+            gsapTickerCallback = null;
+          })
+          .catch(() => {});
       }
     };
   }, []);

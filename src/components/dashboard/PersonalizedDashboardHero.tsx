@@ -403,7 +403,101 @@ export function PromotionalBannersSection() {
   );
 }
 
-/* ─── Section 5: Popular Products Carousel ────────────── */
+/* ─── Section 5: Continue Exploring ─────────────── */
+export function ContinueExploringSection() {
+  const suggestions = products.slice(0, 4);
+
+  if (suggestions.length === 0) return null;
+
+  return (
+    <motion.section
+      data-no-batch
+      className="px-4 sm:px-6 lg:px-10 py-4"
+      initial={{ opacity: 0, y: 24 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-40px" }}
+      transition={{ duration: 0.45 }}
+    >
+      <div className="max-w-7xl mx-auto rounded-3xl border border-[var(--hairline)] bg-[linear-gradient(135deg,var(--surface),var(--surface-2))] p-6 sm:p-8">
+        <div className="flex items-center justify-between gap-4 mb-6">
+          <div>
+            <p className="font-mono-tech text-[10px] uppercase tracking-[0.3em] text-[var(--cyan-accent)]">Continue exploring</p>
+            <h3 className="font-display text-xl sm:text-2xl font-semibold text-foreground">Pick up where you left off</h3>
+          </div>
+          <span className="hidden sm:inline-flex rounded-full border border-[var(--hairline)] px-3 py-1 text-xs text-muted-foreground">
+            Built around your recent interests
+          </span>
+        </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
+          {suggestions.map((product) => (
+            <Link
+              key={product.slug}
+              to={`/product/${product.slug}`}
+              className="group rounded-2xl border border-[var(--hairline)] bg-background/70 p-4 transition-all hover:-translate-y-1 hover:border-[var(--emerald-accent)]"
+            >
+              <div className="relative aspect-[5/4] overflow-hidden rounded-xl bg-[var(--surface-2)]">
+                <img src={product.image} alt={product.name} className="size-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" />
+              </div>
+              <div className="mt-4 space-y-1">
+                <p className="text-sm font-semibold text-foreground">{product.name}</p>
+                <p className="text-xs text-muted-foreground">{product.category}</p>
+              </div>
+            </Link>
+          ))}
+        </div>
+      </div>
+    </motion.section>
+  );
+}
+
+/* ─── Section 6: Saved Products ─────────────── */
+export function SavedProductsSection() {
+  const savedProducts = products.slice(1, 4);
+
+  if (savedProducts.length === 0) return null;
+
+  return (
+    <motion.section
+      data-no-batch
+      className="px-4 sm:px-6 lg:px-10 py-4"
+      initial={{ opacity: 0, y: 24 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-40px" }}
+      transition={{ duration: 0.45 }}
+    >
+      <div className="max-w-7xl mx-auto rounded-3xl border border-[var(--hairline)] bg-[var(--surface)]/70 p-6 sm:p-8">
+        <div className="flex items-center justify-between gap-4 mb-6">
+          <div>
+            <p className="font-mono-tech text-[10px] uppercase tracking-[0.3em] text-[var(--emerald-accent)]">Saved for later</p>
+            <h3 className="font-display text-xl sm:text-2xl font-semibold text-foreground">Keep an eye on these</h3>
+          </div>
+          <Link to="/wishlist" className="text-sm font-medium text-[var(--emerald-accent)] inline-flex items-center gap-2">
+            View all <ArrowRight className="size-4" />
+          </Link>
+        </div>
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          {savedProducts.map((product) => (
+            <Link
+              key={product.slug}
+              to={`/product/${product.slug}`}
+              className="group flex items-center gap-3 rounded-2xl border border-[var(--hairline)] bg-background/70 p-3 transition-all hover:border-[var(--cyan-accent)]"
+            >
+              <div className="size-16 shrink-0 overflow-hidden rounded-xl bg-[var(--surface-2)]">
+                <img src={product.image} alt={product.name} className="size-full object-cover" loading="lazy" />
+              </div>
+              <div>
+                <p className="text-sm font-semibold text-foreground">{product.name}</p>
+                <p className="text-xs text-muted-foreground">{product.category}</p>
+              </div>
+            </Link>
+          ))}
+        </div>
+      </div>
+    </motion.section>
+  );
+}
+
+/* ─── Section 7: Popular Products Carousel ────────────── */
 export function PopularProductsSection() {
   const scrollRef = useRef<HTMLDivElement>(null);
   const popular = products.filter((p) => p.isTrending || p.isBestSeller);

@@ -6,6 +6,8 @@ import {
   CategoryBrowserSection,
   PromotionalBannersSection,
   PopularProductsSection,
+  ContinueExploringSection,
+  SavedProductsSection,
 } from "@/components/dashboard/PersonalizedDashboardHero";
 import { PersonalizedRecommendations } from "@/components/dashboard/PersonalizedRecommendations";
 import { PersonalizationOnboarding } from "@/components/dashboard/PersonalizationOnboarding";
@@ -39,19 +41,16 @@ function DashboardPage() {
     setShowOnboarding(false);
   };
 
-  // Group products by category for the browser sections
   const computingProducts = products.filter((p) => p.categorySlug === "computing");
   const audioProducts = products.filter((p) => p.categorySlug === "audio");
   const mobileWearableProducts = products.filter(
     (p) => p.categorySlug === "mobile" || p.categorySlug === "wearables" || p.categorySlug === "cameras"
   );
 
-  // Show nothing until preferences are loaded
   if (prefs === null) return null;
 
   return (
     <div className="min-h-screen bg-background text-foreground relative">
-      {/* Personalization Onboarding — only on first login */}
       {showOnboarding && (
         <PersonalizationOnboarding
           onComplete={handleOnboardingComplete}
@@ -59,44 +58,31 @@ function DashboardPage() {
         />
       )}
 
-      <main className="relative space-y-2">
-        {/* 1. Hero: Category Sidebar + Banner + User Card */}
+      <main className="relative space-y-2 pb-16">
         <DashboardHeroSection />
-
-        {/* 2. Recommended For You — Preference-driven */}
         <PersonalizedRecommendations />
-
-        {/* 3. Deals & Offers: Countdown + Discount Products */}
+        <ContinueExploringSection />
         <DealsAndOffersSection />
-
-        {/* 4. Category Browser: Computing */}
         <CategoryBrowserSection
           title="Computing & productivity"
           categorySlug="computing"
           accentColor="var(--emerald-accent)"
           categoryProducts={computingProducts}
         />
-
-        {/* 5. Category Browser: Audio */}
         <CategoryBrowserSection
           title="Audio & sound"
           categorySlug="audio"
           accentColor="var(--cyan-accent)"
           categoryProducts={audioProducts}
         />
-
-        {/* 6. Promotional Banners */}
         <PromotionalBannersSection />
-
-        {/* 7. Category Browser: Mobile, Wearables & Cameras */}
         <CategoryBrowserSection
           title="Consumer electronics & gadgets"
           categorySlug="mobile"
           accentColor="var(--emerald-accent)"
           categoryProducts={mobileWearableProducts}
         />
-
-        {/* 8. Popular Products Carousel */}
+        <SavedProductsSection />
         <PopularProductsSection />
       </main>
     </div>

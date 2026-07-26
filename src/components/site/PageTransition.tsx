@@ -6,11 +6,14 @@ export function PageTransition({ children }: { children: ReactNode }) {
   const location = useRouterState({ select: (s) => s.location.pathname });
   const shouldReduceMotion = useReducedMotion();
 
-  // Instantly scroll to top on any route change to prevent stale scroll state for GSAP
   useEffect(() => {
-    if (typeof window !== "undefined") {
-      window.scrollTo(0, 0);
-    }
+    if (typeof window === "undefined") return;
+
+    const frame = window.requestAnimationFrame(() => {
+      window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+    });
+
+    return () => window.cancelAnimationFrame(frame);
   }, [location]);
 
   return (
@@ -19,9 +22,10 @@ export function PageTransition({ children }: { children: ReactNode }) {
       initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 8 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{
-        duration: shouldReduceMotion ? 0.05 : 0.22,
-        ease: [0.215, 0.61, 0.355, 1],
+        duration: shouldReduceMotion ? 0.05 : 0.2,
+        ease: [0.16, 1, 0.3, 1],
       }}
+      className="min-h-screen"
     >
       {children}
     </motion.div>
