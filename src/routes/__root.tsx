@@ -128,7 +128,7 @@ function RootComponent() {
       <ThemeProvider>
         <SmoothScroll>
           <div className="cine-progress" aria-hidden />
-          {showLoggedInShell ? <LoggedInNavbar /> : <Navbar />}
+          {showLoggedInShell ? <LoggedInNavbar key="logged-in" /> : <Navbar key="public" />}
           <ScrollChoreography>
             <PageTransition>
               <main className="relative" data-route={location}>

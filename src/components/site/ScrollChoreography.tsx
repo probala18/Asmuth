@@ -26,8 +26,6 @@ export function ScrollChoreography({ children }: { children: ReactNode }) {
 
       if (cancelled) return;
 
-      ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
-
       const ctx = gsap.context(() => {
         const bar = document.querySelector<HTMLElement>(".cine-progress");
         const progressST = bar
@@ -90,7 +88,6 @@ export function ScrollChoreography({ children }: { children: ReactNode }) {
             el.removeAttribute("data-cine-handled");
             gsap.set(el, { clearProps: "all" });
           });
-          ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
           if (bar) bar.style.transform = "scaleX(0)";
         };
       });
@@ -100,8 +97,8 @@ export function ScrollChoreography({ children }: { children: ReactNode }) {
       }
 
       if (cancelled) {
+        cleanup();
         ctx.revert();
-        ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
         return;
       }
     };
