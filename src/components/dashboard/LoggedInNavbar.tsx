@@ -1,21 +1,13 @@
 import { useEffect, useRef, useState } from "react";
 import { Link, useNavigate, useRouterState } from "@tanstack/react-router";
 import { motion, AnimatePresence } from "motion/react";
-import { 
-  Search, 
-  Bookmark, 
-  Bell, 
-  ChevronDown, 
-  Menu, 
-  X, 
-  Sparkles,
-  ArrowUpRight
-} from "lucide-react";
+import { Search, Bookmark, Bell, ChevronDown, Menu, X, Sparkles, ArrowUpRight } from "lucide-react";
 import { ThemeToggle } from "@/components/site/ThemeToggle";
 import { SearchCommand } from "./SearchCommand";
 import { NotificationPanel } from "./NotificationPanel";
 import { ProfileDropdown } from "./ProfileDropdown";
 import { dashboardData } from "@/data/personalizedDashboardData";
+import { useSavedProducts } from "@/lib/saved-products";
 
 const loggedInNavItems = [
   { label: "Discover", href: "/dashboard", active: true },
@@ -34,6 +26,7 @@ export function LoggedInNavbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const navigate = useNavigate();
   const currentPath = useRouterState({ select: (s) => s.location.pathname });
+  const savedProducts = useSavedProducts();
 
   // GSAP ScrollTrigger for smooth navbar height & blur compression on scroll
   useEffect(() => {
@@ -97,7 +90,8 @@ export function LoggedInNavbar() {
                 <span className="font-display text-sm font-bold text-background">Æ</span>
               </div>
               <span className="font-display text-lg font-semibold tracking-tight text-foreground">
-                genCART<span className="text-[var(--emerald-accent)] text-[10px] align-top ml-0.5">®</span>
+                genCART
+                <span className="text-[var(--emerald-accent)] text-[10px] align-top ml-0.5">®</span>
               </span>
             </Link>
 
@@ -109,9 +103,10 @@ export function LoggedInNavbar() {
           {/* CENTER: Staggered Nav Links (Desktop) */}
           <nav className="hidden md:flex items-center gap-1">
             {loggedInNavItems.map((item, idx) => {
-              const isActive = item.href === "/dashboard" 
-                ? currentPath === "/dashboard" 
-                : currentPath.startsWith(item.href);
+              const isActive =
+                item.href === "/dashboard"
+                  ? currentPath === "/dashboard"
+                  : currentPath.startsWith(item.href);
 
               return (
                 <motion.div
@@ -164,7 +159,7 @@ export function LoggedInNavbar() {
                 <Bookmark className="size-3.5 text-[var(--emerald-accent)]" />
                 <span className="hidden sm:inline">Saved</span>
                 <span className="inline-flex items-center justify-center px-1.5 py-0.5 rounded-full bg-[var(--emerald-accent)]/20 text-[10px] font-mono-tech text-[var(--emerald-accent)] font-bold">
-                  {dashboardData.user.savedCount}
+                  {savedProducts.length}
                 </span>
               </motion.div>
             </Link>
@@ -208,10 +203,7 @@ export function LoggedInNavbar() {
                 </span>
                 <ChevronDown className="size-3 text-muted-foreground" />
               </motion.button>
-              <ProfileDropdown
-                isOpen={profileOpen}
-                onClose={() => setProfileOpen(false)}
-              />
+              <ProfileDropdown isOpen={profileOpen} onClose={() => setProfileOpen(false)} />
             </div>
 
             <ThemeToggle />
@@ -241,7 +233,11 @@ export function LoggedInNavbar() {
           >
             <div className="flex items-center gap-3 pb-3 border-b border-[var(--hairline)]">
               <div className="size-10 rounded-full overflow-hidden bg-[var(--surface-2)]">
-                <img src={dashboardData.user.avatar} alt={dashboardData.user.name} className="size-full object-cover" />
+                <img
+                  src={dashboardData.user.avatar}
+                  alt={dashboardData.user.name}
+                  className="size-full object-cover"
+                />
               </div>
               <div>
                 <p className="text-sm font-semibold">{dashboardData.user.name}</p>

@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
 import { Link } from "@tanstack/react-router";
-import { Star, Timer, Tag, ArrowRight, LucideIcon } from "lucide-react";
+import { Star, Timer, Tag, ArrowRight, Bookmark, BookmarkCheck, LucideIcon } from "lucide-react";
 import * as Icons from "lucide-react";
 import type { Product, Category } from "@/types";
 import { TiltCard, MouseGlow } from "./motion";
 import { motion } from "motion/react";
+import { toggleSavedProduct, useSavedProducts } from "@/lib/saved-products";
 
 // Helper to resolve icon dynamic name from Lucide
 function resolveIcon(name: string): LucideIcon {
@@ -14,9 +15,17 @@ function resolveIcon(name: string): LucideIcon {
 
 export function ProductCard({ product }: { product: Product }) {
   const hasDiscount = product.originalPrice && product.originalPrice > product.price;
-  const discountPercent = hasDiscount 
-    ? Math.round(((product.originalPrice! - product.price) / product.originalPrice!) * 100) 
+  const discountPercent = hasDiscount
+    ? Math.round(((product.originalPrice! - product.price) / product.originalPrice!) * 100)
     : 0;
+  const savedProducts = useSavedProducts();
+  const isSaved = savedProducts.some((savedProduct) => savedProduct.slug === product.slug);
+
+  const handleSaveToggle = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+    event.stopPropagation();
+    toggleSavedProduct(product.slug, product);
+  };
 
   return (
     <motion.div
@@ -26,31 +35,36 @@ export function ProductCard({ product }: { product: Product }) {
       variants={{
         initial: { opacity: 0, y: 16 },
         animate: { opacity: 1, y: 0 },
-        tap: { scale: 0.975 }
+        tap: { scale: 0.975 },
       }}
       whileInView="animate"
       viewport={{ once: true, margin: "-40px" }}
       transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
       className="h-full"
     >
-      <TiltCard className="surface-card overflow-hidden group flex flex-col h-full relative" max={6}>
-        <Link to={`/product/${product.slug}`} className="flex flex-col h-full">
+      <TiltCard
+        className="surface-card overflow-hidden group flex flex-col h-full relative"
+        max={6}
+      >
+        <div className="flex flex-col h-full">
           {/* Image panel */}
           <div className="relative aspect-[5/4] overflow-hidden bg-[var(--surface-2)]">
-            <img
-              src={product.image}
-              alt={product.name}
-              loading="lazy"
-              decoding="async"
-              sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
-              className="absolute inset-0 size-full object-cover transition-transform duration-700 group-hover:scale-[1.06]"
-            />
+            <Link to={`/product/${product.slug}`} className="block size-full">
+              <img
+                src={product.image}
+                alt={product.name}
+                loading="lazy"
+                decoding="async"
+                sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
+                className="absolute inset-0 size-full object-cover transition-transform duration-700 group-hover:scale-[1.06]"
+              />
+            </Link>
             <MouseGlow />
-            
+
             {/* Badge */}
             {product.badge && (
-              <span 
-                className="absolute top-4 left-4 rounded-full px-2.5 py-1 text-[9px] font-bold font-mono-tech text-background uppercase tracking-wider" 
+              <span
+                className="absolute top-4 left-4 rounded-full px-2.5 py-1 text-[9px] font-bold font-mono-tech text-background uppercase tracking-wider"
                 style={{ background: "var(--gradient-accent)" }}
               >
                 {product.badge.replace("-", " ")}
@@ -69,10 +83,22 @@ export function ProductCard({ product }: { product: Product }) {
               <Star className="size-3 text-amber-400 fill-amber-400" />
               {product.rating.toFixed(1)}
             </span>
+
+            <button
+              type="button"
+              onClick={handleSaveToggle}
+              className="absolute bottom-4 right-4 flex items-center justify-center size-9 rounded-full border border-[var(--hairline)] bg-background/85 backdrop-blur-md text-foreground shadow-sm transition-all hover:border-[var(--emerald-accent)] hover:text-[var(--emerald-accent)]"
+              aria-label={isSaved ? "Remove from saved" : "Save product"}
+            >
+              {isSaved ? <BookmarkCheck className="size-4" /> : <Bookmark className="size-4" />}
+            </button>
           </div>
 
           {/* Info panel */}
-          <div className="p-6 flex-1 flex flex-col justify-between">
+          <Link
+            to={`/product/${product.slug}`}
+            className="p-6 flex-1 flex flex-col justify-between"
+          >
             <div className="space-y-2">
               <div className="flex items-center justify-between">
                 <span className="font-mono-tech text-[10px] uppercase tracking-[0.25em] text-[var(--emerald-accent)]">
@@ -98,10 +124,10 @@ export function ProductCard({ product }: { product: Product }) {
                   </span>
                 )}
               </div>
-              <motion.span 
+              <motion.span
                 variants={{
                   initial: { x: 0 },
-                  hover: { x: 3 }
+                  hover: { x: 3 },
                 }}
                 transition={{ type: "spring", stiffness: 300, damping: 15 }}
                 className="size-8 rounded-full bg-[var(--surface-2)] group-hover:bg-[var(--emerald-accent)] text-foreground group-hover:text-background flex items-center justify-center transition-colors"
@@ -109,8 +135,8 @@ export function ProductCard({ product }: { product: Product }) {
                 <ArrowRight className="size-4" />
               </motion.span>
             </div>
-          </div>
-        </Link>
+          </Link>
+        </div>
       </TiltCard>
     </motion.div>
   );
@@ -118,8 +144,8 @@ export function ProductCard({ product }: { product: Product }) {
 
 export function DealCard({ product, hours }: { product: Product; hours: number }) {
   const hasDiscount = product.originalPrice && product.originalPrice > product.price;
-  const discountPercent = hasDiscount 
-    ? Math.round(((product.originalPrice! - product.price) / product.originalPrice!) * 100) 
+  const discountPercent = hasDiscount
+    ? Math.round(((product.originalPrice! - product.price) / product.originalPrice!) * 100)
     : 0;
 
   const [timeLeft, setTimeLeft] = useState("");
@@ -142,7 +168,7 @@ export function DealCard({ product, hours }: { product: Product; hours: number }
       const s = Math.floor((difference % (1000 * 60)) / 1000);
 
       setTimeLeft(
-        `${h.toString().padStart(2, "0")}:${m.toString().padStart(2, "0")}:${s.toString().padStart(2, "0")}`
+        `${h.toString().padStart(2, "0")}:${m.toString().padStart(2, "0")}:${s.toString().padStart(2, "0")}`,
       );
     };
 
@@ -159,14 +185,17 @@ export function DealCard({ product, hours }: { product: Product; hours: number }
       variants={{
         initial: { opacity: 0, y: 16 },
         animate: { opacity: 1, y: 0 },
-        tap: { scale: 0.975 }
+        tap: { scale: 0.975 },
       }}
       whileInView="animate"
       viewport={{ once: true, margin: "-40px" }}
       transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
       className="h-full"
     >
-      <TiltCard className="surface-card overflow-hidden group flex flex-col h-full relative" max={5}>
+      <TiltCard
+        className="surface-card overflow-hidden group flex flex-col h-full relative"
+        max={5}
+      >
         <div className="relative aspect-[5/4] overflow-hidden bg-[var(--surface-2)]">
           <img
             src={product.image}
@@ -199,9 +228,13 @@ export function DealCard({ product, hours }: { product: Product; hours: number }
             </span>
             <h3 className="font-display text-lg font-semibold tracking-tight">{product.name}</h3>
             <div className="flex items-baseline gap-3 pt-1">
-              <span className="font-display text-2xl font-bold text-accent-gradient">${product.price}</span>
+              <span className="font-display text-2xl font-bold text-accent-gradient">
+                ${product.price}
+              </span>
               {hasDiscount && (
-                <span className="text-sm text-muted-foreground line-through">${product.originalPrice}</span>
+                <span className="text-sm text-muted-foreground line-through">
+                  ${product.originalPrice}
+                </span>
               )}
             </div>
           </div>
@@ -236,14 +269,17 @@ export function CategoryCard({ category }: { category: Category }) {
       variants={{
         initial: { opacity: 0, y: 16 },
         animate: { opacity: 1, y: 0 },
-        tap: { scale: 0.98 }
+        tap: { scale: 0.98 },
       }}
       whileInView="animate"
       viewport={{ once: true, margin: "-40px" }}
       transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
       className="h-full"
     >
-      <TiltCard className="surface-card-2 relative overflow-hidden group flex flex-col justify-between h-full min-h-[280px]" max={6}>
+      <TiltCard
+        className="surface-card-2 relative overflow-hidden group flex flex-col justify-between h-full min-h-[280px]"
+        max={6}
+      >
         <img
           src={category.image}
           alt=""
@@ -253,14 +289,21 @@ export function CategoryCard({ category }: { category: Category }) {
           className="absolute inset-0 size-full object-cover opacity-30 transition-transform duration-700 group-hover:scale-[1.04] dark:opacity-20"
         />
         <div className="absolute inset-0 bg-gradient-to-br from-background via-background/90 to-background/55" />
-        <div className="absolute -right-20 -top-20 size-60 rounded-full blur-3xl opacity-20 group-hover:opacity-40 transition-opacity" style={{ background: "var(--gradient-accent)" }} />
-        
+        <div
+          className="absolute -right-20 -top-20 size-60 rounded-full blur-3xl opacity-20 group-hover:opacity-40 transition-opacity"
+          style={{ background: "var(--gradient-accent)" }}
+        />
+
         <div className="relative p-8 pb-0">
           <div className="size-12 grid place-items-center rounded-xl bg-background border border-[var(--hairline)] text-[var(--emerald-accent)] group-hover:scale-110 transition-transform duration-300 mb-6">
             <IconComponent className="size-5" />
           </div>
-          <h3 className="font-display text-2xl font-semibold mb-2 text-foreground">{category.name}</h3>
-          <p className="text-sm text-muted-foreground leading-relaxed pr-4 line-clamp-2">{category.description}</p>
+          <h3 className="font-display text-2xl font-semibold mb-2 text-foreground">
+            {category.name}
+          </h3>
+          <p className="text-sm text-muted-foreground leading-relaxed pr-4 line-clamp-2">
+            {category.description}
+          </p>
         </div>
 
         <div className="relative p-8 pt-6 border-t border-[var(--hairline)]/50 mt-6 flex items-center justify-between">
@@ -275,7 +318,7 @@ export function CategoryCard({ category }: { category: Category }) {
             <motion.span
               variants={{
                 initial: { x: 0 },
-                hover: { x: 3 }
+                hover: { x: 3 },
               }}
               transition={{ type: "spring", stiffness: 300, damping: 15 }}
               className="inline-block"

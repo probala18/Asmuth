@@ -1,61 +1,31 @@
-import { useEffect, useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { Heart, Inbox, Trash2 } from "lucide-react";
+import { Inbox, Trash2 } from "lucide-react";
 import { SplitTextReveal } from "@/components/site/motion";
 import { ProductCard } from "@/components/site/ProductCards";
-import { getProduct } from "@/data";
-import type { Product } from "@/types";
+import { clearSavedProducts, removeSavedProduct, useSavedProducts } from "@/lib/saved-products";
 
 export const Route = createFileRoute("/wishlist")({
   head: () => ({
     meta: [
       { title: "Your Wishlist — genCART" },
-      { name: "description", content: "View and manage your bookmarked premium tech products on genCART." },
+      {
+        name: "description",
+        content: "View and manage your bookmarked premium tech products on genCART.",
+      },
     ],
   }),
   component: WishlistPage,
 });
 
 function WishlistPage() {
-  const [wishlistItems, setWishlistItems] = useState<Product[]>([]);
-
-  useEffect(() => {
-    // Read wishlist from localStorage
-    try {
-      const stored = localStorage.getItem("genCART-wishlist");
-      if (stored) {
-        const slugs = JSON.parse(stored) as string[];
-        const items = slugs.map((s) => getProduct(s)).filter((p): p is Product => !!p);
-        setWishlistItems(items);
-      } else {
-        // Mock default item if localStorage is empty to show how it works
-        const defaults = ["genCART-laptop-air", "genCART-buds-pro"];
-        const items = defaults.map((s) => getProduct(s)).filter((p): p is Product => !!p);
-        setWishlistItems(items);
-        localStorage.setItem("genCART-wishlist", JSON.stringify(defaults));
-      }
-    } catch (e) {
-      console.error(e);
-    }
-  }, []);
+  const wishlistItems = useSavedProducts();
 
   const handleClear = () => {
-    localStorage.removeItem("genCART-wishlist");
-    setWishlistItems([]);
+    clearSavedProducts();
   };
 
   const handleRemove = (slug: string) => {
-    try {
-      const stored = localStorage.getItem("genCART-wishlist");
-      if (stored) {
-        const slugs = JSON.parse(stored) as string[];
-        const filteredSlugs = slugs.filter((s) => s !== slug);
-        localStorage.setItem("genCART-wishlist", JSON.stringify(filteredSlugs));
-        setWishlistItems(wishlistItems.filter((i) => i.slug !== slug));
-      }
-    } catch (e) {
-      console.error(e);
-    }
+    removeSavedProduct(slug);
   };
 
   return (
@@ -63,10 +33,16 @@ function WishlistPage() {
       <section className="relative pt-40 pb-16 px-6 lg:px-10 overflow-hidden">
         <div className="absolute inset-0 bg-radial-glow opacity-70" />
         <div className="relative max-w-6xl mx-auto text-center space-y-4">
-          <p className="font-mono-tech text-[10px] uppercase tracking-[0.3em] text-[var(--emerald-accent)]">Your Collection</p>
-          <SplitTextReveal text="Wishlist" className="font-display text-5xl lg:text-7xl font-bold tracking-tight" />
+          <p className="font-mono-tech text-[10px] uppercase tracking-[0.3em] text-[var(--emerald-accent)]">
+            Your Collection
+          </p>
+          <SplitTextReveal
+            text="Wishlist"
+            className="font-display text-5xl lg:text-7xl font-bold tracking-tight"
+          />
           <p className="text-muted-foreground text-sm max-w-md mx-auto">
-            A curated list of products you are tracking. Check back for stock changes, price drops, or reviews updates.
+            A curated list of products you are tracking. Check back for stock changes, price drops,
+            or reviews updates.
           </p>
         </div>
       </section>
@@ -76,8 +52,10 @@ function WishlistPage() {
           {wishlistItems.length > 0 ? (
             <>
               <div className="flex justify-between items-center border-b border-[var(--hairline)] pb-4">
-                <span className="text-xs font-mono-tech uppercase text-muted-foreground">{wishlistItems.length} Saved item{wishlistItems.length !== 1 ? "s" : ""}</span>
-                <button 
+                <span className="text-xs font-mono-tech uppercase text-muted-foreground">
+                  {wishlistItems.length} Saved item{wishlistItems.length !== 1 ? "s" : ""}
+                </span>
+                <button
                   onClick={handleClear}
                   className="text-xs text-[var(--cyan-accent)] hover:text-foreground font-semibold flex items-center gap-1.5 transition-colors cursor-pointer"
                 >
@@ -108,7 +86,10 @@ function WishlistPage() {
                 Explore our curated categories to add products to your wishlist.
               </p>
               <div className="pt-2">
-                <Link to="/categories" className="btn-accent rounded-full px-6 py-3 text-xs font-semibold">
+                <Link
+                  to="/categories"
+                  className="btn-accent rounded-full px-6 py-3 text-xs font-semibold"
+                >
                   Browse Categories
                 </Link>
               </div>

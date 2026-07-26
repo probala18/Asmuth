@@ -22,6 +22,7 @@ import {
 import { ShimmerButton } from "@/components/ui/shimmer-button";
 import { products, categories, getDealsProducts } from "@/data";
 import { dashboardData } from "@/data/personalizedDashboardData";
+import { useSavedProducts } from "@/lib/saved-products";
 import type { Product } from "@/types";
 
 /* ───────────────────────────────────────────────────────────
@@ -119,7 +120,9 @@ export function DashboardHeroSection() {
               >
                 Editorially curated recommendations built around your interest profile.
               </motion.p>
-              <motion.div variants={{ hidden: { opacity: 0, y: 12 }, visible: { opacity: 1, y: 0 } }}>
+              <motion.div
+                variants={{ hidden: { opacity: 0, y: 12 }, visible: { opacity: 1, y: 0 } }}
+              >
                 <Link to="/collections">
                   <ShimmerButton className="btn-accent">
                     Explore Collections
@@ -132,9 +135,24 @@ export function DashboardHeroSection() {
 
           {/* Floating product images on right side of banner */}
           <div className="absolute right-4 bottom-4 hidden sm:flex items-end gap-3 pointer-events-none">
-            <img src="/assets/product-laptop.jpg" alt="" className="w-28 h-20 rounded-xl object-cover shadow-lg opacity-90 translate-y-2" loading="lazy" />
-            <img src="/assets/product-headphones.jpg" alt="" className="w-24 h-24 rounded-xl object-cover shadow-lg opacity-80 -translate-y-2" loading="lazy" />
-            <img src="/assets/product-watch.jpg" alt="" className="w-20 h-20 rounded-xl object-cover shadow-lg opacity-85" loading="lazy" />
+            <img
+              src="/assets/product-laptop.jpg"
+              alt=""
+              className="w-28 h-20 rounded-xl object-cover shadow-lg opacity-90 translate-y-2"
+              loading="lazy"
+            />
+            <img
+              src="/assets/product-headphones.jpg"
+              alt=""
+              className="w-24 h-24 rounded-xl object-cover shadow-lg opacity-80 -translate-y-2"
+              loading="lazy"
+            />
+            <img
+              src="/assets/product-watch.jpg"
+              alt=""
+              className="w-20 h-20 rounded-xl object-cover shadow-lg opacity-85"
+              loading="lazy"
+            />
           </div>
         </div>
 
@@ -144,18 +162,30 @@ export function DashboardHeroSection() {
           <div className="surface-card-2 rounded-2xl border border-[var(--hairline)] p-5 space-y-4">
             <div className="flex items-center gap-3">
               <div className="size-10 rounded-full overflow-hidden border border-[var(--hairline)] bg-[var(--surface-2)]">
-                <img src={dashboardData.user.avatar} alt={dashboardData.user.name} className="size-full object-cover" />
+                <img
+                  src={dashboardData.user.avatar}
+                  alt={dashboardData.user.name}
+                  className="size-full object-cover"
+                />
               </div>
               <div>
                 <p className="text-xs text-muted-foreground">{getGreeting()},</p>
-                <p className="font-display text-sm font-bold text-foreground">{dashboardData.user.firstName}</p>
+                <p className="font-display text-sm font-bold text-foreground">
+                  {dashboardData.user.firstName}
+                </p>
               </div>
             </div>
             <div className="flex flex-col gap-2">
-              <Link to="/dashboard" className="btn-accent flex items-center justify-center gap-2 rounded-xl py-2.5 text-xs font-semibold w-full">
+              <Link
+                to="/dashboard"
+                className="btn-accent flex items-center justify-center gap-2 rounded-xl py-2.5 text-xs font-semibold w-full"
+              >
                 My Workspace
               </Link>
-              <Link to="/login" className="flex items-center justify-center gap-2 rounded-xl py-2.5 text-xs font-medium w-full border border-[var(--hairline)] text-foreground hover:bg-[var(--surface)] transition-all">
+              <Link
+                to="/login"
+                className="flex items-center justify-center gap-2 rounded-xl py-2.5 text-xs font-medium w-full border border-[var(--hairline)] text-foreground hover:bg-[var(--surface)] transition-all"
+              >
                 Manage Account
               </Link>
             </div>
@@ -163,21 +193,33 @@ export function DashboardHeroSection() {
 
           {/* Promo Cards */}
           <div className="surface-card-2 rounded-2xl border border-[var(--hairline)] p-4 space-y-2 bg-gradient-to-br from-[color-mix(in_oklab,var(--cyan-accent)_8%,var(--background))] to-[var(--surface)]">
-            <p className="font-mono-tech text-[9px] uppercase tracking-widest text-[var(--cyan-accent)]">Deal Alert</p>
-            <p className="text-xs font-semibold text-foreground leading-snug">
-              Get up to 25% off on selected <span className="text-[var(--emerald-accent)]">computing products</span>.
+            <p className="font-mono-tech text-[9px] uppercase tracking-widest text-[var(--cyan-accent)]">
+              Deal Alert
             </p>
-            <Link to="/deals" className="text-[10px] font-mono-tech text-[var(--emerald-accent)] inline-flex items-center gap-1 hover:gap-2 transition-all">
+            <p className="text-xs font-semibold text-foreground leading-snug">
+              Get up to 25% off on selected{" "}
+              <span className="text-[var(--emerald-accent)]">computing products</span>.
+            </p>
+            <Link
+              to="/deals"
+              className="text-[10px] font-mono-tech text-[var(--emerald-accent)] inline-flex items-center gap-1 hover:gap-2 transition-all"
+            >
               View Deals <ArrowRight className="size-3" />
             </Link>
           </div>
 
           <div className="surface-card-2 rounded-2xl border border-[var(--hairline)] p-4 space-y-2 bg-gradient-to-br from-[color-mix(in_oklab,var(--emerald-accent)_6%,var(--background))] to-[var(--surface)]">
-            <p className="font-mono-tech text-[9px] uppercase tracking-widest text-[var(--emerald-accent)]">Editorial</p>
-            <p className="text-xs font-semibold text-foreground leading-snug">
-              New comparison matrix: <span className="text-[var(--cyan-accent)]">Laptop Air vs MacBook Pro</span>
+            <p className="font-mono-tech text-[9px] uppercase tracking-widest text-[var(--emerald-accent)]">
+              Editorial
             </p>
-            <Link to="/compare" className="text-[10px] font-mono-tech text-[var(--emerald-accent)] inline-flex items-center gap-1 hover:gap-2 transition-all">
+            <p className="text-xs font-semibold text-foreground leading-snug">
+              New comparison matrix:{" "}
+              <span className="text-[var(--cyan-accent)]">Laptop Air vs MacBook Pro</span>
+            </p>
+            <Link
+              to="/compare"
+              className="text-[10px] font-mono-tech text-[var(--emerald-accent)] inline-flex items-center gap-1 hover:gap-2 transition-all"
+            >
               Read Now <ArrowRight className="size-3" />
             </Link>
           </div>
@@ -197,9 +239,18 @@ export function DealsAndOffersSection() {
       setCountdown((prev) => {
         let { days, hours, mins, secs } = prev;
         secs--;
-        if (secs < 0) { secs = 59; mins--; }
-        if (mins < 0) { mins = 59; hours--; }
-        if (hours < 0) { hours = 23; days--; }
+        if (secs < 0) {
+          secs = 59;
+          mins--;
+        }
+        if (mins < 0) {
+          mins = 59;
+          hours--;
+        }
+        if (hours < 0) {
+          hours = 23;
+          days--;
+        }
         if (days < 0) days = 0;
         return { days, hours, mins, secs };
       });
@@ -222,7 +273,9 @@ export function DealsAndOffersSection() {
             <h2 className="font-display text-xl sm:text-2xl font-bold text-foreground">
               Deals and <span className="text-accent-gradient">offers</span>
             </h2>
-            <p className="text-xs text-muted-foreground mt-1">Signal-grade savings on curated products</p>
+            <p className="text-xs text-muted-foreground mt-1">
+              Signal-grade savings on curated products
+            </p>
           </div>
 
           {/* Countdown Timer */}
@@ -237,7 +290,9 @@ export function DealsAndOffersSection() {
                 <span className="font-display text-lg font-bold text-foreground bg-[var(--surface-2)] px-3 py-1.5 rounded-lg border border-[var(--hairline)] min-w-[42px] text-center tabular-nums">
                   {String(t.val).padStart(2, "0")}
                 </span>
-                <span className="font-mono-tech text-[9px] text-muted-foreground mt-1">{t.label}</span>
+                <span className="font-mono-tech text-[9px] text-muted-foreground mt-1">
+                  {t.label}
+                </span>
               </div>
             ))}
           </div>
@@ -250,9 +305,18 @@ export function DealsAndOffersSection() {
               ? Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100)
               : 0;
             return (
-              <Link key={product.slug} to={`/product/${product.slug}`} className="group text-center space-y-3 p-3 rounded-xl hover:bg-[var(--surface)] transition-all">
+              <Link
+                key={product.slug}
+                to={`/product/${product.slug}`}
+                className="group text-center space-y-3 p-3 rounded-xl hover:bg-[var(--surface)] transition-all"
+              >
                 <div className="relative aspect-square rounded-xl overflow-hidden bg-[var(--surface-2)] mx-auto w-full max-w-[140px]">
-                  <img src={product.image} alt={product.name} className="size-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />
+                  <img
+                    src={product.image}
+                    alt={product.name}
+                    className="size-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    loading="lazy"
+                  />
                 </div>
                 <p className="text-xs font-semibold text-foreground truncate">{product.name}</p>
                 {discount > 0 && (
@@ -329,7 +393,9 @@ export function CategoryBrowserSection({
                   />
                 </div>
                 <div className="space-y-0.5">
-                  <p className="text-xs font-semibold text-foreground line-clamp-1">{product.name}</p>
+                  <p className="text-xs font-semibold text-foreground line-clamp-1">
+                    {product.name}
+                  </p>
                   <p className="font-mono-tech text-[10px] text-muted-foreground">
                     From <span className="text-foreground font-semibold">${product.price}</span>
                   </p>
@@ -373,7 +439,12 @@ export function PromotionalBannersSection() {
                 View Collection
               </Link>
             </div>
-            <img src="/assets/product-watch.jpg" alt="Smart Watch" className="w-32 h-32 sm:w-40 sm:h-40 rounded-2xl object-cover shadow-xl" loading="lazy" />
+            <img
+              src="/assets/product-watch.jpg"
+              alt="Smart Watch"
+              className="w-32 h-32 sm:w-40 sm:h-40 rounded-2xl object-cover shadow-xl"
+              loading="lazy"
+            />
           </div>
         </div>
 
@@ -395,7 +466,12 @@ export function PromotionalBannersSection() {
                 Shop Now
               </Link>
             </div>
-            <img src="/assets/product-headphones.jpg" alt="Buds Pro" className="w-32 h-32 sm:w-40 sm:h-40 rounded-2xl object-cover shadow-xl" loading="lazy" />
+            <img
+              src="/assets/product-headphones.jpg"
+              alt="Buds Pro"
+              className="w-32 h-32 sm:w-40 sm:h-40 rounded-2xl object-cover shadow-xl"
+              loading="lazy"
+            />
           </div>
         </div>
       </div>
@@ -421,8 +497,12 @@ export function ContinueExploringSection() {
       <div className="max-w-7xl mx-auto rounded-3xl border border-[var(--hairline)] bg-[linear-gradient(135deg,var(--surface),var(--surface-2))] p-6 sm:p-8">
         <div className="flex items-center justify-between gap-4 mb-6">
           <div>
-            <p className="font-mono-tech text-[10px] uppercase tracking-[0.3em] text-[var(--cyan-accent)]">Continue exploring</p>
-            <h3 className="font-display text-xl sm:text-2xl font-semibold text-foreground">Pick up where you left off</h3>
+            <p className="font-mono-tech text-[10px] uppercase tracking-[0.3em] text-[var(--cyan-accent)]">
+              Continue exploring
+            </p>
+            <h3 className="font-display text-xl sm:text-2xl font-semibold text-foreground">
+              Pick up where you left off
+            </h3>
           </div>
           <span className="hidden sm:inline-flex rounded-full border border-[var(--hairline)] px-3 py-1 text-xs text-muted-foreground">
             Built around your recent interests
@@ -436,7 +516,12 @@ export function ContinueExploringSection() {
               className="group rounded-2xl border border-[var(--hairline)] bg-background/70 p-4 transition-all hover:-translate-y-1 hover:border-[var(--emerald-accent)]"
             >
               <div className="relative aspect-[5/4] overflow-hidden rounded-xl bg-[var(--surface-2)]">
-                <img src={product.image} alt={product.name} className="size-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" />
+                <img
+                  src={product.image}
+                  alt={product.name}
+                  className="size-full object-cover transition-transform duration-500 group-hover:scale-105"
+                  loading="lazy"
+                />
               </div>
               <div className="mt-4 space-y-1">
                 <p className="text-sm font-semibold text-foreground">{product.name}</p>
@@ -452,9 +537,9 @@ export function ContinueExploringSection() {
 
 /* ─── Section 6: Saved Products ─────────────── */
 export function SavedProductsSection() {
-  const savedProducts = products.slice(1, 4);
-
-  if (savedProducts.length === 0) return null;
+  const savedProducts = useSavedProducts();
+  const visibleProducts = savedProducts.slice(0, 3);
+  const hasSavedProducts = visibleProducts.length > 0;
 
   return (
     <motion.section
@@ -468,30 +553,56 @@ export function SavedProductsSection() {
       <div className="max-w-7xl mx-auto rounded-3xl border border-[var(--hairline)] bg-[var(--surface)]/70 p-6 sm:p-8">
         <div className="flex items-center justify-between gap-4 mb-6">
           <div>
-            <p className="font-mono-tech text-[10px] uppercase tracking-[0.3em] text-[var(--emerald-accent)]">Saved for later</p>
-            <h3 className="font-display text-xl sm:text-2xl font-semibold text-foreground">Keep an eye on these</h3>
+            <p className="font-mono-tech text-[10px] uppercase tracking-[0.3em] text-[var(--emerald-accent)]">
+              Saved for later
+            </p>
+            <h3 className="font-display text-xl sm:text-2xl font-semibold text-foreground">
+              {hasSavedProducts ? "Keep an eye on these" : "Start building your shortlist"}
+            </h3>
           </div>
-          <Link to="/wishlist" className="text-sm font-medium text-[var(--emerald-accent)] inline-flex items-center gap-2">
+          <Link
+            to="/wishlist"
+            className="text-sm font-medium text-[var(--emerald-accent)] inline-flex items-center gap-2"
+          >
             View all <ArrowRight className="size-4" />
           </Link>
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-          {savedProducts.map((product) => (
+        {hasSavedProducts ? (
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            {visibleProducts.map((product) => (
+              <Link
+                key={product.slug}
+                to={`/product/${product.slug}`}
+                className="group flex items-center gap-3 rounded-2xl border border-[var(--hairline)] bg-background/70 p-3 transition-all hover:border-[var(--cyan-accent)]"
+              >
+                <div className="size-16 shrink-0 overflow-hidden rounded-xl bg-[var(--surface-2)]">
+                  <img
+                    src={product.image}
+                    alt={product.name}
+                    className="size-full object-cover"
+                    loading="lazy"
+                  />
+                </div>
+                <div>
+                  <p className="text-sm font-semibold text-foreground">{product.name}</p>
+                  <p className="text-xs text-muted-foreground">{product.category}</p>
+                </div>
+              </Link>
+            ))}
+          </div>
+        ) : (
+          <div className="rounded-2xl border border-dashed border-[var(--hairline)] bg-background/60 p-6 text-center">
+            <p className="text-sm text-muted-foreground">
+              Save products from the catalog to keep your favorite picks in one place.
+            </p>
             <Link
-              key={product.slug}
-              to={`/product/${product.slug}`}
-              className="group flex items-center gap-3 rounded-2xl border border-[var(--hairline)] bg-background/70 p-3 transition-all hover:border-[var(--cyan-accent)]"
+              to="/collections"
+              className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-[var(--emerald-accent)]"
             >
-              <div className="size-16 shrink-0 overflow-hidden rounded-xl bg-[var(--surface-2)]">
-                <img src={product.image} alt={product.name} className="size-full object-cover" loading="lazy" />
-              </div>
-              <div>
-                <p className="text-sm font-semibold text-foreground">{product.name}</p>
-                <p className="text-xs text-muted-foreground">{product.category}</p>
-              </div>
+              Explore products <ArrowRight className="size-4" />
             </Link>
-          ))}
-        </div>
+          </div>
+        )}
       </div>
     </motion.section>
   );
@@ -523,7 +634,9 @@ export function PopularProductsSection() {
             <h2 className="font-display text-xl sm:text-2xl font-bold text-foreground">
               Popular <span className="text-accent-gradient">Products</span>
             </h2>
-            <p className="text-xs text-muted-foreground mt-1">Trending and best-selling across all categories</p>
+            <p className="text-xs text-muted-foreground mt-1">
+              Trending and best-selling across all categories
+            </p>
           </div>
 
           {/* Carousel Controls */}
@@ -556,7 +669,12 @@ export function PopularProductsSection() {
               className="group shrink-0 w-52 sm:w-56 surface-card-2 rounded-2xl border border-[var(--hairline)] p-4 snap-start hover:shadow-xl transition-all space-y-3"
             >
               <div className="relative aspect-square rounded-xl overflow-hidden bg-[var(--surface-2)]">
-                <img src={product.image} alt={product.name} className="size-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />
+                <img
+                  src={product.image}
+                  alt={product.name}
+                  className="size-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  loading="lazy"
+                />
                 {product.badge && (
                   <span className="absolute top-2 left-2 font-mono-tech text-[9px] uppercase tracking-wider bg-background/80 backdrop-blur-sm text-[var(--emerald-accent)] px-2 py-0.5 rounded-md border border-[var(--hairline)]">
                     {product.badge}
@@ -565,9 +683,13 @@ export function PopularProductsSection() {
               </div>
               <div className="space-y-1">
                 <p className="text-xs font-semibold text-foreground line-clamp-1">{product.name}</p>
-                <p className="text-[10px] text-muted-foreground line-clamp-1">{product.shortDescription}</p>
+                <p className="text-[10px] text-muted-foreground line-clamp-1">
+                  {product.shortDescription}
+                </p>
                 <div className="flex items-center justify-between pt-1">
-                  <span className="font-display text-sm font-bold text-foreground">${product.price}</span>
+                  <span className="font-display text-sm font-bold text-foreground">
+                    ${product.price}
+                  </span>
                   <div className="flex items-center gap-0.5 text-[10px] text-[var(--emerald-accent)]">
                     <Star className="size-3 fill-current" />
                     {product.rating}
