@@ -1,6 +1,15 @@
 import { useEffect, useState } from "react";
 import { Link } from "@tanstack/react-router";
-import { Star, Timer, Tag, ArrowRight, Bookmark, BookmarkCheck, LucideIcon } from "lucide-react";
+import {
+  Star,
+  Timer,
+  Tag,
+  ArrowRight,
+  Bookmark,
+  BookmarkCheck,
+  GitCompareArrows,
+  LucideIcon,
+} from "lucide-react";
 import * as Icons from "lucide-react";
 import type { Product, Category } from "@/types";
 import { TiltCard, MouseGlow } from "./motion";
@@ -13,7 +22,15 @@ function resolveIcon(name: string): LucideIcon {
   return IconComponent || Icons.HelpCircle;
 }
 
-export function ProductCard({ product }: { product: Product }) {
+export function ProductCard({
+  product,
+  compareSelected = false,
+  onCompareToggle,
+}: {
+  product: Product;
+  compareSelected?: boolean;
+  onCompareToggle?: (slug: string) => void;
+}) {
   const hasDiscount = product.originalPrice && product.originalPrice > product.price;
   const discountPercent = hasDiscount
     ? Math.round(((product.originalPrice! - product.price) / product.originalPrice!) * 100)
@@ -25,6 +42,12 @@ export function ProductCard({ product }: { product: Product }) {
     event.preventDefault();
     event.stopPropagation();
     toggleSavedProduct(product.slug, product);
+  };
+
+  const handleCompareToggle = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+    event.stopPropagation();
+    onCompareToggle?.(product.slug);
   };
 
   return (
@@ -49,7 +72,7 @@ export function ProductCard({ product }: { product: Product }) {
         <div className="flex flex-col h-full">
           {/* Image panel */}
           <div className="relative aspect-[5/4] overflow-hidden bg-[var(--surface-2)]">
-            <Link to={`/product/${product.slug}`} className="block size-full">
+            <Link to="/product/$slug" params={{ slug: product.slug }} className="block size-full">
               <img
                 src={product.image}
                 alt={product.name}
@@ -84,19 +107,30 @@ export function ProductCard({ product }: { product: Product }) {
               {product.rating.toFixed(1)}
             </span>
 
-            <button
-              type="button"
-              onClick={handleSaveToggle}
-              className="absolute bottom-4 right-4 flex items-center justify-center size-9 rounded-full border border-[var(--hairline)] bg-background/85 backdrop-blur-md text-foreground shadow-sm transition-all hover:border-[var(--emerald-accent)] hover:text-[var(--emerald-accent)]"
-              aria-label={isSaved ? "Remove from saved" : "Save product"}
-            >
-              {isSaved ? <BookmarkCheck className="size-4" /> : <Bookmark className="size-4" />}
-            </button>
+            <div className="absolute bottom-4 right-4 flex gap-2">
+              <button
+                type="button"
+                onClick={handleCompareToggle}
+                className={`flex items-center justify-center size-9 rounded-full border border-[var(--hairline)] bg-background/85 backdrop-blur-md text-foreground shadow-sm transition-all ${compareSelected ? "border-[var(--emerald-accent)] text-[var(--emerald-accent)]" : "hover:border-[var(--emerald-accent)] hover:text-[var(--emerald-accent)]"}`}
+                aria-label={compareSelected ? "Remove from compare" : "Add to compare"}
+              >
+                <GitCompareArrows className="size-4" />
+              </button>
+              <button
+                type="button"
+                onClick={handleSaveToggle}
+                className="flex items-center justify-center size-9 rounded-full border border-[var(--hairline)] bg-background/85 backdrop-blur-md text-foreground shadow-sm transition-all hover:border-[var(--emerald-accent)] hover:text-[var(--emerald-accent)]"
+                aria-label={isSaved ? "Remove from saved" : "Save product"}
+              >
+                {isSaved ? <BookmarkCheck className="size-4" /> : <Bookmark className="size-4" />}
+              </button>
+            </div>
           </div>
 
           {/* Info panel */}
           <Link
-            to={`/product/${product.slug}`}
+            to="/product/$slug"
+            params={{ slug: product.slug }}
             className="p-6 flex-1 flex flex-col justify-between"
           >
             <div className="space-y-2">
@@ -246,7 +280,8 @@ export function DealCard({ product, hours }: { product: Product; hours: number }
             className="w-full mt-4"
           >
             <Link
-              to={`/product/${product.slug}`}
+              to="/product/$slug"
+              params={{ slug: product.slug }}
               className="btn-ghost-glow w-full rounded-full py-2.5 text-xs font-semibold inline-flex items-center justify-center gap-2 cursor-pointer"
             >
               <Tag className="size-3" /> Grab deal
@@ -311,7 +346,8 @@ export function CategoryCard({ category }: { category: Category }) {
             {category.productCount} items reviewed
           </span>
           <Link
-            to={`/category/${category.slug}`}
+            to="/category/$slug"
+            params={{ slug: category.slug }}
             className="text-xs font-semibold text-[var(--emerald-accent)] inline-flex items-center gap-1 transition-all"
           >
             <span>Explore</span>

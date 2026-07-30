@@ -96,7 +96,7 @@ Theme state is managed in:
 
 ## Notes
 
-- This repo uses `@lovable.dev/vite-tanstack-config` to provide Vite defaults and shared plugin behavior.
+- This repo uses standard Vite and TanStack Start configuration for local development and builds.
 - The Vite config is minimal, with server entry configured via `server: { entry: "server" }`.
 
 ## Scripts

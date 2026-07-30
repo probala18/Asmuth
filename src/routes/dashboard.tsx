@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, redirect } from "@tanstack/react-router";
 import {
   DashboardHeroSection,
   DealsAndOffersSection,
@@ -13,8 +13,16 @@ import { PersonalizedRecommendations } from "@/components/dashboard/Personalized
 import { PersonalizationOnboarding } from "@/components/dashboard/PersonalizationOnboarding";
 import { getUserPreferences, type UserPreferences } from "@/lib/preferences";
 import { products } from "@/data";
+import { supabase } from "@/supabase";
 
 export const Route = createFileRoute("/dashboard")({
+  beforeLoad: async () => {
+    const { data } = await supabase.auth.getSession();
+
+    if (!data.session) {
+      throw redirect({ to: "/login" });
+    }
+  },
   head: () => ({
     meta: [
       { title: "Personalized Workspace · genCART" },

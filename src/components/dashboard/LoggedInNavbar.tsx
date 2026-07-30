@@ -1,9 +1,9 @@
 import { useEffect, useRef, useState } from "react";
-import { Link, useNavigate, useRouterState } from "@tanstack/react-router";
+import { Link, useRouterState } from "@tanstack/react-router";
 import { motion, AnimatePresence } from "motion/react";
-import { Search, Bookmark, Bell, ChevronDown, Menu, X, Sparkles, ArrowUpRight } from "lucide-react";
+import { Bookmark, Bell, ChevronDown, Menu, X, Sparkles, ArrowUpRight } from "lucide-react";
 import { ThemeToggle } from "@/components/site/ThemeToggle";
-import { SearchCommand } from "./SearchCommand";
+import { GlobalSearch } from "@/components/site/SearchBar";
 import { NotificationPanel } from "./NotificationPanel";
 import { ProfileDropdown } from "./ProfileDropdown";
 import { dashboardData } from "@/data/personalizedDashboardData";
@@ -20,11 +20,9 @@ const loggedInNavItems = [
 
 export function LoggedInNavbar() {
   const navRef = useRef<HTMLDivElement>(null);
-  const [searchOpen, setSearchOpen] = useState(false);
   const [notificationsOpen, setNotificationsOpen] = useState(false);
   const [profileOpen, setProfileOpen] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const navigate = useNavigate();
   const currentPath = useRouterState({ select: (s) => s.location.pathname });
   const savedProducts = useSavedProducts();
 
@@ -78,10 +76,10 @@ export function LoggedInNavbar() {
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-          className="max-w-7xl mx-auto rounded-full border border-[var(--hairline)] bg-background/85 backdrop-blur-xl px-5 py-2.5 transition-all shadow-xl pointer-events-auto flex items-center justify-between gap-4"
+          className="pointer-events-auto mx-auto flex max-w-7xl flex-nowrap items-center justify-between gap-3 rounded-full border border-[var(--hairline)] bg-background/85 px-4 py-3 shadow-xl backdrop-blur-xl transition-all sm:px-5 sm:py-2.5"
         >
           {/* LEFT: Logo & Personal Tag */}
-          <div className="flex items-center gap-3 shrink-0">
+          <div className="flex min-w-0 shrink-0 items-center gap-3">
             <Link to="/dashboard" className="flex items-center gap-2 group">
               <div
                 className="relative w-8 h-8 rounded-lg flex items-center justify-center transition-transform group-hover:scale-105"
@@ -95,13 +93,13 @@ export function LoggedInNavbar() {
               </span>
             </Link>
 
-            <span className="hidden lg:inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[var(--surface)] text-[10px] font-mono-tech uppercase tracking-widest text-[var(--emerald-accent)] border border-[var(--hairline)]">
+            <span className="hidden md:inline-flex items-center gap-1.5 rounded-full border border-[var(--hairline)] bg-[var(--surface)] px-2.5 py-0.5 text-[10px] font-mono-tech uppercase tracking-widest text-[var(--emerald-accent)]">
               <Sparkles className="size-3" /> Workspace
             </span>
           </div>
 
           {/* CENTER: Staggered Nav Links (Desktop) */}
-          <nav className="hidden md:flex items-center gap-1">
+          <nav className="hidden md:flex items-center gap-1 flex-1 justify-center">
             {loggedInNavItems.map((item, idx) => {
               const isActive =
                 item.href === "/dashboard"
@@ -134,20 +132,8 @@ export function LoggedInNavbar() {
           </nav>
 
           {/* RIGHT: Search, Saved, Notifications, User Profile & Theme Toggle */}
-          <div className="flex items-center gap-2 sm:gap-3 shrink-0">
-            {/* Search Trigger */}
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              onClick={() => setSearchOpen(true)}
-              className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-[var(--surface)] text-xs text-muted-foreground hover:text-foreground border border-[var(--hairline)] transition-all"
-            >
-              <Search className="size-3.5" />
-              <span className="hidden sm:inline">Search</span>
-              <kbd className="hidden lg:inline-flex items-center gap-0.5 text-[9px] font-mono-tech text-muted-foreground bg-[var(--surface-2)] px-1.5 py-0.5 rounded border border-[var(--hairline)]">
-                ⌘K
-              </kbd>
-            </motion.button>
+          <div className="ml-auto flex min-w-0 items-center justify-end gap-2 sm:gap-3">
+            <GlobalSearch className="flex-1 min-w-0 max-w-[520px] sm:max-w-[420px]" />
 
             {/* Saved Products Link */}
             <Link to="/wishlist">
@@ -218,9 +204,6 @@ export function LoggedInNavbar() {
           </div>
         </motion.div>
       </header>
-
-      {/* ── Search Modal ── */}
-      <SearchCommand isOpen={searchOpen} onClose={() => setSearchOpen(false)} />
 
       {/* ── Mobile Menu Drawer ── */}
       <AnimatePresence>

@@ -1,21 +1,22 @@
 import { useEffect, useState } from "react";
-import { Link, useNavigate } from "@tanstack/react-router";
-import { 
-  ArrowUpRight, 
-  Laptop, 
-  Headphones, 
-  Watch, 
-  Smartphone, 
-  Camera, 
-  ChevronDown, 
-  Menu, 
-  X, 
-  Search, 
-  TrendingUp, 
-  Tag, 
-  Scale 
+import { Link } from "@tanstack/react-router";
+import {
+  ArrowUpRight,
+  Laptop,
+  Headphones,
+  Watch,
+  Smartphone,
+  Camera,
+  ChevronDown,
+  Menu,
+  X,
+  Search,
+  TrendingUp,
+  Tag,
+  Scale,
 } from "lucide-react";
 import { ThemeToggle } from "./ThemeToggle";
+import { GlobalSearch } from "./SearchBar";
 import { motion, AnimatePresence, useReducedMotion } from "motion/react";
 
 const megaCategories = [
@@ -39,9 +40,6 @@ export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [mega, setMega] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [searchOpen, setSearchOpen] = useState(false);
-  const [searchQuery, setSearchQuery] = useState("");
-  const navigate = useNavigate();
   const shouldReduceMotion = useReducedMotion();
 
   useEffect(() => {
@@ -51,9 +49,9 @@ export function Navbar() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  // Prevent scroll when mobile menu or search is open
+  // Prevent scroll when mobile menu is open
   useEffect(() => {
-    if (mobileMenuOpen || searchOpen) {
+    if (mobileMenuOpen) {
       document.body.style.overflow = "hidden";
     } else {
       document.body.style.overflow = "";
@@ -61,28 +59,23 @@ export function Navbar() {
     return () => {
       document.body.style.overflow = "";
     };
-  }, [mobileMenuOpen, searchOpen]);
-
-  const handleSearchSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (searchQuery.trim()) {
-      navigate({ to: "/search", search: { q: searchQuery.trim() } });
-      setSearchOpen(false);
-      setSearchQuery("");
-    }
-  };
+  }, [mobileMenuOpen]);
 
   return (
     <>
       <header
         className={`fixed top-0 inset-x-0 z-50 transition-all duration-300 bg-background/80 backdrop-blur-xl border-b border-[var(--hairline)] ${
-          scrolled || mobileMenuOpen || searchOpen ? "bg-background/90" : ""
+          scrolled || mobileMenuOpen ? "bg-background/90" : ""
         }`}
         onMouseLeave={() => setMega(false)}
       >
-        <div className="max-w-7xl mx-auto px-6 lg:px-10 h-20 flex items-center justify-between">
+        <div className="mx-auto flex min-h-20 max-w-7xl flex-nowrap items-center justify-between gap-3 px-6 py-3 lg:px-10 lg:py-0">
           {/* Logo */}
-          <Link to="/" className="flex items-center gap-3 group z-50" onClick={() => setMobileMenuOpen(false)}>
+          <Link
+            to="/"
+            className="z-50 flex flex-shrink-0 items-center gap-3 group"
+            onClick={() => setMobileMenuOpen(false)}
+          >
             <img
               src="/assets/logo.png"
               alt="genCART logo"
@@ -94,7 +87,7 @@ export function Navbar() {
           </Link>
 
           {/* Desktop Navigation */}
-          <nav className="hidden lg:flex items-center gap-8">
+          <nav className="hidden lg:flex items-center gap-8 flex-1 justify-center">
             {navItems.map((item) =>
               item.hasMega ? (
                 <button
@@ -103,7 +96,9 @@ export function Navbar() {
                   className="nav-link text-sm font-medium flex items-center gap-1 cursor-pointer"
                 >
                   {item.label}
-                  <ChevronDown className={`size-3.5 transition-transform ${mega ? "rotate-180" : ""}`} />
+                  <ChevronDown
+                    className={`size-3.5 transition-transform ${mega ? "rotate-180" : ""}`}
+                  />
                 </button>
               ) : (
                 <Link
@@ -114,26 +109,19 @@ export function Navbar() {
                 >
                   {item.label}
                 </Link>
-              )
+              ),
             )}
           </nav>
 
           {/* Action Bar */}
-          <div className="flex items-center gap-2 lg:gap-3 z-50">
-            {/* Search Button */}
-            <button
-              onClick={() => setSearchOpen(!searchOpen)}
-              className="p-2.5 rounded-full hover:bg-[var(--surface-2)] text-muted-foreground hover:text-foreground transition-colors cursor-pointer"
-              aria-label="Search"
-            >
-              <Search className="size-5" />
-            </button>
+          <div className="z-50 ml-auto flex min-w-0 items-center justify-end gap-2 lg:gap-3">
+            <GlobalSearch className="flex-1 min-w-0 max-w-[520px] sm:max-w-[420px]" />
 
             <ThemeToggle />
 
             <Link
               to="/login"
-              className="hidden md:inline-flex items-center rounded-full border border-[var(--hairline)] px-4 py-2 text-sm font-semibold text-foreground transition-colors hover:bg-[var(--surface-2)]"
+              className="hidden lg:inline-flex items-center rounded-full border border-[var(--hairline)] px-4 py-2 text-sm font-semibold text-foreground transition-colors hover:bg-[var(--surface-2)]"
             >
               Login
             </Link>
@@ -141,7 +129,7 @@ export function Navbar() {
             {/* Shop Now (desktop) */}
             <Link
               to="/collections"
-              className="btn-accent hidden md:inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-semibold"
+              className="btn-accent hidden xl:inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-semibold"
             >
               Shop Now
               <ArrowUpRight className="size-4" />
@@ -150,7 +138,7 @@ export function Navbar() {
             {/* Mobile Hamburger menu */}
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="p-2.5 rounded-full hover:bg-[var(--surface-2)] text-muted-foreground hover:text-foreground transition-colors lg:hidden cursor-pointer"
+              className="cursor-pointer rounded-full p-2.5 text-muted-foreground transition-colors hover:bg-[var(--surface-2)] hover:text-foreground lg:hidden"
               aria-label="Toggle menu"
             >
               {mobileMenuOpen ? <X className="size-5" /> : <Menu className="size-5" />}
@@ -178,12 +166,12 @@ export function Navbar() {
                     <p className="font-mono-tech text-[10px] uppercase tracking-[0.25em] text-[var(--emerald-accent)] mb-4">
                       Categories
                     </p>
-                    <motion.ul 
+                    <motion.ul
                       initial="hidden"
                       animate="visible"
                       variants={{
                         hidden: {},
-                        visible: { transition: { staggerChildren: 0.04 } }
+                        visible: { transition: { staggerChildren: 0.04 } },
                       }}
                       className="space-y-1"
                     >
@@ -192,7 +180,11 @@ export function Navbar() {
                           key={c.label}
                           variants={{
                             hidden: { opacity: 0, y: 10 },
-                            visible: { opacity: 1, y: 0, transition: { ease: "easeOut", duration: 0.25 } }
+                            visible: {
+                              opacity: 1,
+                              y: 0,
+                              transition: { ease: "easeOut", duration: 0.25 },
+                            },
                           }}
                         >
                           <Link
@@ -220,12 +212,15 @@ export function Navbar() {
                       <p className="font-mono-tech text-[10px] uppercase tracking-[0.25em] text-[var(--cyan-accent)] mb-3">
                         Featured · 2026
                       </p>
-                      <h3 className="font-display text-3xl font-semibold mb-2">genCART Laptop Air</h3>
+                      <h3 className="font-display text-3xl font-semibold mb-2">
+                        genCART Laptop Air
+                      </h3>
                       <p className="text-sm text-muted-foreground max-w-sm mb-6">
                         M-class silicon, edge-to-edge OLED, all-day battery. Engineered as one.
                       </p>
                       <Link
-                        to="/product/genCART-laptop-air"
+                        to="/product/$slug"
+                        params={{ slug: "genCART-laptop-air" }}
                         className="btn-ghost-glow inline-flex items-center gap-2 rounded-full px-4 py-2 text-xs font-semibold tracking-wide"
                         onClick={() => setMega(false)}
                       >
@@ -329,83 +324,6 @@ export function Navbar() {
                 </p>
               </div>
             </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-
-      {/* Floating Search Overlay */}
-      <AnimatePresence>
-        {searchOpen && (
-          <motion.div
-            initial={{ opacity: 0, scale: 1.015 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 1.015 }}
-            transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
-            className="fixed inset-0 z-50 bg-background/95 backdrop-blur-2xl flex flex-col justify-start pt-32 px-6 lg:px-10"
-          >
-            <button
-              onClick={() => setSearchOpen(false)}
-              className="absolute top-6 right-6 p-3 rounded-full hover:bg-[var(--surface-2)] text-muted-foreground hover:text-foreground transition-colors cursor-pointer"
-              aria-label="Close search"
-            >
-              <X className="size-6" />
-            </button>
-
-            <div className="max-w-2xl mx-auto w-full">
-              <form onSubmit={handleSearchSubmit} className="relative">
-                <Search className="absolute left-5 top-1/2 -translate-y-1/2 size-6 text-muted-foreground" />
-                <input
-                  type="text"
-                  placeholder="Search products, reviews, guides..."
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full bg-[var(--surface-2)] border border-[var(--hairline)] rounded-2xl py-5 pl-14 pr-6 text-lg placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-[var(--emerald-accent)] focus:border-transparent transition-all"
-                  autoFocus
-                />
-              </form>
-
-              <div className="mt-8">
-                <h4 className="font-mono-tech text-[10px] uppercase tracking-[0.25em] text-muted-foreground mb-4">
-                  Trending Searches
-                </h4>
-                <motion.div 
-                  initial="hidden"
-                  animate="visible"
-                  variants={{
-                    hidden: {},
-                    visible: { transition: { staggerChildren: 0.03 } }
-                  }}
-                  className="flex flex-wrap gap-2"
-                >
-                  {[
-                    { term: "Laptop Air", icon: Laptop },
-                    { term: "Buds Pro", icon: Headphones },
-                    { term: "Watch X", icon: Watch },
-                    { term: "Comparison Hub", icon: Scale },
-                    { term: "Latest Reviews", icon: TrendingUp },
-                    { term: "Best Deals", icon: Tag },
-                  ].map((item) => (
-                    <motion.button
-                      key={item.term}
-                      variants={{
-                        hidden: { opacity: 0, y: 10, scale: 0.95 },
-                        visible: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.2 } }
-                      }}
-                      onClick={() => {
-                        setSearchQuery(item.term);
-                        navigate({ to: "/search", search: { q: item.term } });
-                        setSearchOpen(false);
-                        setSearchQuery("");
-                      }}
-                      className="flex items-center gap-2 rounded-xl px-4 py-2 text-sm bg-[var(--surface)] hover:bg-[var(--surface-2)] border border-[var(--hairline)] hover:border-muted-foreground/30 transition-all cursor-pointer"
-                    >
-                      <item.icon className="size-3.5 text-[var(--emerald-accent)]" />
-                      {item.term}
-                    </motion.button>
-                  ))}
-                </motion.div>
-              </div>
-            </div>
           </motion.div>
         )}
       </AnimatePresence>
