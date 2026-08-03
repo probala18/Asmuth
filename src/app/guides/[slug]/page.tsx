@@ -70,9 +70,14 @@ export default function GuideDetailPage({ params }: { params: Promise<{ slug: st
             </div>
           )}
 
-          <div className="prose prose-invert max-w-none space-y-6 text-foreground/80 leading-relaxed text-lg font-sans">
-            {guide.content.split("\n\n").map((paragraph, i) => (
-              <p key={i}>{paragraph}</p>
+          <div className="space-y-12">
+            {guide.sections.map((section, sectionIndex) => (
+              <div key={sectionIndex} className="space-y-4">
+                <h2 className="font-display text-2xl font-bold text-foreground">{section.title}</h2>
+                <p className="text-foreground/80 leading-relaxed text-lg font-sans whitespace-pre-line">
+                  {section.content}
+                </p>
+              </div>
             ))}
           </div>
         </div>

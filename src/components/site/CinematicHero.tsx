@@ -298,7 +298,9 @@ export function CinematicHero() {
         {heroScenes.map((scene, index) => (
           <video
             key={scene.id}
-            ref={(el) => (videoRefs.current[index] = el)}
+            ref={(el) => {
+              videoRefs.current[index] = el;
+            }}
             src={scene.video}
             autoPlay
             loop
@@ -342,7 +344,9 @@ export function CinematicHero() {
           {heroScenes.map((scene, index) => (
             <div
               key={scene.id}
-              ref={(el) => (textRefs.current[index] = el)}
+              ref={(el) => {
+                textRefs.current[index] = el;
+              }}
               className="absolute inset-x-0 space-y-5 sm:space-y-6 pointer-events-auto"
               style={{
                 opacity: index === 0 ? 1 : 0,

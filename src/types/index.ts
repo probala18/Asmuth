@@ -87,6 +87,7 @@ export interface Guide {
   readTime: string;
   image: string;
   sections: GuideSection[];
+  featuredProductSlug?: string;
   relatedProducts: string[];
 }
 

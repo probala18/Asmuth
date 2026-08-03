@@ -404,7 +404,9 @@ function StoryBlock({
               {story.chapters.map((chapter, ci) => (
                 <div
                   key={ci}
-                  ref={(el) => (chapterRefs.current[ci] = el)}
+                  ref={(el) => {
+                    chapterRefs.current[ci] = el;
+                  }}
                   className="absolute inset-x-0 space-y-5 lg:space-y-6"
                   style={{
                     opacity: ci === 0 ? 1 : 0,
@@ -453,7 +455,13 @@ function StoryBlock({
               <span>{story.id} / {String(total).padStart(2, "0")}</span>
             </div>
             {story.chapters.map((chapter, ci) => (
-              <div key={ci} ref={(el) => (chapterRefs.current[ci] = el)} className="rounded-[2rem] border border-[var(--hairline)] bg-[var(--surface)]/80 p-5 sm:p-7 shadow-sm">
+              <div
+                key={ci}
+                ref={(el) => {
+                  chapterRefs.current[ci] = el;
+                }}
+                className="rounded-[2rem] border border-[var(--hairline)] bg-[var(--surface)]/80 p-5 sm:p-7 shadow-sm"
+              >
                 <div className="mb-5 overflow-hidden rounded-[1.5rem] border border-[var(--hairline)] bg-[var(--surface)]">
                   <img src={story.image} alt={story.product} loading="lazy" className="aspect-[4/3] w-full object-cover" />
                 </div>

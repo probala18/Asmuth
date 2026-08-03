@@ -15,6 +15,7 @@ export default function ReviewDetailPage({ params }: { params: Promise<{ slug: s
 
   const product = review.productSlug ? getProduct(review.productSlug) : null;
   const otherReviews = reviews.filter((r) => r.slug !== review.slug).slice(0, 3);
+  const reviewLabel = product?.category || review.productName;
 
   return (
     <>
@@ -31,7 +32,7 @@ export default function ReviewDetailPage({ params }: { params: Promise<{ slug: s
 
           <div className="space-y-4">
             <div className="flex items-center gap-4 text-xs font-mono-tech text-muted-foreground">
-              <span className="text-[var(--emerald-accent)] uppercase tracking-widest font-semibold">{review.category}</span>
+              <span className="text-[var(--emerald-accent)] uppercase tracking-widest font-semibold">{reviewLabel}</span>
               <span>·</span>
               <span>By {review.author}</span>
               <span>·</span>
@@ -90,13 +91,13 @@ export default function ReviewDetailPage({ params }: { params: Promise<{ slug: s
             <h3 className="font-display text-2xl font-bold">Score Breakdown</h3>
             <div className="space-y-4">
               {review.scores.map((s) => (
-                <div key={s.category} className="space-y-1.5">
+                <div key={s.label} className="space-y-1.5">
                   <div className="flex justify-between text-xs font-mono-tech">
-                    <span>{s.category}</span>
-                    <span className="text-[var(--emerald-accent)] font-bold">{s.score}/10</span>
+                    <span>{s.label}</span>
+                    <span className="text-[var(--emerald-accent)] font-bold">{s.value}/10</span>
                   </div>
                   <div className="h-2 rounded-full bg-[var(--surface-2)] overflow-hidden">
-                    <div className="h-full bg-[var(--emerald-accent)]" style={{ width: `${s.score * 10}%` }} />
+                    <div className="h-full bg-[var(--emerald-accent)]" style={{ width: `${s.value * 10}%` }} />
                   </div>
                 </div>
               ))}
