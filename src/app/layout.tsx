@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import { ClientLayout } from "./ClientLayout";
+import { ensurePublicAssets } from "@/lib/ensure-assets";
 
 export const viewport: Viewport = {
   themeColor: "#FAFBFC",
@@ -25,6 +26,8 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
+  ensurePublicAssets();
+
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
@@ -34,7 +37,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
           rel="stylesheet"
         />
-        <meta name='impact-site-verification' value='92f3e907-5c9a-440b-9f1d-aaef3ca53e17'>
+        <meta name="impact-site-verification" content="92f3e907-5c9a-440b-9f1d-aaef3ca53e17" />
       </head>
       <body className="min-h-screen bg-background text-foreground antialiased">
         <ClientLayout>{children}</ClientLayout>
