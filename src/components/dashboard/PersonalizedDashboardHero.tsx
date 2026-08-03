@@ -86,7 +86,7 @@ export function DashboardHeroSection() {
         </div>
 
         {/* CENTER — Hero Banner */}
-        <div className="lg:col-span-7 relative overflow-hidden rounded-2xl min-h-[280px] sm:min-h-[320px] bg-gradient-to-br from-[var(--surface-2)] to-[color-mix(in_oklab,var(--emerald-accent)_12%,var(--background))] border border-[var(--hairline)]">
+        <div className="lg:col-span-7 relative overflow-hidden rounded-2xl min-h-[280px] sm:min-h-[320px] bg-[var(--surface)] border border-[var(--hairline)]">
           <div className="absolute inset-0 bg-radial-glow opacity-40 pointer-events-none" />
           <div className="absolute inset-0 bg-grid opacity-20 pointer-events-none" />
 
@@ -192,7 +192,7 @@ export function DashboardHeroSection() {
           </div>
 
           {/* Promo Cards */}
-          <div className="surface-card-2 rounded-2xl border border-[var(--hairline)] p-4 space-y-2 bg-gradient-to-br from-[color-mix(in_oklab,var(--cyan-accent)_8%,var(--background))] to-[var(--surface)]">
+          <div className="surface-card-2 rounded-2xl border border-[var(--hairline)] p-4 space-y-2 bg-[var(--surface)]">
             <p className="font-mono-tech text-[9px] uppercase tracking-widest text-[var(--cyan-accent)]">
               Deal Alert
             </p>
@@ -208,7 +208,7 @@ export function DashboardHeroSection() {
             </Link>
           </div>
 
-          <div className="surface-card-2 rounded-2xl border border-[var(--hairline)] p-4 space-y-2 bg-gradient-to-br from-[color-mix(in_oklab,var(--emerald-accent)_6%,var(--background))] to-[var(--surface)]">
+          <div className="surface-card-2 rounded-2xl border border-[var(--hairline)] p-4 space-y-2 bg-[var(--surface)]">
             <p className="font-mono-tech text-[9px] uppercase tracking-widest text-[var(--emerald-accent)]">
               Editorial
             </p>
@@ -422,7 +422,7 @@ export function PromotionalBannersSection() {
     >
       <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-4">
         {/* Banner 1 */}
-        <div className="relative overflow-hidden rounded-2xl border border-[var(--hairline)] min-h-[200px] bg-gradient-to-br from-[color-mix(in_oklab,var(--emerald-accent)_10%,var(--background))] to-[var(--surface)]">
+        <div className="relative overflow-hidden rounded-2xl border border-[var(--hairline)] min-h-[200px] bg-[var(--surface)]">
           <div className="absolute inset-0 bg-radial-glow opacity-30 pointer-events-none" />
           <div className="relative z-10 p-6 sm:p-8 flex items-center justify-between gap-4">
             <div className="space-y-3 max-w-[200px]">
@@ -449,7 +449,7 @@ export function PromotionalBannersSection() {
         </div>
 
         {/* Banner 2 */}
-        <div className="relative overflow-hidden rounded-2xl border border-[var(--hairline)] min-h-[200px] bg-gradient-to-br from-[color-mix(in_oklab,var(--cyan-accent)_10%,var(--background))] to-[var(--surface)]">
+        <div className="relative overflow-hidden rounded-2xl border border-[var(--hairline)] min-h-[200px] bg-[var(--surface)]">
           <div className="absolute inset-0 bg-radial-glow opacity-30 pointer-events-none" />
           <div className="relative z-10 p-6 sm:p-8 flex items-center justify-between gap-4">
             <div className="space-y-3 max-w-[200px]">
@@ -494,7 +494,7 @@ export function ContinueExploringSection() {
       viewport={{ once: true, margin: "-40px" }}
       transition={{ duration: 0.45 }}
     >
-      <div className="max-w-7xl mx-auto rounded-3xl border border-[var(--hairline)] bg-[linear-gradient(135deg,var(--surface),var(--surface-2))] p-6 sm:p-8">
+      <div className="max-w-7xl mx-auto rounded-3xl border border-[var(--hairline)] bg-[var(--surface)] p-6 sm:p-8">
         <div className="flex items-center justify-between gap-4 mb-6">
           <div>
             <p className="font-mono-tech text-[10px] uppercase tracking-[0.3em] text-[var(--cyan-accent)]">

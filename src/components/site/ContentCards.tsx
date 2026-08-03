@@ -30,7 +30,7 @@ export function ReviewCard({ review }: { review: Review }) {
           {review.badge && (
             <span 
               className="absolute top-4 left-4 rounded-full px-2.5 py-1 text-[9px] font-bold font-mono-tech text-background uppercase tracking-wider flex items-center gap-1"
-              style={{ background: "var(--gradient-accent)" }}
+              style={{ background: "var(--primary)" }}
             >
               <Award className="size-3" />
               {review.badge.replace("-", " ")}
@@ -138,7 +138,7 @@ export function BrandCard({ brand }: { brand: Brand }) {
       className="h-full"
     >
     <TiltCard className="surface-card p-8 flex flex-col justify-between h-full min-h-[200px] relative group" max={5}>
-      <div className="absolute -right-16 -top-16 size-48 rounded-full blur-3xl opacity-10 group-hover:opacity-20 transition-opacity" style={{ background: "var(--gradient-accent)" }} />
+<div className="absolute -right-16 -top-16 size-48 rounded-full blur-3xl opacity-10 group-hover:opacity-20 transition-opacity" style={{ background: "var(--primary)" }} />
       
       <div>
         <div className="flex items-center justify-between mb-4">

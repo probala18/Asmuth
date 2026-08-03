@@ -174,8 +174,8 @@ export function PersonalizationOnboarding({ onComplete, initialPreferences }: On
               </span>
               <div className="w-24 h-1.5 rounded-full bg-[var(--surface-2)] overflow-hidden">
                 <div
-                  className="h-full bg-gradient-to-r from-[var(--emerald-accent)] to-[var(--cyan-accent)] transition-all duration-500 ease-out"
-                  style={{ width: `${(step / 4) * 100}%` }}
+                  className="h-full transition-all duration-500 ease-out"
+                  style={{ width: `${(step / 4) * 100}%`, background: "var(--accent)" }}
                 />
               </div>
             </div>

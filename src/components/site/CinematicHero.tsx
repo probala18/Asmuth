@@ -417,7 +417,7 @@ export function CinematicHero() {
           </div>
         </div>
 
-        <div className="flex items-center justify-between gap-4 sm:gap-6 pb-4 pt-4 border-t border-[var(--hairline)]/50 pointer-events-auto">
+        <div className="relative flex items-center justify-between gap-4 sm:gap-6 pb-4 pt-4 border-t border-[var(--hairline)]/50 pointer-events-auto">
           <div className="font-mono-tech text-[10px] sm:text-xs uppercase tracking-widest text-muted-foreground flex items-center gap-2">
             <span className="text-foreground font-semibold">0{activeSceneIndex + 1}</span>
             <span>/</span>
@@ -426,12 +426,16 @@ export function CinematicHero() {
 
           <div className="flex-1 max-w-md h-1 rounded-full bg-[var(--surface-2)] overflow-hidden relative">
             <div
-              className="h-full bg-gradient-to-r from-[var(--emerald-accent)] to-[var(--cyan-accent)] transition-all duration-200 ease-out"
-              style={{ width: `${progressPercent}%` }}
+              className="h-full transition-all duration-200 ease-out"
+              style={{ width: `${progressPercent}%`, background: "var(--accent)" }}
             />
           </div>
 
-          <div className="font-mono-tech text-[10px] uppercase tracking-[0.25em] text-muted-foreground hidden sm:block">
+          <div className="w-24 sm:w-32" />
+        </div>
+
+        <div className="absolute bottom-5 left-1/2 -translate-x-1/2 pointer-events-auto">
+          <div className="font-mono-tech text-[10px] sm:text-xs uppercase tracking-[0.25em] text-muted-foreground/90">
             {progressPercent >= 90 ? "SCROLL TO EXPLORE" : "SCROLL DOWN"}
           </div>
         </div>

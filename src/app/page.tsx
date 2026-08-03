@@ -3,7 +3,7 @@
 import { useEffect, useRef } from "react";
 import { motion } from "motion/react";
 import Link from "next/link";
-import { Marquee } from "@/components/ui/marquee";
+import { InfiniteMarquee } from "@/components/ui/InfiniteMarquee";
 import { ShimmerButton } from "@/components/ui/shimmer-button";
 import {
   ArrowRight,
@@ -52,6 +52,7 @@ import {
 
 import { CinematicHero } from "@/components/site/CinematicHero";
 import { ProductStorytelling } from "@/components/site/ProductStorytelling";
+import { MagicText } from "@/components/ui/MagicText";
 
 export default function IndexPage() {
   const featuredCategories = categories.filter((c) => c.featured).slice(0, 3);
@@ -68,17 +69,19 @@ export default function IndexPage() {
       <CinematicHero />
 
       {/* 2. LOGO MARQUEE */}
-      <section className="relative overflow-hidden py-8 border-y border-[var(--hairline)] bg-[var(--surface)]/40">
+      <section className="relative overflow-hidden py-6 border-y border-[var(--hairline)] bg-[var(--surface)]/40">
         <div className="pointer-events-none absolute inset-y-0 left-0 w-24 bg-gradient-to-r from-background to-transparent z-10" />
         <div className="pointer-events-none absolute inset-y-0 right-0 w-24 bg-gradient-to-l from-background to-transparent z-10" />
-        <Marquee pauseOnHover className="[--duration:30s]">
+        <InfiniteMarquee duration={26} durationOnHover={14} className="[--duration:30s]">
           {["FUTURE COMMERCE", "·", "genCART 2026", "·", "ENGINEERED AS ONE", "·", "SIGNAL ABOVE NOISE", "·", "BUILT IN ORBIT", "·"].map((t, i) => (
             <span key={i} className="font-display text-2xl lg:text-3xl text-muted-foreground/60 tracking-wider whitespace-nowrap mx-4">
               {t}
             </span>
           ))}
-        </Marquee>
+        </InfiniteMarquee>
       </section>
+
+      <MagicText text='"As an Amazon Associate, we earn from qualifying purchases. Some links on this website are affiliate links, which means that we may receive a commission if you make a purchase through those links. This comes at no additional cost to you. Our goal is to provide honest recommendations and help you discover products that best suit your needs."' />
 
       {/* 2.5. PRODUCT STORYTELLING */}
       <ProductStorytelling />

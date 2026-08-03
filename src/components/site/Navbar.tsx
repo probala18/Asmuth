@@ -77,7 +77,7 @@ export function Navbar() {
             onClick={() => setMobileMenuOpen(false)}
           >
             <img
-              src="/assets/logo.png"
+              src="https://chatgpt.com/s/m_6a70a9607fa081918c3e305985694c68"
               alt="genCART logo"
               className="h-9 w-9 rounded-full border border-hairline bg-surface object-cover"
             />
@@ -206,7 +206,7 @@ export function Navbar() {
                     </motion.ul>
                   </div>
 
-                  <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-[var(--surface-2)] via-[var(--surface)] to-[color-mix(in_oklab,var(--emerald-accent)_15%,var(--background))] border border-[var(--hairline)] p-8">
+                  <div className="relative overflow-hidden rounded-2xl bg-[var(--surface)] border border-[var(--hairline)] p-8">
                     <div className="absolute inset-0 bg-radial-glow opacity-60" />
                     <div className="relative">
                       <p className="font-mono-tech text-[10px] uppercase tracking-[0.25em] text-[var(--cyan-accent)] mb-3">

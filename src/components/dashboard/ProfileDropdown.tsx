@@ -27,11 +27,11 @@ export function ProfileDropdown({ isOpen, onClose }: ProfileDropdownProps) {
   };
 
   const menuItems = [
-    { icon: User, label: "Profile", href: "/dashboard" },
+    { icon: User, label: "Profile", href: "/profile" },
     { icon: Sparkles, label: "My Interests", href: "/dashboard" },
     { icon: Bookmark, label: "Saved Products", href: "/wishlist" },
     { icon: Scale, label: "My Comparisons", href: "/compare" },
-    { icon: Settings, label: "Settings", href: "/dashboard" },
+    { icon: Settings, label: "Edit Preferences", href: "/dashboard" },
   ];
 
   return (

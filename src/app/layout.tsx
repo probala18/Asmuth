@@ -4,7 +4,7 @@ import { ClientLayout } from "./ClientLayout";
 import { ensurePublicAssets } from "@/lib/ensure-assets";
 
 export const viewport: Viewport = {
-  themeColor: "#FAFBFC",
+  themeColor: "#050816",
 };
 
 export const metadata: Metadata = {
@@ -29,7 +29,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   ensurePublicAssets();
 
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" suppressHydrationWarning className="dark">
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
@@ -37,7 +37,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
           rel="stylesheet"
         />
-        <meta name="impact-site-verification" content="92f3e907-5c9a-440b-9f1d-aaef3ca53e17" />
+        <meta name="impact-site-verification" content="2a6e00e4-d244-4820-8efa-43560afd107e" />
       </head>
       <body className="min-h-screen bg-background text-foreground antialiased">
         <ClientLayout>{children}</ClientLayout>

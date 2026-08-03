@@ -68,7 +68,7 @@ export default function LoginPage() {
   };
 
   const handleGoogleSignIn = async () => {
-    const redirectTo = `${window.location.origin}/`;
+    const redirectTo = `${window.location.origin}/dashboard`;
 
     const { error } = await supabase.auth.signInWithOAuth({
       provider: "google",
@@ -116,7 +116,7 @@ export default function LoginPage() {
         }
 
         .auth-right {
-          background: linear-gradient(135deg, var(--emerald-accent) 0%, var(--cyan-accent) 100%);
+          background: var(--primary);
           padding: 3rem;
           display: flex;
           flex-direction: column;
@@ -275,7 +275,7 @@ export default function LoginPage() {
         .submit-btn {
           width: 100%;
           padding: 0.875rem;
-          background: linear-gradient(135deg, var(--emerald-accent), var(--cyan-accent));
+          background: var(--accent);
           color: white;
           border: none;
           border-radius: 12px;

@@ -54,15 +54,19 @@ export default function DashboardPage() {
 
   if (loadingSession || prefs === null) return null;
 
-  return (
-    <div className="min-h-screen bg-background text-foreground relative">
-      {showOnboarding && (
+  if (showOnboarding) {
+    return (
+      <div className="min-h-screen bg-background text-foreground">
         <PersonalizationOnboarding
           onComplete={handleOnboardingComplete}
           initialPreferences={prefs}
         />
-      )}
+      </div>
+    );
+  }
 
+  return (
+    <div className="min-h-screen bg-background text-foreground relative">
       <main className="relative space-y-2 pb-16">
         <DashboardHeroSection />
         <PersonalizedRecommendations />

@@ -32,7 +32,7 @@ export const ShimmerButton = React.forwardRef<HTMLButtonElement, ShimmerButtonPr
         whileTap={{ scale: 0.97 }}
         transition={{ type: "spring", stiffness: 400, damping: 25 }}
         className={cn(
-          "group relative flex cursor-pointer items-center justify-center overflow-hidden whitespace-nowrap px-7 py-3.5 text-sm font-semibold text-foreground transition-all duration-300 hover:shadow-[0_0_25px_rgba(16,185,129,0.35)] rounded-full",
+          "group relative flex cursor-pointer items-center justify-center overflow-hidden whitespace-nowrap px-7 py-3.5 text-sm font-semibold text-foreground transition-all duration-300 hover:shadow-[0_0_25px_rgba(220,38,38,0.2)] rounded-full",
           "border border-[var(--hairline)] bg-[var(--surface)] dark:bg-[var(--surface-2)]",
           className
         )}
@@ -41,7 +41,7 @@ export const ShimmerButton = React.forwardRef<HTMLButtonElement, ShimmerButtonPr
       >
         {/* Shimmer effect background */}
         <span className="absolute inset-0 overflow-hidden rounded-full pointer-events-none">
-          <span className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-in-out bg-gradient-to-r from-transparent via-[var(--emerald-accent)]/20 to-transparent" />
+          <span className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-in-out bg-[var(--accent)]/10" />
         </span>
 
         {/* Content container */}

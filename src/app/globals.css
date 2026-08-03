@@ -5,8 +5,8 @@
 
 /*
  * genCART — Dual theme
- * Light: warm editorial ivory + ink + indigo/amber accents
- * Dark : deep-space navy + emerald + cyan (preserved from prior build)
+ * Dark is the default experience, light is an optional variant.
+ * Accent palette uses solid red and blue tones without gradients.
  */
 
 @theme inline {
@@ -51,82 +51,84 @@
 
 @layer base {
   :root {
-    --background: oklch(0.985 0.004 95);
-    --foreground: oklch(0.145 0.015 260);
-    --card: oklch(0.995 0.002 95);
-    --card-foreground: oklch(0.145 0.015 260);
-    --popover: oklch(0.995 0.002 95);
-    --popover-foreground: oklch(0.145 0.015 260);
-    --primary: oklch(0.205 0.03 260);
-    --primary-foreground: oklch(0.985 0.004 95);
-    --secondary: oklch(0.95 0.008 95);
-    --secondary-foreground: oklch(0.205 0.03 260);
-    --muted: oklch(0.94 0.008 95);
-    --muted-foreground: oklch(0.45 0.02 260);
-    --accent: oklch(0.94 0.012 95);
-    --accent-foreground: oklch(0.205 0.03 260);
-    --destructive: oklch(0.577 0.245 27.325);
-    --destructive-foreground: oklch(0.985 0.004 95);
-    --border: oklch(0.9 0.01 95);
-    --input: oklch(0.9 0.01 95);
-    --ring: oklch(0.4 0.12 260);
-    --radius: 0.875rem;
-
-    --surface: oklch(0.97 0.006 95);
-    --surface-2: oklch(0.95 0.008 95);
-    --surface-3: oklch(0.92 0.01 95);
-    --hairline: oklch(0 0 0 / 0.08);
-
-    --emerald: #10b981;
-    --emerald-accent: #059669;
-    --emerald-glow: rgba(5, 150, 105, 0.15);
-    --emerald-hover: #047857;
-
-    --cyan: #06b6d4;
-    --cyan-accent: #0284c7;
-    --cyan-glow: rgba(2, 132, 199, 0.15);
-
-    --gradient-accent: linear-gradient(135deg, #059669 0%, #0284c7 100%);
-    --gradient-card: linear-gradient(180deg, rgba(255, 255, 255, 0.8) 0%, rgba(245, 247, 250, 0.6) 100%);
-  }
-
-  .dark {
+    color-scheme: dark;
     --background: #050816;
     --foreground: #f3f4f6;
     --card: #0b0f29;
     --card-foreground: #f3f4f6;
     --popover: #0b0f29;
     --popover-foreground: #f3f4f6;
-    --primary: #10b981;
-    --primary-foreground: #050816;
+    --primary: #dc2626;
+    --primary-foreground: #fff7ed;
     --secondary: #111827;
     --secondary-foreground: #f3f4f6;
     --muted: #1f2937;
     --muted-foreground: #9ca3af;
-    --accent: #111827;
+    --accent: #2563eb;
     --accent-foreground: #f3f4f6;
     --destructive: #ef4444;
     --destructive-foreground: #f3f4f6;
     --border: rgba(255, 255, 255, 0.08);
     --input: rgba(255, 255, 255, 0.08);
-    --ring: #10b981;
+    --ring: #dc2626;
+    --radius: 0.875rem;
 
     --surface: #0b1021;
     --surface-2: #111827;
     --surface-3: #1f2937;
     --hairline: rgba(255, 255, 255, 0.08);
 
-    --emerald: #10b981;
-    --emerald-accent: #34d399;
-    --emerald-glow: rgba(16, 185, 129, 0.2);
-    --emerald-hover: #059669;
+    --emerald: #dc2626;
+    --emerald-accent: #dc2626;
+    --emerald-glow: rgba(220, 38, 38, 0.2);
+    --emerald-hover: #b91c1c;
 
-    --cyan: #06b6d4;
-    --cyan-accent: #38bdf8;
-    --cyan-glow: rgba(6, 182, 212, 0.2);
+    --cyan: #2563eb;
+    --cyan-accent: #2563eb;
+    --cyan-glow: rgba(37, 99, 235, 0.2);
 
-    --gradient-accent: linear-gradient(135deg, #10b981 0%, #06b6d4 100%);
-    --gradient-card: linear-gradient(180deg, rgba(17, 24, 39, 0.8) 0%, rgba(11, 16, 33, 0.6) 100%);
+    --gradient-accent: #dc2626;
+    --gradient-card: #0b0f29;
+  }
+
+  :root:not(.dark) {
+    color-scheme: light;
+    --background: #f8fafc;
+    --foreground: #0f172a;
+    --card: #ffffff;
+    --card-foreground: #0f172a;
+    --popover: #ffffff;
+    --popover-foreground: #0f172a;
+    --primary: #dc2626;
+    --primary-foreground: #fff7ed;
+    --secondary: #f1f5f9;
+    --secondary-foreground: #0f172a;
+    --muted: #f1f5f9;
+    --muted-foreground: #475569;
+    --accent: #2563eb;
+    --accent-foreground: #0f172a;
+    --destructive: #ef4444;
+    --destructive-foreground: #ffffff;
+    --border: #e2e8f0;
+    --input: #e2e8f0;
+    --ring: #dc2626;
+
+    --surface: #ffffff;
+    --surface-2: #f8fafc;
+    --surface-3: #f1f5f9;
+    --hairline: rgba(15, 23, 42, 0.08);
+
+    --emerald: #dc2626;
+    --emerald-accent: #dc2626;
+    --emerald-glow: rgba(220, 38, 38, 0.14);
+    --emerald-hover: #b91c1c;
+
+    --cyan: #2563eb;
+    --cyan-accent: #2563eb;
+    --cyan-glow: rgba(37, 99, 235, 0.14);
+
+    --gradient-accent: #dc2626;
+    --gradient-card: #ffffff;
   }
 }
 
@@ -156,9 +158,7 @@
 }
 
 .text-accent-gradient {
-  background: var(--gradient-accent);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  color: var(--gradient-accent);
 }
 
 .surface-card {
@@ -174,7 +174,7 @@
 
 .btn-accent {
   background: var(--gradient-accent);
-  color: #ffffff;
+  color: var(--primary-foreground);
   transition: all 0.2s ease;
 }
 
@@ -191,8 +191,8 @@
 }
 
 .btn-ghost-glow:hover {
-  border-color: var(--emerald-accent);
-  box-shadow: 0 0 15px var(--emerald-glow);
+  border-color: var(--accent);
+  box-shadow: 0 0 15px var(--cyan-glow);
 }
 
 .cine-progress {

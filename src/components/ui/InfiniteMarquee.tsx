@@ -4,15 +4,15 @@ import React, { memo, useEffect, useRef, useState } from "react";
 import { animate, motion, useMotionValue } from "motion/react";
 import { cn } from "@/lib/utils";
 
-interface MarqueeProps {
-  className?: string;
+type InfiniteSliderProps = {
+  children: React.ReactNode;
+  gap?: number;
+  duration?: number;
+  durationOnHover?: number;
+  direction?: "horizontal" | "vertical";
   reverse?: boolean;
-  pauseOnHover?: boolean;
-  children?: React.ReactNode;
-  vertical?: boolean;
-  repeat?: number;
-  [key: string]: any;
-}
+  className?: string;
+};
 
 const InfiniteSlider = memo(function InfiniteSlider({
   children,
@@ -22,15 +22,7 @@ const InfiniteSlider = memo(function InfiniteSlider({
   direction = "horizontal",
   reverse = false,
   className,
-}: {
-  children: React.ReactNode;
-  gap?: number;
-  duration?: number;
-  durationOnHover?: number;
-  direction?: "horizontal" | "vertical";
-  reverse?: boolean;
-  className?: string;
-}) {
+}: InfiniteSliderProps) {
   const [currentDuration, setCurrentDuration] = useState(duration);
   const containerRef = useRef<HTMLDivElement | null>(null);
   const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
@@ -100,7 +92,9 @@ const InfiniteSlider = memo(function InfiniteSlider({
         ref={containerRef}
         className="flex w-max"
         style={{
-          ...(direction === "horizontal" ? { x: translation } : { y: translation }),
+          ...(direction === "horizontal"
+            ? { x: translation }
+            : { y: translation }),
           gap: `${gap}px`,
           flexDirection: direction === "horizontal" ? "row" : "column",
         }}
@@ -113,49 +107,38 @@ const InfiniteSlider = memo(function InfiniteSlider({
   );
 });
 
-export function Marquee({
-  className,
-  reverse = false,
-  pauseOnHover = true,
+export function InfiniteMarquee({
   children,
-  vertical = false,
-  repeat = 4,
-  ...props
-}: MarqueeProps) {
-  const duration = Number(props["--duration"]?.replace("s", "") || 35);
-  const hoverDuration = pauseOnHover ? duration / 2 : undefined;
-
+  className,
+  gap = 24,
+  duration = 35,
+  durationOnHover = 18,
+  reverse = false,
+}: {
+  children: React.ReactNode;
+  className?: string;
+  gap?: number;
+  duration?: number;
+  durationOnHover?: number;
+  reverse?: boolean;
+}) {
   return (
     <div
-      {...props}
       className={cn(
-        "group relative overflow-hidden py-2",
-        {
-          "flex-row": !vertical,
-          "flex-col": vertical,
-        },
+        "mx-auto max-w-7xl overflow-hidden py-4 mask-[linear-gradient(to_right,transparent,black_25%,black_75%,transparent)]",
         className
       )}
     >
       <InfiniteSlider
-        gap={24}
+        gap={gap}
         duration={duration}
-        durationOnHover={hoverDuration}
-        direction={vertical ? "vertical" : "horizontal"}
+        durationOnHover={durationOnHover}
         reverse={reverse}
-        className="w-full"
       >
-        {Array(repeat)
-          .fill(0)
-          .map((_, i) => (
-            <div key={i} className="flex shrink-0 items-center justify-around gap-6">
-              {children}
-            </div>
-          ))}
+        {children}
       </InfiniteSlider>
     </div>
   );
 }
 
-Marquee.displayName = "Marquee";
-export default Marquee;
+export default InfiniteMarquee;

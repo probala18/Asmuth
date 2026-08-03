@@ -321,7 +321,7 @@ export function CategoryCard({ category }: { category: Category }) {
           sizes="(min-width: 768px) 33vw, 100vw"
           className="absolute inset-0 size-full object-cover opacity-30 transition-transform duration-700 group-hover:scale-[1.04] dark:opacity-20"
         />
-        <div className="absolute inset-0 bg-gradient-to-br from-background via-background/90 to-background/55" />
+        <div className="absolute inset-0 bg-[var(--surface)]/80" />
         <div
           className="absolute -right-20 -top-20 size-60 rounded-full blur-3xl opacity-20 group-hover:opacity-40 transition-opacity"
           style={{ background: "var(--gradient-accent)" }}
