@@ -52,7 +52,7 @@ import {
 
 import { CinematicHero } from "@/components/site/CinematicHero";
 import { ProductStorytelling } from "@/components/site/ProductStorytelling";
-import { MagicText } from "@/components/ui/MagicText";
+import { MagicText } from "@/components/ui/magic-text";
 
 export default function IndexPage() {
   const featuredCategories = categories.filter((c) => c.featured).slice(0, 3);
@@ -81,7 +81,19 @@ export default function IndexPage() {
         </InfiniteMarquee>
       </section>
 
-      <MagicText text='"As an Amazon Associate, we earn from qualifying purchases. Some links on this website are affiliate links, which means that we may receive a commission if you make a purchase through those links. This comes at no additional cost to you. Our goal is to provide honest recommendations and help you discover products that best suit your needs."' />
+      {/* Affiliate disclosure (inline) */}
+      <section className="px-6 lg:px-10 py-16 sm:py-20">
+        <div className="max-w-7xl mx-auto">
+          <div className="mb-6 text-center">
+            <p className="font-mono-tech text-[10px] uppercase tracking-[0.3em] text-[var(--emerald-accent)]">Affiliate Disclosure</p>
+          </div>
+          <MagicText
+            text={
+              '"As an Amazon Associate, we earn from qualifying purchases. Some links on this website are affiliate links, which means that we may receive a commission if you make a purchase through those links. This comes at no additional cost to you. Our goal is to provide honest recommendations and help you discover products that best suit your needs."'
+            }
+          />
+        </div>
+      </section>
 
       {/* 2.5. PRODUCT STORYTELLING */}
       <ProductStorytelling />
