@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link } from "@tanstack/react-router";
+import Link from "next/link";
 import {
   ArrowUpRight,
   Laptop,
@@ -72,7 +72,7 @@ export function Navbar() {
         <div className="mx-auto flex min-h-20 max-w-7xl flex-nowrap items-center justify-between gap-3 px-6 py-3 lg:px-10 lg:py-0">
           {/* Logo */}
           <Link
-            to="/"
+            href="/"
             className="z-50 flex flex-shrink-0 items-center gap-3 group"
             onClick={() => setMobileMenuOpen(false)}
           >
@@ -103,7 +103,7 @@ export function Navbar() {
               ) : (
                 <Link
                   key={item.label}
-                  to={item.href}
+                  href={item.href}
                   onMouseEnter={() => setMega(false)}
                   className="nav-link text-sm font-medium"
                 >
@@ -120,7 +120,7 @@ export function Navbar() {
             <ThemeToggle />
 
             <Link
-              to="/login"
+              href="/login"
               className="hidden lg:inline-flex items-center rounded-full border border-[var(--hairline)] px-4 py-2 text-sm font-semibold text-foreground transition-colors hover:bg-[var(--surface-2)]"
             >
               Login
@@ -128,7 +128,7 @@ export function Navbar() {
 
             {/* Shop Now (desktop) */}
             <Link
-              to="/collections"
+              href="/collections"
               className="btn-accent hidden xl:inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-semibold"
             >
               Shop Now
@@ -188,7 +188,7 @@ export function Navbar() {
                           }}
                         >
                           <Link
-                            to={c.href}
+                            href={c.href}
                             className="group flex items-center gap-4 rounded-xl px-3 py-3 hover:bg-[color-mix(in_oklab,var(--emerald-accent)_8%,transparent)] transition-colors"
                             onClick={() => setMega(false)}
                           >
@@ -219,8 +219,7 @@ export function Navbar() {
                         M-class silicon, edge-to-edge OLED, all-day battery. Engineered as one.
                       </p>
                       <Link
-                        to="/product/$slug"
-                        params={{ slug: "genCART-laptop-air" }}
+                        href="/products/laptop-air"
                         className="btn-ghost-glow inline-flex items-center gap-2 rounded-full px-4 py-2 text-xs font-semibold tracking-wide"
                         onClick={() => setMega(false)}
                       >
@@ -268,7 +267,7 @@ export function Navbar() {
                     {navItems.map((item) => (
                       <Link
                         key={item.label}
-                        to={item.href}
+                        href={item.href}
                         onClick={() => setMobileMenuOpen(false)}
                         className="text-2xl font-display font-semibold hover:text-[var(--emerald-accent)] transition-colors py-2 flex items-center justify-between"
                       >
@@ -277,7 +276,7 @@ export function Navbar() {
                       </Link>
                     ))}
                     <Link
-                      to="/login"
+                      href="/login"
                       onClick={() => setMobileMenuOpen(false)}
                       className="text-2xl font-display font-semibold hover:text-[var(--emerald-accent)] transition-colors py-2 flex items-center justify-between"
                     >
@@ -295,7 +294,7 @@ export function Navbar() {
                     {megaCategories.map((c) => (
                       <Link
                         key={c.label}
-                        to={c.href}
+                        href={c.href}
                         onClick={() => setMobileMenuOpen(false)}
                         className="flex items-center gap-3 p-3 rounded-xl surface-card-2 hover:bg-[color-mix(in_oklab,var(--emerald-accent)_8%,transparent)] transition-colors"
                       >
@@ -312,7 +311,7 @@ export function Navbar() {
               {/* Bottom Call to Action */}
               <div className="space-y-4 border-t border-[var(--hairline)] pt-6">
                 <Link
-                  to="/collections"
+                  href="/collections"
                   className="btn-accent w-full flex items-center justify-center gap-2 rounded-full py-3.5 text-sm font-semibold"
                   onClick={() => setMobileMenuOpen(false)}
                 >

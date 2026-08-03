@@ -1,15 +1,8 @@
 import { useEffect, type ReactNode } from "react";
-import { useRouterState } from "@tanstack/react-router";
+import { usePathname } from "next/navigation";
 
-/**
- * Cinematic ScrollChoreography
- * - Global scroll progress bar (top of viewport)
- * - GSAP ScrollTrigger.batch fade/slide-up reveals for headings, sections and cards
- * - Subtle parallax for elements tagged data-parallax
- * - Re-initializes on route change
- */
 export function ScrollChoreography({ children }: { children: ReactNode }) {
-  const location = useRouterState({ select: (s) => s.location.pathname });
+  const pathname = usePathname();
 
   useEffect(() => {
     if (typeof window === "undefined") return undefined;
@@ -109,7 +102,7 @@ export function ScrollChoreography({ children }: { children: ReactNode }) {
       cancelled = true;
       cleanup();
     };
-  }, [location]);
+  }, [pathname]);
 
   return <>{children}</>;
 }

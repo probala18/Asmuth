@@ -1,4 +1,4 @@
-import { Link } from "@tanstack/react-router";
+import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import { Newsletter } from "./UIComponents";
 import { motion } from "motion/react";
@@ -80,9 +80,9 @@ export function Footer() {
               genCART-powered editorial shopping platform. Independent testing, expert reviews, and reference performance picks.
             </p>
             <div className="text-[10px] text-muted-foreground font-mono-tech flex flex-wrap gap-x-3 gap-y-1">
-              <Link to="/dmca" className="hover:text-[var(--emerald-accent)] transition-colors">DMCA Notice</Link>
+              <Link href="/dmca" className="hover:text-[var(--emerald-accent)] transition-colors">DMCA Notice</Link>
               <span>·</span>
-              <Link to="/editorial-policy" className="hover:text-[var(--emerald-accent)] transition-colors">Editorial Integrity</Link>
+              <Link href="/editorial-policy" className="hover:text-[var(--emerald-accent)] transition-colors">Editorial Integrity</Link>
             </div>
           </motion.div>
 
@@ -103,7 +103,7 @@ export function Footer() {
                   {col.items.map((it) => (
                     <li key={it.label}>
                       <Link
-                        to={it.href}
+                        href={it.href}
                         className="group inline-flex items-center gap-1 text-sm text-foreground/80 hover:text-[var(--emerald-accent)] transition-colors"
                       >
                         <motion.span whileHover={{ x: 3 }} transition={{ type: "spring", stiffness: 400 }}>

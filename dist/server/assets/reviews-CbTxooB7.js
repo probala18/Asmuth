@@ -1,0 +1,151 @@
+//#region src/data/reviews.ts
+var reviews = [
+	{
+		slug: "genCART-laptop-air-review",
+		productSlug: "genCART-laptop-air",
+		productName: "genCART Laptop Air",
+		title: "genCART Laptop Air M-class — Three Weeks of Daily Driving",
+		excerpt: "M-class silicon, a gorgeous edge-to-edge 120Hz OLED screen, and 22-hour battery life. Is this the most complete laptop of the year?",
+		content: "The genCART Laptop Air is the result of engineering everything as one. M-class silicon delivers desktop-grade performance, the edge-to-edge OLED display reproduces 100% of DCI-P3, and the 22-hour battery means you leave the charger at home. Over three weeks of rigorous daily usage, we found it completely silent under load, with keyboard ergonomics that surpass its closest competitors.",
+		author: "Elena Rostova",
+		authorRole: "Senior Hardware Editor",
+		publishedAt: "2026-05-15",
+		readTime: "12 min read",
+		overallScore: 9.6,
+		image: "/assets/product-laptop.jpg",
+		scores: [
+			{
+				label: "Performance",
+				value: 96
+			},
+			{
+				label: "Battery Life",
+				value: 99
+			},
+			{
+				label: "Display Quality",
+				value: 98
+			},
+			{
+				label: "Keyboard & Trackpad",
+				value: 95
+			},
+			{
+				label: "Port Selection",
+				value: 75
+			},
+			{
+				label: "Value for Money",
+				value: 89
+			}
+		],
+		pros: [
+			"22-hour battery — unmatched in category",
+			"OLED display with 120Hz refresh rate is spectacular",
+			"Completely silent under heavy developer workloads",
+			"Robust unibody design and incredible keyboard feel"
+		],
+		cons: [
+			"Limited port selection (only 2 USB-C ports)",
+			"RAM is soldered and not upgradeable",
+			"Reflective screen coating can be annoying in bright sunlight"
+		],
+		verdict: "If you make a living on your machine, every single dollar spent on the genCART Laptop Air earns itself back within a month.",
+		badge: "editors-choice"
+	},
+	{
+		slug: "genCART-buds-pro-review",
+		productSlug: "genCART-buds-pro",
+		productName: "genCART Buds Pro",
+		title: "genCART Buds Pro — Reference Audio Meets Perfect Comfort",
+		excerpt: "Studio-grade frequency response and pressure-free adaptive ANC in an impossibly small package. How do they sound?",
+		content: "The genCART Buds Pro deliver studio-grade audio in an impossibly compact package. Featuring a custom 11mm driver with reference-grade tuning, adaptive ANC that adjusts 200 times per second, and 9.4 hours of battery with ANC on. Sound quality is incredibly flat and balanced, making them excellent for mobile mixing or critical listening.",
+		author: "Marcus Vance",
+		authorRole: "Audio Lead",
+		publishedAt: "2026-06-01",
+		readTime: "8 min read",
+		overallScore: 9.2,
+		image: "/assets/product-headphones.jpg",
+		scores: [
+			{
+				label: "Sound Quality",
+				value: 98
+			},
+			{
+				label: "Active Noise Cancelling",
+				value: 92
+			},
+			{
+				label: "Comfort",
+				value: 95
+			},
+			{
+				label: "Battery Life",
+				value: 94
+			},
+			{
+				label: "App Settings",
+				value: 80
+			}
+		],
+		pros: [
+			"Flattest, most natural sound signature available",
+			"Pressure-free active noise cancellation",
+			"Fantastic 9.4h battery life on a single charge",
+			"Fast multipoint switching between phone and laptop"
+		],
+		cons: ["No wireless charging on the baseline model case", "The companion app EQ settings are slightly limited"],
+		verdict: "For pure audiophiles who want accurate response and reliable ANC on the go, nothing else comes close for the price.",
+		badge: "best-value"
+	},
+	{
+		slug: "genCART-watch-x-review",
+		productSlug: "genCART-watch-x",
+		productName: "genCART Watch X",
+		title: "genCART Watch X Review — Quiet Smart Watch with Long Battery",
+		excerpt: "Vitals monitoring, always-on AMOLED screen, titanium construction, and 72-hour battery life. We review genCART's latest wearable.",
+		content: "The genCART Watch X is a refreshingly simple take on wearable technology. Rather than badgering you with endless notifications, it acts as a quiet companion focusing on long-term health metrics and core productivity. With Grade 5 titanium housing and standard health sensors like SpO2 and ECG, it provides accurate health diagnostics wrapped in premium design.",
+		author: "Sarah Jenkins",
+		authorRole: "Wearables Expert",
+		publishedAt: "2026-06-10",
+		readTime: "10 min read",
+		overallScore: 8.9,
+		image: "/assets/product-watch.jpg",
+		scores: [
+			{
+				label: "Build Quality",
+				value: 98
+			},
+			{
+				label: "Battery Life",
+				value: 95
+			},
+			{
+				label: "Health Tracking",
+				value: 90
+			},
+			{
+				label: "Display & OS",
+				value: 85
+			},
+			{
+				label: "App Ecosystem",
+				value: 70
+			}
+		],
+		pros: [
+			"72-hour battery means charging only twice a week",
+			"Premium Grade 5 Titanium construction looks beautiful",
+			"Highly accurate SpO2, heart rate, and skin temp tracking",
+			"Focus mode actually helps you disconnect"
+		],
+		cons: ["Lack of third-party applications compared to Apple Watch", "No cellular/LTE connectivity option"],
+		verdict: "An elegantly designed tracker that excels at health data and battery life, perfect if you don't need a phone on your wrist.",
+		badge: "premium-pick"
+	}
+];
+function getReview(slug) {
+	return reviews.find((r) => r.slug === slug || r.productSlug === slug);
+}
+//#endregion
+export { reviews as n, getReview as t };

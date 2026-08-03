@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { Link } from "@tanstack/react-router";
+import Link from "next/link";
 import { ArrowRight, Sparkles } from "lucide-react";
 import { ShimmerButton } from "@/components/ui/shimmer-button";
 import { gsap } from "gsap";
@@ -362,14 +362,14 @@ export function CinematicHero() {
               </p>
 
               <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4 pt-2">
-                <Link to={scene.ctaLink}>
+                <Link href={scene.ctaLink}>
                   <ShimmerButton className="btn-accent">
                     {scene.ctaText}
                     <ArrowRight className="size-4" />
                   </ShimmerButton>
                 </Link>
                 <Link
-                  to="/guides"
+                  href="/guides"
                   className="btn-ghost-glow rounded-full px-6 py-3 text-sm font-semibold inline-flex items-center gap-2"
                 >
                   Explore Guides
@@ -397,14 +397,14 @@ export function CinematicHero() {
               Explore our editorially curated rankings, comparison matrices, and signal-graded reviews.
             </p>
             <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4 pt-2">
-              <Link to="/collections">
+              <Link href="/collections">
                 <ShimmerButton className="btn-accent">
                   Explore All Products
                   <ArrowRight className="size-4" />
                 </ShimmerButton>
               </Link>
               <Link
-                to="/best-of-2026"
+                href="/best-of-2026"
                 className="btn-ghost-glow rounded-full px-6 py-3 text-sm font-semibold inline-flex items-center gap-2"
               >
                 View Editor's Picks

@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { Link } from "@tanstack/react-router";
+import Link from "next/link";
 import { motion } from "motion/react";
 import { ArrowRight, ArrowUpRight } from "lucide-react";
 import { gsap } from "gsap";
@@ -81,14 +81,14 @@ function SectionOutro() {
         Explore the products, reviews, comparisons, and guides that make your next decision easier.
       </p>
       <div className="flex flex-wrap items-center justify-center gap-4 pt-2">
-        <Link to="/collections">
+        <Link href="/collections">
           <ShimmerButton className="btn-accent">
             Explore All Products
             <ArrowRight className="size-4" />
           </ShimmerButton>
         </Link>
         <Link
-          to="/best-of-2026"
+          href="/best-of-2026"
           className="btn-ghost-glow rounded-full px-7 py-3.5 text-sm font-semibold inline-flex items-center gap-2"
         >
           View Editor's Picks
@@ -424,7 +424,7 @@ function StoryBlock({
                     {chapter.description}
                   </p>
                   <Link
-                    to={`/product/${story.slug}`}
+                    href={`/product/${story.slug}`}
                     className="group inline-flex items-center gap-2 text-sm font-semibold text-[var(--emerald-accent)] hover:gap-3 transition-all"
                   >
                     Explore Product
@@ -467,7 +467,7 @@ function StoryBlock({
                   {chapter.description}
                 </p>
                 <div className="mt-5 flex items-center justify-between">
-                  <Link to={`/product/${story.slug}`} className="inline-flex items-center gap-2 text-sm font-semibold text-[var(--emerald-accent)]">
+                  <Link href={`/product/${story.slug}`} className="inline-flex items-center gap-2 text-sm font-semibold text-[var(--emerald-accent)]">
                     Explore Product
                     <ArrowUpRight className="size-4" />
                   </Link>

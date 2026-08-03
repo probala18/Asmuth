@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { useNavigate } from "@tanstack/react-router";
+import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "motion/react";
 import { Search, X, TrendingUp, Sparkles, ArrowRight } from "lucide-react";
 
@@ -19,7 +19,7 @@ const trendingSearches = [
 export function SearchCommand({ isOpen, onClose }: SearchCommandProps) {
   const [query, setQuery] = useState("");
   const inputRef = useRef<HTMLInputElement>(null);
-  const navigate = useNavigate();
+  const router = useRouter();
 
   useEffect(() => {
     if (isOpen) {
@@ -48,14 +48,14 @@ export function SearchCommand({ isOpen, onClose }: SearchCommandProps) {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (query.trim()) {
-      navigate({ to: "/search", search: { q: query.trim() } });
       onClose();
+      router.push(`/search?q=${encodeURIComponent(query.trim())}`);
     }
   };
 
   const handleSelectTrending = (text: string) => {
-    navigate({ to: "/search", search: { q: text } });
     onClose();
+    router.push(`/search?q=${encodeURIComponent(text)}`);
   };
 
   return (

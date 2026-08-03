@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link } from "@tanstack/react-router";
+import Link from "next/link";
 import {
   Star,
   Timer,
@@ -72,7 +72,7 @@ export function ProductCard({
         <div className="flex flex-col h-full">
           {/* Image panel */}
           <div className="relative aspect-[5/4] overflow-hidden bg-[var(--surface-2)]">
-            <Link to="/product/$slug" params={{ slug: product.slug }} className="block size-full">
+            <Link href={`/product/${product.slug}`} className="block size-full">
               <img
                 src={product.image}
                 alt={product.name}
@@ -129,8 +129,7 @@ export function ProductCard({
 
           {/* Info panel */}
           <Link
-            to="/product/$slug"
-            params={{ slug: product.slug }}
+            href={`/product/${product.slug}`}
             className="p-6 flex-1 flex flex-col justify-between"
           >
             <div className="space-y-2">
@@ -280,8 +279,7 @@ export function DealCard({ product, hours }: { product: Product; hours: number }
             className="w-full mt-4"
           >
             <Link
-              to="/product/$slug"
-              params={{ slug: product.slug }}
+              href={`/product/${product.slug}`}
               className="btn-ghost-glow w-full rounded-full py-2.5 text-xs font-semibold inline-flex items-center justify-center gap-2 cursor-pointer"
             >
               <Tag className="size-3" /> Grab deal
@@ -346,8 +344,7 @@ export function CategoryCard({ category }: { category: Category }) {
             {category.productCount} items reviewed
           </span>
           <Link
-            to="/category/$slug"
-            params={{ slug: category.slug }}
+            href={`/category/${category.slug}`}
             className="text-xs font-semibold text-[var(--emerald-accent)] inline-flex items-center gap-1 transition-all"
           >
             <span>Explore</span>

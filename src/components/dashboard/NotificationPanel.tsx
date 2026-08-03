@@ -1,4 +1,4 @@
-import { Link } from "@tanstack/react-router";
+import Link from "next/link";
 import { motion, AnimatePresence } from "motion/react";
 import { Bell, Tag, Scale, BookOpen, Check } from "lucide-react";
 import { dashboardData } from "@/data/personalizedDashboardData";
@@ -39,7 +39,7 @@ export function NotificationPanel({ isOpen, onClose }: NotificationPanelProps) {
                 return (
                   <Link
                     key={item.id}
-                    to={item.link}
+                    href={item.link}
                     onClick={onClose}
                     className="block p-3 rounded-xl hover:bg-[var(--surface)] transition-all relative group"
                   >

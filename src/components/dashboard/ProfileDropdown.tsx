@@ -1,4 +1,5 @@
-import { Link, useNavigate } from "@tanstack/react-router";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "motion/react";
 import { User, Bookmark, Scale, Sparkles, Settings, LogOut, SlidersHorizontal } from "lucide-react";
 import { dashboardData } from "@/data/personalizedDashboardData";
@@ -11,12 +12,12 @@ interface ProfileDropdownProps {
 }
 
 export function ProfileDropdown({ isOpen, onClose }: ProfileDropdownProps) {
-  const navigate = useNavigate();
+  const router = useRouter();
 
   const handleSignOut = async () => {
     onClose();
     await supabase.auth.signOut();
-    navigate({ to: "/" });
+    router.push("/");
   };
 
   const handleEditPreferences = () => {
@@ -63,7 +64,7 @@ export function ProfileDropdown({ isOpen, onClose }: ProfileDropdownProps) {
               return (
                 <Link
                   key={idx}
-                  to={item.href}
+                  href={item.href}
                   onClick={onClose}
                   className="flex items-center gap-3 px-3 py-2 rounded-xl text-xs font-medium text-foreground/80 hover:text-foreground hover:bg-[var(--surface)] transition-all group"
                 >

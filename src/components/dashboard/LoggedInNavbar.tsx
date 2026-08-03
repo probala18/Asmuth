@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
-import { Link, useRouterState } from "@tanstack/react-router";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "motion/react";
 import { Bookmark, Bell, ChevronDown, Menu, X, Sparkles, ArrowUpRight } from "lucide-react";
 import { ThemeToggle } from "@/components/site/ThemeToggle";
@@ -23,7 +24,7 @@ export function LoggedInNavbar() {
   const [notificationsOpen, setNotificationsOpen] = useState(false);
   const [profileOpen, setProfileOpen] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const currentPath = useRouterState({ select: (s) => s.location.pathname });
+  const currentPath = usePathname();
   const savedProducts = useSavedProducts();
 
   // GSAP ScrollTrigger for smooth navbar height & blur compression on scroll
@@ -80,7 +81,7 @@ export function LoggedInNavbar() {
         >
           {/* LEFT: Logo & Personal Tag */}
           <div className="flex min-w-0 shrink-0 items-center gap-3">
-            <Link to="/dashboard" className="flex items-center gap-2 group">
+            <Link href="/dashboard" className="flex items-center gap-2 group">
               <div
                 className="relative w-8 h-8 rounded-lg flex items-center justify-center transition-transform group-hover:scale-105"
                 style={{ background: "var(--gradient-accent)" }}
@@ -114,7 +115,7 @@ export function LoggedInNavbar() {
                   transition={{ duration: 0.3, delay: 0.1 + idx * 0.05 }}
                 >
                   <Link
-                    to={item.href}
+                    href={item.href}
                     className={`px-3.5 py-1.5 rounded-full text-xs font-medium transition-all relative ${
                       isActive
                         ? "text-foreground bg-[var(--surface-2)] font-semibold"
@@ -136,7 +137,7 @@ export function LoggedInNavbar() {
             <GlobalSearch className="flex-1 min-w-0 max-w-[520px] sm:max-w-[420px]" />
 
             {/* Saved Products Link */}
-            <Link to="/wishlist">
+            <Link href="/wishlist">
               <motion.div
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
@@ -232,7 +233,7 @@ export function LoggedInNavbar() {
               {loggedInNavItems.map((item) => (
                 <Link
                   key={item.label}
-                  to={item.href}
+                  href={item.href}
                   onClick={() => setMobileMenuOpen(false)}
                   className="flex items-center justify-between p-3 rounded-xl text-sm font-medium hover:bg-[var(--surface)] transition-all"
                 >

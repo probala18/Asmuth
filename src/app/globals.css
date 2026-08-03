@@ -1,0 +1,208 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark, .dark *));
+
+/*
+ * genCART — Dual theme
+ * Light: warm editorial ivory + ink + indigo/amber accents
+ * Dark : deep-space navy + emerald + cyan (preserved from prior build)
+ */
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+  --radius-3xl: calc(var(--radius) + 16px);
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-surface-3: var(--surface-3);
+  --color-emerald: var(--emerald);
+  --color-emerald-accent: var(--emerald-accent);
+  --color-emerald-glow: var(--emerald-glow);
+  --color-emerald-hover: var(--emerald-hover);
+  --color-cyan: var(--cyan);
+  --color-cyan-accent: var(--cyan-accent);
+  --color-cyan-glow: var(--cyan-glow);
+}
+
+@layer base {
+  :root {
+    --background: oklch(0.985 0.004 95);
+    --foreground: oklch(0.145 0.015 260);
+    --card: oklch(0.995 0.002 95);
+    --card-foreground: oklch(0.145 0.015 260);
+    --popover: oklch(0.995 0.002 95);
+    --popover-foreground: oklch(0.145 0.015 260);
+    --primary: oklch(0.205 0.03 260);
+    --primary-foreground: oklch(0.985 0.004 95);
+    --secondary: oklch(0.95 0.008 95);
+    --secondary-foreground: oklch(0.205 0.03 260);
+    --muted: oklch(0.94 0.008 95);
+    --muted-foreground: oklch(0.45 0.02 260);
+    --accent: oklch(0.94 0.012 95);
+    --accent-foreground: oklch(0.205 0.03 260);
+    --destructive: oklch(0.577 0.245 27.325);
+    --destructive-foreground: oklch(0.985 0.004 95);
+    --border: oklch(0.9 0.01 95);
+    --input: oklch(0.9 0.01 95);
+    --ring: oklch(0.4 0.12 260);
+    --radius: 0.875rem;
+
+    --surface: oklch(0.97 0.006 95);
+    --surface-2: oklch(0.95 0.008 95);
+    --surface-3: oklch(0.92 0.01 95);
+    --hairline: oklch(0 0 0 / 0.08);
+
+    --emerald: #10b981;
+    --emerald-accent: #059669;
+    --emerald-glow: rgba(5, 150, 105, 0.15);
+    --emerald-hover: #047857;
+
+    --cyan: #06b6d4;
+    --cyan-accent: #0284c7;
+    --cyan-glow: rgba(2, 132, 199, 0.15);
+
+    --gradient-accent: linear-gradient(135deg, #059669 0%, #0284c7 100%);
+    --gradient-card: linear-gradient(180deg, rgba(255, 255, 255, 0.8) 0%, rgba(245, 247, 250, 0.6) 100%);
+  }
+
+  .dark {
+    --background: #050816;
+    --foreground: #f3f4f6;
+    --card: #0b0f29;
+    --card-foreground: #f3f4f6;
+    --popover: #0b0f29;
+    --popover-foreground: #f3f4f6;
+    --primary: #10b981;
+    --primary-foreground: #050816;
+    --secondary: #111827;
+    --secondary-foreground: #f3f4f6;
+    --muted: #1f2937;
+    --muted-foreground: #9ca3af;
+    --accent: #111827;
+    --accent-foreground: #f3f4f6;
+    --destructive: #ef4444;
+    --destructive-foreground: #f3f4f6;
+    --border: rgba(255, 255, 255, 0.08);
+    --input: rgba(255, 255, 255, 0.08);
+    --ring: #10b981;
+
+    --surface: #0b1021;
+    --surface-2: #111827;
+    --surface-3: #1f2937;
+    --hairline: rgba(255, 255, 255, 0.08);
+
+    --emerald: #10b981;
+    --emerald-accent: #34d399;
+    --emerald-glow: rgba(16, 185, 129, 0.2);
+    --emerald-hover: #059669;
+
+    --cyan: #06b6d4;
+    --cyan-accent: #38bdf8;
+    --cyan-glow: rgba(6, 182, 212, 0.2);
+
+    --gradient-accent: linear-gradient(135deg, #10b981 0%, #06b6d4 100%);
+    --gradient-card: linear-gradient(180deg, rgba(17, 24, 39, 0.8) 0%, rgba(11, 16, 33, 0.6) 100%);
+  }
+}
+
+@layer base {
+  * {
+    border-color: var(--border);
+  }
+
+  body {
+    background-color: var(--background);
+    color: var(--foreground);
+    font-family: 'Inter', sans-serif;
+    overflow-x: hidden;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Space Grotesk', sans-serif;
+  }
+}
+
+.font-display {
+  font-family: 'Space Grotesk', sans-serif;
+}
+
+.font-mono-tech {
+  font-family: 'JetBrains Mono', monospace;
+}
+
+.text-accent-gradient {
+  background: var(--gradient-accent);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.surface-card {
+  background: var(--gradient-card);
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--hairline);
+}
+
+.surface-card-2 {
+  background: var(--surface-2);
+  border: 1px solid var(--hairline);
+}
+
+.btn-accent {
+  background: var(--gradient-accent);
+  color: #ffffff;
+  transition: all 0.2s ease;
+}
+
+.btn-accent:hover {
+  opacity: 0.92;
+  box-shadow: 0 4px 20px var(--emerald-glow);
+}
+
+.btn-ghost-glow {
+  background: var(--surface);
+  border: 1px solid var(--hairline);
+  color: var(--foreground);
+  transition: all 0.2s ease;
+}
+
+.btn-ghost-glow:hover {
+  border-color: var(--emerald-accent);
+  box-shadow: 0 0 15px var(--emerald-glow);
+}
+
+.cine-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--gradient-accent);
+  transform-origin: 0%;
+  transform: scaleX(0);
+  z-index: 100;
+}

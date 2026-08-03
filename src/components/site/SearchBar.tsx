@@ -1,7 +1,7 @@
 import { AnimatePresence, motion } from "motion/react";
 import { ArrowRight, Clock3, Search, Sparkles, X } from "lucide-react";
 import { useEffect, useMemo, useRef, useState } from "react";
-import { useNavigate } from "@tanstack/react-router";
+import { useRouter } from "next/navigation";
 import { useSavedProducts } from "@/lib/saved-products";
 import {
   clearRecentSearches,
@@ -24,7 +24,7 @@ export function GlobalSearch({
   const [open, setOpen] = useState(false);
   const [activeIndex, setActiveIndex] = useState(0);
   const inputRef = useRef<HTMLInputElement>(null);
-  const navigate = useNavigate();
+  const router = useRouter();
   const savedProducts = useSavedProducts();
   const [recentSearches, setRecentSearches] = useState<string[]>([]);
 
@@ -68,7 +68,7 @@ export function GlobalSearch({
     if (!value) return;
     persistRecentSearch(value);
     setRecentSearches(getRecentSearches());
-    navigate({ to: "/search", search: { q: value } });
+    router.push(`/search?q=${encodeURIComponent(value)}`);
     setOpen(false);
     setQuery("");
   };
@@ -76,9 +76,13 @@ export function GlobalSearch({
   const selectSuggestion = (item: SearchSuggestion) => {
     if (item.href) {
       if (item.params) {
-        navigate({ to: item.href as string, params: item.params as Record<string, string> });
+        let path = item.href as string;
+        Object.entries(item.params).forEach(([k, v]) => {
+          path = path.replace(`$${k}`, v as string).replace(`:${k}`, v as string);
+        });
+        router.push(path);
       } else {
-        navigate({ to: item.href as string });
+        router.push(item.href as string);
       }
       setOpen(false);
       setQuery("");
@@ -88,7 +92,7 @@ export function GlobalSearch({
     const term = item.label.trim();
     persistRecentSearch(term);
     setRecentSearches(getRecentSearches());
-    navigate({ to: "/search", search: { q: term } });
+    router.push(`/search?q=${encodeURIComponent(term)}`);
     setOpen(false);
     setQuery("");
   };

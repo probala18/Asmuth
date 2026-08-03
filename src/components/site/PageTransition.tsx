@@ -1,9 +1,9 @@
 import { useEffect, type ReactNode } from "react";
-import { useRouterState } from "@tanstack/react-router";
+import { usePathname } from "next/navigation";
 import { motion, useReducedMotion } from "motion/react";
 
 export function PageTransition({ children }: { children: ReactNode }) {
-  const location = useRouterState({ select: (s) => s.location.pathname });
+  const pathname = usePathname();
   const shouldReduceMotion = useReducedMotion();
 
   useEffect(() => {
@@ -14,11 +14,11 @@ export function PageTransition({ children }: { children: ReactNode }) {
     });
 
     return () => window.cancelAnimationFrame(frame);
-  }, [location]);
+  }, [pathname]);
 
   return (
     <motion.div
-      key={location}
+      key={pathname}
       initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 8 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{

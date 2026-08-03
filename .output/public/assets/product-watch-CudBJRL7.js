@@ -1,0 +1,1 @@
+var e=`/assets/product-headphones-CduSVDKW.jpg`,t=`/assets/product-watch-9FC3LxEx.jpg`;export{e as n,t};

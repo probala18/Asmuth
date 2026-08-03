@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { Link } from "@tanstack/react-router";
+import Link from "next/link";
 import { motion } from "motion/react";
 import {
   ArrowRight,
@@ -75,7 +75,7 @@ export function DashboardHeroSection() {
             return (
               <Link
                 key={c.slug}
-                to={`/category/${c.slug}`}
+                href={`/category/${c.slug}`}
                 className="flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-medium text-foreground/80 hover:text-foreground hover:bg-[var(--surface)] transition-all group"
               >
                 <Icon className="size-4 text-muted-foreground group-hover:text-[var(--emerald-accent)] transition-colors" />
@@ -123,7 +123,7 @@ export function DashboardHeroSection() {
               <motion.div
                 variants={{ hidden: { opacity: 0, y: 12 }, visible: { opacity: 1, y: 0 } }}
               >
-                <Link to="/collections">
+                <Link href="/collections">
                   <ShimmerButton className="btn-accent">
                     Explore Collections
                     <ArrowRight className="size-4" />
@@ -177,13 +177,13 @@ export function DashboardHeroSection() {
             </div>
             <div className="flex flex-col gap-2">
               <Link
-                to="/dashboard"
+                href="/dashboard"
                 className="btn-accent flex items-center justify-center gap-2 rounded-xl py-2.5 text-xs font-semibold w-full"
               >
                 My Workspace
               </Link>
               <Link
-                to="/login"
+                href="/login"
                 className="flex items-center justify-center gap-2 rounded-xl py-2.5 text-xs font-medium w-full border border-[var(--hairline)] text-foreground hover:bg-[var(--surface)] transition-all"
               >
                 Manage Account
@@ -201,7 +201,7 @@ export function DashboardHeroSection() {
               <span className="text-[var(--emerald-accent)]">computing products</span>.
             </p>
             <Link
-              to="/deals"
+              href="/deals"
               className="text-[10px] font-mono-tech text-[var(--emerald-accent)] inline-flex items-center gap-1 hover:gap-2 transition-all"
             >
               View Deals <ArrowRight className="size-3" />
@@ -217,7 +217,7 @@ export function DashboardHeroSection() {
               <span className="text-[var(--cyan-accent)]">Laptop Air vs MacBook Pro</span>
             </p>
             <Link
-              to="/compare"
+              href="/compare"
               className="text-[10px] font-mono-tech text-[var(--emerald-accent)] inline-flex items-center gap-1 hover:gap-2 transition-all"
             >
               Read Now <ArrowRight className="size-3" />
@@ -307,7 +307,7 @@ export function DealsAndOffersSection() {
             return (
               <Link
                 key={product.slug}
-                to={`/product/${product.slug}`}
+                href={`/product/${product.slug}`}
                 className="group text-center space-y-3 p-3 rounded-xl hover:bg-[var(--surface)] transition-all"
               >
                 <div className="relative aspect-square rounded-xl overflow-hidden bg-[var(--surface-2)] mx-auto w-full max-w-[140px]">
@@ -368,7 +368,7 @@ export function CategoryBrowserSection({
                 {title}
               </h3>
               <Link
-                to={`/category/${categorySlug}`}
+                href={`/category/${categorySlug}`}
                 className="inline-flex items-center gap-2 rounded-full px-4 py-2 text-xs font-semibold border border-[var(--hairline)] bg-background/60 backdrop-blur-sm text-foreground hover:bg-background transition-all"
               >
                 Browse now <ArrowRight className="size-3" />
@@ -381,7 +381,7 @@ export function CategoryBrowserSection({
             {categoryProducts.slice(0, 4).map((product) => (
               <Link
                 key={product.slug}
-                to={`/product/${product.slug}`}
+                href={`/product/${product.slug}`}
                 className="group flex flex-col items-start gap-2.5 p-3 rounded-xl hover:bg-[var(--surface)] transition-all"
               >
                 <div className="w-full aspect-square rounded-xl overflow-hidden bg-[var(--surface-2)] max-w-[120px]">
@@ -433,7 +433,7 @@ export function PromotionalBannersSection() {
                 Smart Watch
               </h3>
               <Link
-                to="/category/wearables"
+                href="/category/wearables"
                 className="inline-flex items-center gap-2 rounded-full px-5 py-2 text-xs font-semibold border border-[var(--hairline)] bg-background/70 backdrop-blur-sm text-foreground hover:bg-background transition-all"
               >
                 View Collection
@@ -460,7 +460,7 @@ export function PromotionalBannersSection() {
                 Buds Pro
               </h3>
               <Link
-                to="/category/audio"
+                href="/category/audio"
                 className="inline-flex items-center gap-2 rounded-full px-5 py-2 text-xs font-semibold border border-[var(--hairline)] bg-background/70 backdrop-blur-sm text-foreground hover:bg-background transition-all"
               >
                 Shop Now
@@ -512,7 +512,7 @@ export function ContinueExploringSection() {
           {suggestions.map((product) => (
             <Link
               key={product.slug}
-              to={`/product/${product.slug}`}
+              href={`/product/${product.slug}`}
               className="group rounded-2xl border border-[var(--hairline)] bg-background/70 p-4 transition-all hover:-translate-y-1 hover:border-[var(--emerald-accent)]"
             >
               <div className="relative aspect-[5/4] overflow-hidden rounded-xl bg-[var(--surface-2)]">
@@ -561,7 +561,7 @@ export function SavedProductsSection() {
             </h3>
           </div>
           <Link
-            to="/wishlist"
+            href="/wishlist"
             className="text-sm font-medium text-[var(--emerald-accent)] inline-flex items-center gap-2"
           >
             View all <ArrowRight className="size-4" />
@@ -572,7 +572,7 @@ export function SavedProductsSection() {
             {visibleProducts.map((product) => (
               <Link
                 key={product.slug}
-                to={`/product/${product.slug}`}
+                href={`/product/${product.slug}`}
                 className="group flex items-center gap-3 rounded-2xl border border-[var(--hairline)] bg-background/70 p-3 transition-all hover:border-[var(--cyan-accent)]"
               >
                 <div className="size-16 shrink-0 overflow-hidden rounded-xl bg-[var(--surface-2)]">
@@ -596,7 +596,7 @@ export function SavedProductsSection() {
               Save products from the catalog to keep your favorite picks in one place.
             </p>
             <Link
-              to="/collections"
+              href="/collections"
               className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-[var(--emerald-accent)]"
             >
               Explore products <ArrowRight className="size-4" />
@@ -665,7 +665,7 @@ export function PopularProductsSection() {
           {popular.map((product) => (
             <Link
               key={product.slug}
-              to={`/product/${product.slug}`}
+              href={`/product/${product.slug}`}
               className="group shrink-0 w-52 sm:w-56 surface-card-2 rounded-2xl border border-[var(--hairline)] p-4 snap-start hover:shadow-xl transition-all space-y-3"
             >
               <div className="relative aspect-square rounded-xl overflow-hidden bg-[var(--surface-2)]">

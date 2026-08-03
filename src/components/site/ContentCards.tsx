@@ -1,4 +1,4 @@
-import { Link } from "@tanstack/react-router";
+import Link from "next/link";
 import { Star, Award, Calendar, BookOpen, ExternalLink, ArrowRight } from "lucide-react";
 import type { Review, Guide, Brand } from "@/types";
 import { TiltCard, MouseGlow } from "./motion";
@@ -14,7 +14,7 @@ export function ReviewCard({ review }: { review: Review }) {
       className="h-full"
     >
     <TiltCard className="surface-card overflow-hidden group flex flex-col h-full relative" max={5}>
-      <Link to={`/reviews/${review.slug}`} className="flex flex-col h-full">
+      <Link href={`/reviews/${review.slug}`} className="flex flex-col h-full">
         <div className="relative aspect-[16/10] overflow-hidden bg-[var(--surface-2)]">
           <img
             src={review.image}
@@ -81,7 +81,7 @@ export function GuideCard({ guide }: { guide: Guide }) {
       className="h-full"
     >
     <TiltCard className="surface-card overflow-hidden group flex flex-col h-full relative" max={5}>
-      <Link to={`/guides/${guide.slug}`} className="flex flex-col h-full">
+      <Link href={`/guides/${guide.slug}`} className="flex flex-col h-full">
         <div className="relative aspect-[16/10] overflow-hidden bg-[var(--surface-2)]">
           <img
             src={guide.image}
@@ -166,7 +166,7 @@ export function BrandCard({ brand }: { brand: Brand }) {
           {brand.productCount} products
         </span>
         <Link 
-          to={`/brand/${brand.slug}`}
+          href={`/brand/${brand.slug}`}
           className="font-semibold text-[var(--emerald-accent)] inline-flex items-center gap-1 group-hover:gap-2 transition-all"
         >
           View all <ArrowRight className="size-3.5" />

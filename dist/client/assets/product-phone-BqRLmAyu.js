@@ -1,0 +1,1 @@
+var e=`/assets/product-phone-B8JfHFGt.jpg`;export{e as t};
