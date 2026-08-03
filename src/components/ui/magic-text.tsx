@@ -30,13 +30,14 @@ export const MagicText: React.FC<MagicTextProps> = ({ text }) => {
 
   const { scrollYProgress } = useScroll({
     target: container,
-    offset: ["start 0.9", "start 0.25"],
+    // Use viewport-relative offsets so the reveal maps reliably on small screens
+    offset: ["start end", "end start"],
   });
 
   const words = text.split(" ");
 
   return (
-    <p ref={container} className="flex flex-wrap leading-[0.5] p-4">
+    <p ref={container} className="flex flex-wrap leading-[0.6] p-4">
       {words.map((word, i) => {
         const start = i / words.length;
         const end = start + 1 / words.length;

@@ -29,6 +29,11 @@ export function ThreeHero({ className = "" }: ThreeHeroProps) {
     // Respect prefers-reduced-motion
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
+    // Skip Three.js entirely on mobile — saves GPU/CPU with no visual loss
+    // on small screens where the subtle particles are barely perceptible
+    const isMobileViewport = window.matchMedia("(max-width: 767px)").matches;
+    if (isMobileViewport) return;
+
     // Disable on very low-end devices or low memory situations
     const deviceMemory = (navigator as any).deviceMemory;
     if (deviceMemory && deviceMemory < 2) return;

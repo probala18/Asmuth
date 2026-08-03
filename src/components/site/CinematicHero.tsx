@@ -224,53 +224,36 @@ export function CinematicHero() {
 
       mm.add("(max-width: 767px)", () => {
         const mobileCtx = gsap.context(() => {
-          const tl = gsap.timeline({
-            scrollTrigger: {
-              trigger: container,
-              start: "top top",
-              end: "+=160%",
-              scrub: 0.45,
-              onUpdate: (self) => {
-                const p = self.progress;
-                setProgressPercent(Math.min(100, Math.round(p * 100)));
-                const idx = Math.min(numScenes - 1, Math.floor(p * numScenes));
-                setActiveSceneIndex(idx);
-              },
-            },
-          });
+          // On mobile: no scroll-driven timeline, no pinning, no scrub.
+          // Show only the first scene with a simple fade-in entrance.
+          // This avoids janky scroll perf and heavy animation overhead.
 
+          // Hide all videos/text except the first
           videoRefs.current.forEach((video, idx) => {
-            if (video) gsap.set(video, { autoAlpha: idx === 0 ? 1 : 0, scale: 1.02, y: 0 });
+            if (video) gsap.set(video, { autoAlpha: idx === 0 ? 1 : 0, scale: 1, y: 0 });
           });
           textRefs.current.forEach((el, idx) => {
-            if (el) {
-              gsap.set(el, { autoAlpha: idx === 0 ? 1 : 0, y: idx === 0 ? 0 : 18, scale: 1 });
-            }
+            if (el) gsap.set(el, { autoAlpha: idx === 0 ? 1 : 0, y: 0, scale: 1 });
           });
           if (outroRef.current) {
-            gsap.set(outroRef.current, { autoAlpha: 0, y: 18, scale: 1 });
+            gsap.set(outroRef.current, { autoAlpha: 0, y: 0, scale: 1 });
           }
 
-          const stepDuration = 0.22;
+          // Simple entrance animation for the first text block — no scroll dependency
+          const firstText = textRefs.current[0];
+          if (firstText) {
+            gsap.fromTo(
+              firstText,
+              { autoAlpha: 0, y: 16 },
+              { autoAlpha: 1, y: 0, duration: 0.6, ease: "power2.out", delay: 0.15 }
+            );
+          }
 
-          heroScenes.forEach((_, i) => {
-            const panel = textRefs.current[i];
-            if (!panel) return;
+          // Lock progress UI to scene 1
+          setActiveSceneIndex(0);
+          setProgressPercent(0);
 
-            const start = i * stepDuration;
-            const fadeOut = start + stepDuration * 0.7;
-
-            tl.to(panel, { autoAlpha: 1, y: 0, duration: stepDuration * 0.55, ease: "power2.out" }, start)
-              .to(panel, { autoAlpha: 0, y: -10, duration: stepDuration * 0.4, ease: "power2.in" }, fadeOut);
-          });
-
-          tl.to(container, { scale: 0.995, ease: "none" }, 0);
-          tl.to(videoRefs.current[0], { scale: 1.02, yPercent: 3, ease: "none" }, 0);
-
-          return () => {
-            tl.scrollTrigger?.kill(true);
-            tl.kill();
-          };
+          // No cleanup needed — no scroll triggers to kill
         }, container);
 
         return () => mobileCtx.revert();
@@ -326,7 +309,7 @@ export function CinematicHero() {
         <div className="flex items-center justify-between gap-3 sm:gap-4 pt-4 pointer-events-auto">
           <div className="inline-flex items-center gap-2 rounded-full px-3 py-1.5 sm:px-3.5 sm:py-1.5 surface-card text-[10px] sm:text-xs font-mono-tech uppercase tracking-[0.25em] text-[var(--emerald-accent)] border border-[var(--hairline)]">
             <span className="relative flex size-2">
-              <span className="absolute inline-flex h-full w-full rounded-full bg-[var(--emerald-accent)] opacity-75 animate-ping" />
+              <span className="absolute inline-flex h-full w-full rounded-full bg-[var(--emerald-accent)] opacity-75 sm:animate-ping" />
               <span className="relative inline-flex rounded-full size-2 bg-[var(--emerald-accent)]" />
             </span>
             THE FUTURE OF PRODUCT DISCOVERY
@@ -417,7 +400,7 @@ export function CinematicHero() {
           </div>
         </div>
 
-        <div className="relative flex items-center justify-between gap-4 sm:gap-6 pb-4 pt-4 border-t border-[var(--hairline)]/50 pointer-events-auto">
+        <div className="relative hidden sm:flex items-center justify-between gap-4 sm:gap-6 pb-4 pt-4 border-t border-[var(--hairline)]/50 pointer-events-auto">
           <div className="font-mono-tech text-[10px] sm:text-xs uppercase tracking-widest text-muted-foreground flex items-center gap-2">
             <span className="text-foreground font-semibold">0{activeSceneIndex + 1}</span>
             <span>/</span>
@@ -434,7 +417,7 @@ export function CinematicHero() {
           <div className="w-24 sm:w-32" />
         </div>
 
-        <div className="absolute bottom-5 left-1/2 -translate-x-1/2 pointer-events-auto">
+        <div className="absolute bottom-5 left-1/2 -translate-x-1/2 pointer-events-auto hidden sm:block">
           <div className="font-mono-tech text-[10px] sm:text-xs uppercase tracking-[0.25em] text-muted-foreground/90">
             {progressPercent >= 90 ? "SCROLL TO EXPLORE" : "SCROLL DOWN"}
           </div>

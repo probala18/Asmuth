@@ -33,6 +33,11 @@ import {
   HorizontalShowcase,
   JourneyLine,
   RevealOnScroll,
+  MagneticButton,
+  TextScramble,
+  StaggerGrid,
+  CountUpBar,
+  GlowLine,
 } from "@/components/site/motion";
 import { ThreeHero } from "@/components/site/ThreeHero";
 import { ProductCard, DealCard, CategoryCard } from "@/components/site/ProductCards";
@@ -94,16 +99,26 @@ function Index() {
       {/* 2.5. PRODUCT STORYTELLING */}
       <ProductStorytelling />
 
-      {/* 3. TRUST METRICS */}
-      <motion.section
-        className="px-6 lg:px-10 py-16"
-        initial={{ opacity: 0, y: 30 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: "-60px" }}
-        transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-      >
-
-      </motion.section>
+      {/* 3. TRUST METRICS — CountUpBar stats */}
+      <section className="px-6 lg:px-10 py-16" data-no-batch>
+        <div className="max-w-5xl mx-auto">
+          <RevealOnScroll className="space-y-3 mb-10 text-center">
+            <p className="font-mono-tech text-[10px] uppercase tracking-[0.3em] text-[var(--emerald-accent)]">
+              By the Numbers
+            </p>
+            <h2 className="font-display text-3xl lg:text-4xl font-semibold">
+              Signal-grade <span className="text-accent-gradient">benchmarks</span>.
+            </h2>
+          </RevealOnScroll>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-6 surface-card-2 p-8 lg:p-12">
+            <CountUpBar label="Products Tested" value={2847} max={3000} suffix="+" />
+            <CountUpBar label="Expert Reviews Published" value={1260} max={1500} suffix="" />
+            <CountUpBar label="Avg. Reader Satisfaction" value={97} max={100} suffix="%" />
+            <CountUpBar label="Brands Covered" value={340} max={400} suffix="+" />
+          </div>
+          <GlowLine className="mt-12" />
+        </div>
+      </section>
 
       {/* 4. FEATURED CATEGORIES */}
       <section className="px-6 lg:px-10 py-16">
@@ -116,11 +131,11 @@ function Index() {
               Curated <span className="text-accent-gradient">product worlds</span>.
             </h2>
           </RevealOnScroll>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <StaggerGrid className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {featuredCategories.map((c) => (
               <CategoryCard key={c.slug} category={c} />
             ))}
-          </div>
+          </StaggerGrid>
         </div>
       </section>
 
@@ -141,11 +156,11 @@ function Index() {
             </Link>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <StaggerGrid className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {trendingProducts.map((p) => (
               <ProductCard key={p.slug} product={p} />
             ))}
-          </div>
+          </StaggerGrid>
         </div>
       </section>
 
@@ -166,11 +181,11 @@ function Index() {
             </Link>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <StaggerGrid className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {dealsList.map((d, index) => (
               <DealCard key={d.slug} product={d} hours={[4, 8, 12][index % 3]} />
             ))}
-          </div>
+          </StaggerGrid>
         </div>
       </section>
 
@@ -394,6 +409,11 @@ function Index() {
         </div>
       </section>
 
+      {/* 14.5 GLOW LINE DIVIDER */}
+      <div className="px-6 lg:px-10 max-w-5xl mx-auto">
+        <GlowLine />
+      </div>
+
       {/* 15. TESTIMONIALS */}
       <motion.section
         className="px-6 lg:px-10 py-24"
@@ -409,9 +429,12 @@ function Index() {
               "genCART is the only place I check before any tech purchase. The reviews are the reviews
               I'd write — if I had three weeks per product."
             </span>
-            <p className="font-mono-tech text-[10px] uppercase tracking-[0.3em] text-[var(--emerald-accent)]">
-              Maya Chen — Director of Design, Loop Studio
-            </p>
+            <TextScramble
+              text="Maya Chen — Director of Design, Loop Studio"
+              as="p"
+              className="font-mono-tech text-[10px] uppercase tracking-[0.3em] text-[var(--emerald-accent)]"
+              speed={0.05}
+            />
           </div>
         </div>
       </motion.section>
@@ -438,15 +461,19 @@ function Index() {
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
           >
-            <Link to="/collections">
-              <ShimmerButton className="bg-background text-foreground hover:bg-[var(--surface)] shadow-md">
-                Shop Collections
-                <ArrowRight className="size-4" />
-              </ShimmerButton>
-            </Link>
-            <Link to="/best-of-2026" className="rounded-full px-7 py-3.5 text-sm font-semibold border border-[oklch(0.13_0.03_270)] text-[oklch(0.13_0.03_270)] hover:bg-[oklch(0.13_0.03_270)] hover:text-background transition-colors">
-              Best of 2026
-            </Link>
+            <MagneticButton>
+              <Link to="/collections">
+                <ShimmerButton className="bg-background text-foreground hover:bg-[var(--surface)] shadow-md">
+                  Shop Collections
+                  <ArrowRight className="size-4" />
+                </ShimmerButton>
+              </Link>
+            </MagneticButton>
+            <MagneticButton>
+              <Link to="/best-of-2026" className="rounded-full px-7 py-3.5 text-sm font-semibold border border-[oklch(0.13_0.03_270)] text-[oklch(0.13_0.03_270)] hover:bg-[oklch(0.13_0.03_270)] hover:text-background transition-colors">
+                Best of 2026
+              </Link>
+            </MagneticButton>
           </motion.div>
         </div>
       </motion.section>

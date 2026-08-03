@@ -527,3 +527,385 @@ export function MouseGlow({ className = "" }: { className?: string }) {
   );
 }
 
+/* ─────────────────────────────────────────────────────────
+ * MagneticButton — cursor-attracted hover effect
+ *
+ * Wraps any interactive element so it subtly follows the
+ * cursor within its bounding box. Reverts on mouse leave.
+ * ───────────────────────────────────────────────────────── */
+export function MagneticButton({
+  children,
+  className = "",
+  strength = 0.35,
+}: {
+  children: ReactNode;
+  className?: string;
+  strength?: number;
+}) {
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    let cleanup: (() => void) | undefined;
+    (async () => {
+      const { gsap } = await import("gsap");
+
+      const handleMove = (e: MouseEvent) => {
+        const r = el.getBoundingClientRect();
+        const cx = r.left + r.width / 2;
+        const cy = r.top + r.height / 2;
+        const dx = (e.clientX - cx) * strength;
+        const dy = (e.clientY - cy) * strength;
+        gsap.to(el, { x: dx, y: dy, duration: 0.4, ease: "power3.out" });
+      };
+
+      const handleLeave = () => {
+        gsap.to(el, { x: 0, y: 0, duration: 0.6, ease: "elastic.out(1, 0.4)" });
+      };
+
+      el.addEventListener("mousemove", handleMove);
+      el.addEventListener("mouseleave", handleLeave);
+      cleanup = () => {
+        el.removeEventListener("mousemove", handleMove);
+        el.removeEventListener("mouseleave", handleLeave);
+      };
+    })();
+    return () => cleanup?.();
+  }, [strength]);
+
+  return (
+    <div ref={ref} className={`inline-block will-change-transform ${className}`}>
+      {children}
+    </div>
+  );
+}
+
+/* ─────────────────────────────────────────────────────────
+ * TextScramble — letter-by-letter decode on scroll
+ *
+ * Cycles through random characters before resolving to the
+ * final text. Fires once when scrolled into view.
+ * ───────────────────────────────────────────────────────── */
+export function TextScramble({
+  text,
+  className = "",
+  as = "span",
+  speed = 0.04,
+}: {
+  text: string;
+  className?: string;
+  as?: ElementType;
+  speed?: number;
+}) {
+  const ref = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    el.textContent = text.replace(/\S/g, "·");
+    let cleanup: (() => void) | undefined;
+    (async () => {
+      const { gsap } = await import("gsap");
+      const { ScrollTrigger } = await import("gsap/ScrollTrigger");
+      gsap.registerPlugin(ScrollTrigger);
+
+      const chars = "ABCDEFGHJKLMNPQRSTUVWXYZabcdefghjkmnpqrstuvwxyz0123456789@#$%";
+      const final = text.split("");
+      const resolved = new Array(final.length).fill(false);
+      let frame = 0;
+      let rafId = 0;
+      let running = false;
+
+      const scramble = () => {
+        if (!running) return;
+        frame++;
+        const display = final.map((ch, i) => {
+          if (ch === " ") return " ";
+          if (resolved[i]) return ch;
+          if (frame > (i + 1) * (1 / speed) * 0.6) {
+            resolved[i] = true;
+            return ch;
+          }
+          return chars[Math.floor(Math.random() * chars.length)];
+        });
+        el.textContent = display.join("");
+        if (resolved.every(Boolean)) { running = false; return; }
+        rafId = requestAnimationFrame(scramble);
+      };
+
+      const st = ScrollTrigger.create({
+        trigger: el,
+        start: "top 88%",
+        once: true,
+        onEnter: () => { running = true; scramble(); },
+      });
+
+      cleanup = () => {
+        cancelAnimationFrame(rafId);
+        running = false;
+        st.kill();
+      };
+    })();
+    return () => cleanup?.();
+  }, [text, speed]);
+
+  return createElement(as, { ref, className });
+}
+
+/* ─────────────────────────────────────────────────────────
+ * ParallaxImage — smooth scroll-driven Y shift
+ *
+ * Wraps an image and applies a GSAP scrub-based yPercent
+ * shift as the user scrolls past it.
+ * ───────────────────────────────────────────────────────── */
+export function ParallaxImage({
+  src,
+  alt,
+  className = "",
+  speed = 0.15,
+}: {
+  src: string;
+  alt: string;
+  className?: string;
+  speed?: number;
+}) {
+  const wrapRef = useRef<HTMLDivElement>(null);
+  const imgRef = useRef<HTMLImageElement>(null);
+
+  useEffect(() => {
+    const wrap = wrapRef.current;
+    const img = imgRef.current;
+    if (!wrap || !img) return;
+    let cleanup: (() => void) | undefined;
+    (async () => {
+      const { gsap } = await import("gsap");
+      const { ScrollTrigger } = await import("gsap/ScrollTrigger");
+      gsap.registerPlugin(ScrollTrigger);
+
+      gsap.set(img, { scale: 1 + speed * 0.6 });
+
+      const t = gsap.to(img, {
+        yPercent: -15 * speed * 100,
+        ease: "none",
+        scrollTrigger: {
+          trigger: wrap,
+          start: "top bottom",
+          end: "bottom top",
+          scrub: true,
+        },
+      });
+      cleanup = () => { t.scrollTrigger?.kill(); t.kill(); };
+    })();
+    return () => cleanup?.();
+  }, [speed]);
+
+  return (
+    <div ref={wrapRef} className={`overflow-hidden ${className}`}>
+      <img
+        ref={imgRef}
+        src={src}
+        alt={alt}
+        loading="lazy"
+        decoding="async"
+        className="size-full object-cover will-change-transform"
+      />
+    </div>
+  );
+}
+
+/* ─────────────────────────────────────────────────────────
+ * StaggerGrid — grid items cascade in with scale + opacity
+ *
+ * Uses ScrollTrigger.batch for a stagger reveal of grid
+ * children. Each child scales up from 0.92 and fades in.
+ * ───────────────────────────────────────────────────────── */
+export function StaggerGrid({
+  children,
+  className = "",
+  stagger = 0.07,
+}: {
+  children: ReactNode;
+  className?: string;
+  stagger?: number;
+}) {
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    let cleanup: (() => void) | undefined;
+    (async () => {
+      const { gsap } = await import("gsap");
+      const { ScrollTrigger } = await import("gsap/ScrollTrigger");
+      gsap.registerPlugin(ScrollTrigger);
+
+      const items = Array.from(el.children) as HTMLElement[];
+      gsap.set(items, { opacity: 0, scale: 0.92, y: 30 });
+
+      const batch = ScrollTrigger.batch(items, {
+        start: "top 90%",
+        once: true,
+        onEnter: (els) =>
+          gsap.to(els, {
+            opacity: 1,
+            scale: 1,
+            y: 0,
+            duration: 0.7,
+            ease: "back.out(1.4)",
+            stagger,
+            overwrite: true,
+          }),
+      });
+
+      cleanup = () => batch.forEach((t) => t.kill());
+    })();
+    return () => cleanup?.();
+  }, [stagger]);
+
+  return (
+    <div ref={ref} className={className}>
+      {children}
+    </div>
+  );
+}
+
+/* ─────────────────────────────────────────────────────────
+ * CountUpBar — animated horizontal stat bar
+ *
+ * Shows a label and value, with a bar that grows to the
+ * specified percentage on scroll.
+ * ───────────────────────────────────────────────────────── */
+export function CountUpBar({
+  label,
+  value,
+  max = 100,
+  color,
+  suffix = "",
+}: {
+  label: string;
+  value: number;
+  max?: number;
+  color?: string;
+  suffix?: string;
+}) {
+  const barRef = useRef<HTMLDivElement>(null);
+  const numRef = useRef<HTMLSpanElement>(null);
+
+  useEffect(() => {
+    const bar = barRef.current;
+    const num = numRef.current;
+    if (!bar || !num) return;
+    let cleanup: (() => void) | undefined;
+    (async () => {
+      const { gsap } = await import("gsap");
+      const { ScrollTrigger } = await import("gsap/ScrollTrigger");
+      gsap.registerPlugin(ScrollTrigger);
+
+      const pct = (value / max) * 100;
+      const obj = { v: 0 };
+      const tl = gsap.timeline({
+        scrollTrigger: { trigger: bar, start: "top 88%", once: true },
+      });
+      tl.to(bar, { width: `${pct}%`, duration: 1.2, ease: "expo.out" }, 0);
+      tl.to(
+        obj,
+        {
+          v: value,
+          duration: 1.2,
+          ease: "expo.out",
+          onUpdate: () => {
+            num.textContent = `${Math.round(obj.v)}${suffix}`;
+          },
+        },
+        0
+      );
+      cleanup = () => { tl.scrollTrigger?.kill(); tl.kill(); };
+    })();
+    return () => cleanup?.();
+  }, [value, max, suffix]);
+
+  return (
+    <div className="space-y-2">
+      <div className="flex items-baseline justify-between">
+        <span className="text-sm font-medium text-foreground">{label}</span>
+        <span
+          ref={numRef}
+          className="font-mono-tech text-xs font-semibold text-[var(--emerald-accent)]"
+        >
+          0{suffix}
+        </span>
+      </div>
+      <div className="h-2 rounded-full bg-[var(--surface-2)] overflow-hidden">
+        <div
+          ref={barRef}
+          className="h-full rounded-full"
+          style={{ width: 0, background: color || "var(--gradient-accent)" }}
+        />
+      </div>
+    </div>
+  );
+}
+
+/* ─────────────────────────────────────────────────────────
+ * GlowLine — decorative SVG line that draws on scroll
+ *
+ * A horizontal line with an accent glow that reveals itself
+ * as a stroke-dashoffset animation when scrolled into view.
+ * ───────────────────────────────────────────────────────── */
+export function GlowLine({
+  className = "",
+  color,
+}: {
+  className?: string;
+  color?: string;
+}) {
+  const pathRef = useRef<SVGPathElement>(null);
+
+  useEffect(() => {
+    const path = pathRef.current;
+    if (!path) return;
+    const len = path.getTotalLength();
+    path.style.strokeDasharray = `${len}`;
+    path.style.strokeDashoffset = `${len}`;
+    let cleanup: (() => void) | undefined;
+    (async () => {
+      const { gsap } = await import("gsap");
+      const { ScrollTrigger } = await import("gsap/ScrollTrigger");
+      gsap.registerPlugin(ScrollTrigger);
+      const t = gsap.to(path, {
+        strokeDashoffset: 0,
+        duration: 1.6,
+        ease: "power2.inOut",
+        scrollTrigger: { trigger: path, start: "top 90%", once: true },
+      });
+      cleanup = () => { t.scrollTrigger?.kill(); t.kill(); };
+    })();
+    return () => cleanup?.();
+  }, []);
+
+  return (
+    <svg
+      viewBox="0 0 800 6"
+      preserveAspectRatio="none"
+      className={`w-full h-1.5 ${className}`}
+      aria-hidden
+    >
+      <path
+        ref={pathRef}
+        d="M0 3 Q 200 0, 400 3 T 800 3"
+        fill="none"
+        stroke={color || "url(#glow-line-grad)"}
+        strokeWidth="2"
+        strokeLinecap="round"
+      />
+      <defs>
+        <linearGradient id="glow-line-grad" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%" stopColor="var(--emerald-accent)" stopOpacity="0.1" />
+          <stop offset="50%" stopColor="var(--cyan-accent)" />
+          <stop offset="100%" stopColor="var(--emerald-accent)" stopOpacity="0.1" />
+        </linearGradient>
+      </defs>
+    </svg>
+  );
+}
