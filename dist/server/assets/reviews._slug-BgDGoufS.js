@@ -8,38 +8,40 @@ import { ArrowLeft, Award, Check, ExternalLink, Star, X } from "lucide-react";
 function DynamicReviewPage() {
 	const { review, product, comparison } = Route.useLoaderData();
 	const relatedReviews = reviews.filter((r) => r.slug !== review.slug).slice(0, 3);
-	return /* @__PURE__ */ jsxs(Fragment, { children: [
+	return /* @__PURE__ */ jsxs(Fragment, {
+		children: [
 		/* @__PURE__ */ jsxs("section", {
 			className: "relative pt-32 pb-16 px-6 lg:px-10 overflow-hidden",
 			children: [/* @__PURE__ */ jsx("div", { className: "absolute inset-0 bg-radial-glow opacity-60" }), /* @__PURE__ */ jsxs("div", {
 				className: "relative max-w-6xl mx-auto",
 				children: [
 					/* @__PURE__ */ jsxs(Link, {
-						to: "/reviews",
-						className: "inline-flex items-center gap-2 text-xs font-mono-tech uppercase tracking-wider text-muted-foreground hover:text-foreground transition-colors mb-8 group",
-						children: [/* @__PURE__ */ jsx(ArrowLeft, { className: "size-3.5 group-hover:-translate-x-1 transition-transform" }), "Back to Reviews"]
-					}),
+					to: "/reviews",
+					className: "inline-flex items-center gap-2 text-xs font-mono-tech uppercase tracking-wider text-muted-foreground hover:text-foreground transition-colors mb-8 group",
+					children: [/* @__PURE__ */ jsx(ArrowLeft, { className: "size-3.5 group-hover:-translate-x-1 transition-transform" }), "Back to Reviews"]
+				}),
 					/* @__PURE__ */ jsxs("div", {
-						className: "flex items-center gap-3 mb-6",
-						children: [/* @__PURE__ */ jsx(Award, { className: "size-4 text-[var(--emerald-accent)]" }), /* @__PURE__ */ jsxs("span", {
-							className: "font-mono-tech text-[10px] uppercase tracking-[0.3em] text-[var(--emerald-accent)]",
-							children: [review.badge ? review.badge.replace("-", " ").toUpperCase() : "EXPERT REVIEW", " · LAB TESTED"]
-						})]
-					}),
+					className: "flex items-center gap-3 mb-6",
+					children: [/* @__PURE__ */ jsx(Award, { className: "size-4 text-[var(--emerald-accent)]" }), /* @__PURE__ */ jsxs("span", {
+						className: "font-mono-tech text-[10px] uppercase tracking-[0.3em] text-[var(--emerald-accent)]",
+						children: [review.badge ? review.badge.replace("-", " ").toUpperCase() : "EXPERT REVIEW", " · LAB TESTED"]
+					})]
+				}),
 					/* @__PURE__ */ jsx(SplitTextReveal, {
-						text: review.title,
-						className: "font-display text-4xl lg:text-6xl font-bold tracking-tight max-w-4xl"
-					}),
+					text: review.title,
+					className: "font-display text-4xl lg:text-6xl font-bold tracking-tight max-w-4xl"
+				}),
 					/* @__PURE__ */ jsx("p", {
-						className: "mt-6 text-xl text-muted-foreground max-w-3xl leading-relaxed",
-						children: review.excerpt
-					}),
+					className: "mt-6 text-xl text-muted-foreground max-w-3xl leading-relaxed",
+					children: review.excerpt
+				}),
 					/* @__PURE__ */ jsxs("div", {
-						className: "flex items-center gap-6 mt-8",
-						children: [/* @__PURE__ */ jsx("span", {
-							className: "font-display text-6xl font-bold text-accent-gradient",
-							children: review.overallScore.toFixed(1)
-						}), /* @__PURE__ */ jsxs("div", { children: [/* @__PURE__ */ jsx("div", {
+					className: "flex items-center gap-6 mt-8",
+					children: [/* @__PURE__ */ jsx("span", {
+						className: "font-display text-6xl font-bold text-accent-gradient",
+						children: review.overallScore.toFixed(1)
+					}), /* @__PURE__ */ jsxs("div", {
+						children: [/* @__PURE__ */ jsx("div", {
 							className: "flex items-center gap-1 text-[var(--emerald-accent)]",
 							children: [...Array(5)].map((_, i) => /* @__PURE__ */ jsx(Star, { className: `size-4 ${i < Math.floor(review.overallScore / 2) ? "fill-current text-[var(--emerald-accent)]" : "text-muted"}` }, i))
 						}), /* @__PURE__ */ jsxs("p", {
@@ -52,8 +54,9 @@ function DynamicReviewPage() {
 								") · ",
 								review.readTime
 							]
-						})] })]
-					})
+						})]
+					})]
+				})
 				]
 			})]
 		}),
@@ -76,29 +79,31 @@ function DynamicReviewPage() {
 					className: "space-y-6 text-foreground/90 text-lg leading-relaxed font-sans",
 					children: [
 						/* @__PURE__ */ jsx("h2", {
-							className: "font-display text-2xl font-bold text-foreground",
-							children: "Lab-Tested Verdict"
-						}),
+						className: "font-display text-2xl font-bold text-foreground",
+						children: "Lab-Tested Verdict"
+					}),
 						/* @__PURE__ */ jsx("p", {
-							className: "whitespace-pre-line",
-							children: review.content
-						}),
+						className: "whitespace-pre-line",
+						children: review.content
+					}),
 						product && /* @__PURE__ */ jsx("div", {
 							className: "pt-8",
 							children: /* @__PURE__ */ jsxs("div", {
 								className: "surface-card p-6 rounded-2xl border border-[var(--hairline)] flex flex-col md:flex-row justify-between items-start md:items-center gap-4",
-								children: [/* @__PURE__ */ jsxs("div", { children: [/* @__PURE__ */ jsx("h4", {
-									className: "font-display font-semibold text-lg",
-									children: product.name
-								}), /* @__PURE__ */ jsx("p", {
-									className: "text-sm text-muted-foreground",
-									children: "Check real-time pricing and stock."
-								})] }), /* @__PURE__ */ jsxs("a", {
+								children: [/* @__PURE__ */ jsxs("div", {
+									children: [/* @__PURE__ */ jsx("h4", {
+										className: "font-display font-semibold text-lg",
+										children: product.name
+									}), /* @__PURE__ */ jsx("p", {
+										className: "text-sm text-muted-foreground",
+										children: "Check real-time pricing and stock."
+									})]
+								}), /* @__PURE__ */ jsxs("a", {
 									href: product.affiliateUrl,
 									target: "_blank",
 									rel: "noopener noreferrer",
 									className: "btn-accent rounded-full px-5 py-2.5 text-xs font-semibold inline-flex items-center gap-1.5",
-									children: ["Buy on Amazon ", /* @__PURE__ */ jsx(ExternalLink, { className: "size-3.5" })]
+									children: ["Buy ", /* @__PURE__ */ jsx(ExternalLink, { className: "size-3.5" })]
 								})]
 							})
 						})
@@ -152,11 +157,11 @@ function DynamicReviewPage() {
 				})]
 			})
 		}),
-		comparison && /* @__PURE__ */ jsx("section", {
-			className: "px-6 lg:px-10 py-16",
-			children: /* @__PURE__ */ jsxs("div", {
-				className: "max-w-5xl mx-auto",
-				children: [
+			comparison && /* @__PURE__ */ jsx("section", {
+				className: "px-6 lg:px-10 py-16",
+				children: /* @__PURE__ */ jsxs("div", {
+					className: "max-w-5xl mx-auto",
+					children: [
 					/* @__PURE__ */ jsx("h2", {
 						className: "font-display text-3xl font-semibold mb-2",
 						children: "Comparative Analysis"
@@ -182,35 +187,35 @@ function DynamicReviewPage() {
 						className: "mt-6 p-6 surface-card-2 rounded-2xl border border-[var(--hairline)]",
 						children: [
 							/* @__PURE__ */ jsx("span", {
-								className: "font-mono-tech text-[9px] uppercase tracking-widest text-[var(--emerald-accent)] font-bold block mb-2",
-								children: "Editor's Verdict"
-							}),
+							className: "font-mono-tech text-[9px] uppercase tracking-widest text-[var(--emerald-accent)] font-bold block mb-2",
+							children: "Editor's Verdict"
+						}),
 							/* @__PURE__ */ jsxs("p", {
-								className: "text-sm text-muted-foreground leading-relaxed italic",
-								children: [
-									"\"",
-									comparison.verdict,
-									"\""
-								]
-							}),
+							className: "text-sm text-muted-foreground leading-relaxed italic",
+							children: [
+								"\"",
+								comparison.verdict,
+								"\""
+							]
+						}),
 							/* @__PURE__ */ jsx("div", {
-								className: "mt-4",
-								children: /* @__PURE__ */ jsx(Link, {
-									to: `/compare/${comparison.slug}`,
-									className: "text-xs font-semibold text-[var(--emerald-accent)] hover:underline inline-flex items-center gap-1",
-									children: "View full comparison data →"
-								})
+							className: "mt-4",
+							children: /* @__PURE__ */ jsx(Link, {
+								to: `/compare/${comparison.slug}`,
+								className: "text-xs font-semibold text-[var(--emerald-accent)] hover:underline inline-flex items-center gap-1",
+								children: "View full comparison data →"
 							})
+						})
 						]
 					})
-				]
-			})
-		}),
+					]
+				})
+			}),
 		/* @__PURE__ */ jsx("section", {
-			className: "px-6 lg:px-10 py-16",
-			children: /* @__PURE__ */ jsxs("div", {
-				className: "max-w-4xl mx-auto surface-card-2 p-10 lg:p-14 text-center rounded-3xl border border-[var(--hairline)] relative overflow-hidden",
-				children: [
+				className: "px-6 lg:px-10 py-16",
+				children: /* @__PURE__ */ jsxs("div", {
+					className: "max-w-4xl mx-auto surface-card-2 p-10 lg:p-14 text-center rounded-3xl border border-[var(--hairline)] relative overflow-hidden",
+					children: [
 					/* @__PURE__ */ jsx("div", { className: "absolute inset-0 bg-radial-glow opacity-30 pointer-events-none" }),
 					/* @__PURE__ */ jsx("p", {
 						className: "font-mono-tech text-[10px] uppercase tracking-[0.3em] text-[var(--emerald-accent)] mb-4",
@@ -224,77 +229,82 @@ function DynamicReviewPage() {
 							"\""
 						]
 					}),
-					product && /* @__PURE__ */ jsxs("div", {
-						className: "mt-8 flex flex-wrap justify-center gap-4",
-						children: [/* @__PURE__ */ jsxs("a", {
-							href: product.affiliateUrl,
-							target: "_blank",
-							rel: "noopener noreferrer",
-							className: "btn-accent inline-flex items-center gap-2 rounded-full px-7 py-3.5 text-sm font-semibold",
-							children: ["Buy on Amazon ", /* @__PURE__ */ jsx(ExternalLink, { className: "size-4" })]
-						}), /* @__PURE__ */ jsx(Link, {
-							to: `/category/${product.categorySlug}`,
-							className: "btn-ghost-glow rounded-full px-7 py-3.5 text-sm font-semibold",
-							children: "Browse Alternative Options"
-						})]
-					})
-				]
-			})
-		}),
-		/* @__PURE__ */ jsx("section", {
-			className: "px-6 lg:px-10 py-16 border-t border-[var(--hairline)]",
-			children: /* @__PURE__ */ jsxs("div", {
-				className: "max-w-7xl mx-auto",
-				children: [/* @__PURE__ */ jsxs("div", {
-					className: "flex justify-between items-end mb-10",
-					children: [/* @__PURE__ */ jsxs("div", { children: [/* @__PURE__ */ jsx("p", {
-						className: "font-mono-tech text-[10px] uppercase tracking-[0.25em] text-muted-foreground",
-						children: "More Reading"
-					}), /* @__PURE__ */ jsx("h2", {
-						className: "font-display text-3xl font-semibold",
-						children: "Latest Expert Reviews"
-					})] }), /* @__PURE__ */ jsx(Link, {
-						to: "/reviews",
-						className: "text-xs font-semibold text-[var(--emerald-accent)] hover:underline",
-						children: "View all reviews →"
-					})]
-				}), /* @__PURE__ */ jsx("div", {
-					className: "grid grid-cols-1 md:grid-cols-3 gap-6",
-					children: relatedReviews.map((r) => /* @__PURE__ */ jsx(TiltCard, {
-						className: "surface-card overflow-hidden group flex flex-col h-full relative",
-						max: 5,
-						children: /* @__PURE__ */ jsxs(Link, {
-							to: `/reviews/${r.slug}`,
-							className: "flex flex-col h-full",
-							children: [/* @__PURE__ */ jsxs("div", {
-								className: "aspect-[16/10] overflow-hidden relative bg-[var(--surface-2)]",
-								children: [/* @__PURE__ */ jsx("img", {
-									src: r.image,
-									alt: r.productName,
-									className: "size-full object-cover transition-transform duration-500 group-hover:scale-105"
-								}), /* @__PURE__ */ jsx("div", {
-									className: "absolute bottom-3 right-3 rounded-full bg-background/90 px-2 py-0.5 text-xs font-bold font-mono text-[var(--emerald-accent)]",
-									children: r.overallScore
-								})]
-							}), /* @__PURE__ */ jsxs("div", {
-								className: "p-5 flex-1 flex flex-col justify-between",
-								children: [/* @__PURE__ */ jsxs("div", { children: [/* @__PURE__ */ jsx("span", {
-									className: "font-mono-tech text-[9px] text-[var(--cyan-accent)] uppercase tracking-wider block mb-2",
-									children: "Review"
-								}), /* @__PURE__ */ jsx("h3", {
-									className: "font-display text-base font-semibold group-hover:text-[var(--emerald-accent)] transition-colors line-clamp-2",
-									children: r.title
-								})] }), /* @__PURE__ */ jsxs("div", {
-									className: "pt-4 border-t border-[var(--hairline)]/50 mt-4 flex items-center justify-between text-xs text-muted-foreground",
-									children: [/* @__PURE__ */ jsxs("span", { children: ["By ", r.author] }), /* @__PURE__ */ jsx("span", { children: r.readTime })]
-								})]
+						product && /* @__PURE__ */ jsxs("div", {
+							className: "mt-8 flex flex-wrap justify-center gap-4",
+							children: [/* @__PURE__ */ jsxs("a", {
+								href: product.affiliateUrl,
+								target: "_blank",
+								rel: "noopener noreferrer",
+								className: "btn-accent inline-flex items-center gap-2 rounded-full px-7 py-3.5 text-sm font-semibold",
+								children: ["Buy ", /* @__PURE__ */ jsx(ExternalLink, { className: "size-4" })]
+							}), /* @__PURE__ */ jsx(Link, {
+								to: `/category/${product.categorySlug}`,
+								className: "btn-ghost-glow rounded-full px-7 py-3.5 text-sm font-semibold",
+								children: "Browse Alternative Options"
 							})]
 						})
-					}, r.slug))
-				})]
+					]
+				})
+			}),
+		/* @__PURE__ */ jsx("section", {
+				className: "px-6 lg:px-10 py-16 border-t border-[var(--hairline)]",
+				children: /* @__PURE__ */ jsxs("div", {
+					className: "max-w-7xl mx-auto",
+					children: [/* @__PURE__ */ jsxs("div", {
+						className: "flex justify-between items-end mb-10",
+						children: [/* @__PURE__ */ jsxs("div", {
+							children: [/* @__PURE__ */ jsx("p", {
+								className: "font-mono-tech text-[10px] uppercase tracking-[0.25em] text-muted-foreground",
+								children: "More Reading"
+							}), /* @__PURE__ */ jsx("h2", {
+								className: "font-display text-3xl font-semibold",
+								children: "Latest Expert Reviews"
+							})]
+						}), /* @__PURE__ */ jsx(Link, {
+							to: "/reviews",
+							className: "text-xs font-semibold text-[var(--emerald-accent)] hover:underline",
+							children: "View all reviews →"
+						})]
+					}), /* @__PURE__ */ jsx("div", {
+						className: "grid grid-cols-1 md:grid-cols-3 gap-6",
+						children: relatedReviews.map((r) => /* @__PURE__ */ jsx(TiltCard, {
+							className: "surface-card overflow-hidden group flex flex-col h-full relative",
+							max: 5,
+							children: /* @__PURE__ */ jsxs(Link, {
+								to: `/reviews/${r.slug}`,
+								className: "flex flex-col h-full",
+								children: [/* @__PURE__ */ jsxs("div", {
+									className: "aspect-[16/10] overflow-hidden relative bg-[var(--surface-2)]",
+									children: [/* @__PURE__ */ jsx("img", {
+										src: r.image,
+										alt: r.productName,
+										className: "size-full object-cover transition-transform duration-500 group-hover:scale-105"
+									}), /* @__PURE__ */ jsx("div", {
+										className: "absolute bottom-3 right-3 rounded-full bg-background/90 px-2 py-0.5 text-xs font-bold font-mono text-[var(--emerald-accent)]",
+										children: r.overallScore
+									})]
+								}), /* @__PURE__ */ jsxs("div", {
+									className: "p-5 flex-1 flex flex-col justify-between",
+									children: [/* @__PURE__ */ jsxs("div", {
+										children: [/* @__PURE__ */ jsx("span", {
+											className: "font-mono-tech text-[9px] text-[var(--cyan-accent)] uppercase tracking-wider block mb-2",
+											children: "Review"
+										}), /* @__PURE__ */ jsx("h3", {
+											className: "font-display text-base font-semibold group-hover:text-[var(--emerald-accent)] transition-colors line-clamp-2",
+											children: r.title
+										})]
+									}), /* @__PURE__ */ jsxs("div", {
+										className: "pt-4 border-t border-[var(--hairline)]/50 mt-4 flex items-center justify-between text-xs text-muted-foreground",
+										children: [/* @__PURE__ */ jsxs("span", { children: ["By ", r.author] }), /* @__PURE__ */ jsx("span", { children: r.readTime })]
+									})]
+								})]
+							})
+						}, r.slug))
+					})]
+				})
 			})
-		})
-	] });
+		]
+	});
 }
 //#endregion
 export { DynamicReviewPage as component };

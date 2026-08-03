@@ -36,8 +36,8 @@ function ProductDetailPage() {
     .slice(0, 3);
 
   // Fallback if no related products in same category
-  const fallbackRelated = related.length > 0 
-    ? related 
+  const fallbackRelated = related.length > 0
+    ? related
     : products.filter((p) => p.slug !== product.slug).slice(0, 3);
 
   const hasDiscount = product.originalPrice && product.originalPrice > product.price;
@@ -48,8 +48,8 @@ function ProductDetailPage() {
       <section className="relative pt-40 pb-16 px-6 lg:px-10 overflow-hidden">
         <div className="absolute inset-0 bg-radial-glow opacity-60" />
         <div className="relative max-w-7xl mx-auto">
-          <Link 
-            to={`/category/${product.categorySlug}`} 
+          <Link
+            to={`/category/${product.categorySlug}`}
             className="inline-flex items-center gap-2 text-xs font-mono-tech uppercase tracking-wider text-muted-foreground hover:text-foreground transition-colors mb-8 group"
           >
             <ArrowLeft className="size-3.5 group-hover:-translate-x-1 transition-transform" />
@@ -76,11 +76,10 @@ function ProductDetailPage() {
               <div className="flex items-center gap-3">
                 <div className="flex items-center gap-1 text-[var(--emerald-accent)]">
                   {[...Array(5)].map((_, i) => (
-                    <Star 
-                      key={i} 
-                      className={`size-4 ${
-                        i < Math.floor(product.rating) ? "fill-amber-400 text-amber-400" : "text-muted-foreground"
-                      }`} 
+                    <Star
+                      key={i}
+                      className={`size-4 ${i < Math.floor(product.rating) ? "fill-amber-400 text-amber-400" : "text-muted-foreground"
+                        }`}
                     />
                   ))}
                 </div>
@@ -95,26 +94,26 @@ function ProductDetailPage() {
               </div>
 
               <div className="flex flex-wrap gap-3 pt-2">
-                <a 
-                  href={product.affiliateUrl} 
-                  target="_blank" 
+                <a
+                  href={product.affiliateUrl}
+                  target="_blank"
                   rel="noopener noreferrer"
                   className="btn-accent rounded-full px-7 py-3.5 text-sm font-semibold inline-flex items-center gap-2 cursor-pointer"
                 >
-                  Buy on Amazon
+                  Buy
                   <ExternalLink className="size-4" />
                 </a>
-                
+
                 {review && (
-                  <Link 
-                    to={`/reviews/${review.slug}`} 
+                  <Link
+                    to={`/reviews/${review.slug}`}
                     className="btn-ghost-glow rounded-full px-7 py-3.5 text-sm font-semibold"
                   >
                     Read Expert Review ({review.overallScore.toFixed(1)})
                   </Link>
                 )}
 
-                <Link 
+                <Link
                   to="/compare"
                   className="btn-ghost-glow rounded-full px-6 py-3.5 text-sm font-semibold inline-flex items-center justify-center"
                 >
@@ -144,7 +143,7 @@ function ProductDetailPage() {
         <div className="max-w-5xl mx-auto surface-card-2 p-10 lg:p-14">
           <p className="font-mono-tech text-[10px] uppercase tracking-[0.3em] text-[var(--cyan-accent)] mb-3">Specifications</p>
           <h2 className="font-display text-3xl lg:text-4xl font-semibold mb-10 max-w-xl">Technical Specifications & Performance</h2>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-6">
             {product.specs.map((spec) => (
               <div key={spec.label} className="flex justify-between items-center py-3 border-b border-[var(--hairline)]">
@@ -169,7 +168,7 @@ function ProductDetailPage() {
               ))}
             </ul>
           </div>
-          
+
           <div className="surface-card-2 p-8 border border-[var(--hairline)] rounded-2xl">
             <p className="font-mono-tech text-[10px] uppercase tracking-[0.25em] text-[var(--cyan-accent)] mb-4 font-semibold">Keep in Mind</p>
             <ul className="space-y-3">
@@ -190,10 +189,10 @@ function ProductDetailPage() {
           <p className="text-muted-foreground leading-relaxed text-lg max-w-2xl mx-auto mb-8">
             {product.description}
           </p>
-          
-          <a 
-            href={product.affiliateUrl} 
-            target="_blank" 
+
+          <a
+            href={product.affiliateUrl}
+            target="_blank"
             rel="noopener noreferrer"
             className="btn-accent inline-flex items-center gap-2 rounded-full px-7 py-3.5 text-sm font-semibold cursor-pointer"
           >

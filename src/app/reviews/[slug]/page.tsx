@@ -40,7 +40,7 @@ export default function ReviewDetailPage({ params }: { params: Promise<{ slug: s
             </div>
 
             <SplitTextReveal text={review.title} className="font-display text-4xl lg:text-6xl font-bold tracking-tight" />
-            
+
             <div className="flex items-center gap-4 pt-2">
               <div className="flex items-center gap-2 bg-[var(--surface-2)] border border-[var(--hairline)] px-4 py-2 rounded-full">
                 <span className="font-mono text-xl font-bold text-[var(--emerald-accent)]">{review.overallScore.toFixed(1)}</span>
@@ -119,7 +119,7 @@ export default function ReviewDetailPage({ params }: { params: Promise<{ slug: s
               </div>
               <div className="flex gap-3">
                 <a href={product.affiliateUrl} target="_blank" rel="noopener noreferrer" className="btn-accent rounded-full px-6 py-3 text-xs font-semibold inline-flex items-center gap-1.5">
-                  Buy on Amazon <ExternalLink className="size-3.5" />
+                  Buy <ExternalLink className="size-3.5" />
                 </a>
                 <Link href={`/product/${product.slug}`} className="btn-ghost-glow rounded-full px-6 py-3 text-xs font-semibold">
                   Specs

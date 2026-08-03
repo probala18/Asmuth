@@ -29,7 +29,7 @@ export const Route = createFileRoute("/best/$category")({
 
 function BestCategoryPage() {
   const { category, catProducts } = Route.useLoaderData();
-  
+
   const winner = catProducts[0];
   const runners = catProducts.slice(1);
 
@@ -61,7 +61,7 @@ function BestCategoryPage() {
         <section className="px-6 lg:px-10 py-8">
           <div className="max-w-6xl mx-auto surface-card p-8 md:p-12 rounded-3xl border border-[var(--emerald-accent)]/40 relative overflow-hidden grid grid-cols-1 lg:grid-cols-[1fr_1.3fr] gap-12 items-center">
             <div className="absolute -left-12 -top-12 size-64 rounded-full blur-3xl opacity-20" style={{ background: "var(--gradient-accent)" }} />
-            
+
             <div className="aspect-square rounded-2xl overflow-hidden bg-[var(--surface-2)] border border-[var(--hairline)] relative z-10">
               <img src={winner.image} alt={winner.name} className="size-full object-cover" />
             </div>
@@ -80,9 +80,9 @@ function BestCategoryPage() {
               <div className="flex items-center gap-3">
                 <div className="flex items-center gap-1 text-[var(--emerald-accent)]">
                   {[...Array(5)].map((_, i) => (
-                    <Star 
-                      key={i} 
-                      className={`size-4 ${i < Math.floor(winner.rating) ? "fill-amber-400 text-amber-400" : "text-muted"}`} 
+                    <Star
+                      key={i}
+                      className={`size-4 ${i < Math.floor(winner.rating) ? "fill-amber-400 text-amber-400" : "text-muted"}`}
                     />
                   ))}
                 </div>
@@ -92,13 +92,13 @@ function BestCategoryPage() {
               <p className="text-sm text-foreground/80 leading-relaxed font-sans">{winner.description}</p>
 
               <div className="flex flex-wrap gap-3 pt-4 border-t border-[var(--hairline)]/50">
-                <a 
-                  href={winner.affiliateUrl} 
-                  target="_blank" 
+                <a
+                  href={winner.affiliateUrl}
+                  target="_blank"
                   rel="noopener noreferrer"
                   className="btn-accent rounded-full px-6 py-3 text-sm font-semibold inline-flex items-center gap-1.5"
                 >
-                  Buy on Amazon <Award className="size-3.5" />
+                  Buy <Award className="size-3.5" />
                 </a>
                 <Link to={`/product/${winner.slug}`} className="btn-ghost-glow rounded-full px-6 py-3 text-sm font-semibold">
                   Full specifications

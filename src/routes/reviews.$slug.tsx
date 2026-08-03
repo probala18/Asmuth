@@ -27,8 +27,8 @@ export const Route = createFileRoute("/reviews/$slug")({
     }
     const product = getProduct(review.productSlug);
     // Find a comparison that features this product
-    const comparison = getComparison(`${review.productSlug}-vs-dell-xps-16`) || 
-                       getComparison(`${review.productSlug}-vs-competitors`);
+    const comparison = getComparison(`${review.productSlug}-vs-dell-xps-16`) ||
+      getComparison(`${review.productSlug}-vs-competitors`);
     return { review, product, comparison };
   },
   component: DynamicReviewPage,
@@ -62,9 +62,9 @@ function DynamicReviewPage() {
               {review.badge ? review.badge.replace("-", " ").toUpperCase() : "EXPERT REVIEW"} · LAB TESTED
             </span>
           </div>
-          
+
           <SplitTextReveal text={review.title} className="font-display text-4xl lg:text-6xl font-bold tracking-tight max-w-4xl" />
-          
+
           <p className="mt-6 text-xl text-muted-foreground max-w-3xl leading-relaxed">
             {review.excerpt}
           </p>
@@ -76,9 +76,9 @@ function DynamicReviewPage() {
             <div>
               <div className="flex items-center gap-1 text-[var(--emerald-accent)]">
                 {[...Array(5)].map((_, i) => (
-                  <Star 
-                    key={i} 
-                    className={`size-4 ${i < Math.floor(review.overallScore / 2) ? "fill-current text-[var(--emerald-accent)]" : "text-muted"}`} 
+                  <Star
+                    key={i}
+                    className={`size-4 ${i < Math.floor(review.overallScore / 2) ? "fill-current text-[var(--emerald-accent)]" : "text-muted"}`}
                   />
                 ))}
               </div>
@@ -104,7 +104,7 @@ function DynamicReviewPage() {
           <div className="space-y-6 text-foreground/90 text-lg leading-relaxed font-sans">
             <h2 className="font-display text-2xl font-bold text-foreground">Lab-Tested Verdict</h2>
             <p className="whitespace-pre-line">{review.content}</p>
-            
+
             {product && (
               <div className="pt-8">
                 <div className="surface-card p-6 rounded-2xl border border-[var(--hairline)] flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
@@ -112,13 +112,13 @@ function DynamicReviewPage() {
                     <h4 className="font-display font-semibold text-lg">{product.name}</h4>
                     <p className="text-sm text-muted-foreground">Check real-time pricing and stock.</p>
                   </div>
-                  <a 
-                    href={product.affiliateUrl} 
-                    target="_blank" 
+                  <a
+                    href={product.affiliateUrl}
+                    target="_blank"
                     rel="noopener noreferrer"
                     className="btn-accent rounded-full px-5 py-2.5 text-xs font-semibold inline-flex items-center gap-1.5"
                   >
-                    Buy on Amazon <ExternalLink className="size-3.5" />
+                    Buy <ExternalLink className="size-3.5" />
                   </a>
                 </div>
               </div>
@@ -178,8 +178,8 @@ function DynamicReviewPage() {
                 <div key={i} className="grid grid-cols-[1.5fr_2fr_2fr] items-center px-6 py-4 border-t border-[var(--hairline)] first:border-t-0 hover:bg-[var(--surface-2)]/50 transition-colors">
                   <span className="text-xs font-mono-tech uppercase tracking-wider text-muted-foreground">{spec.label}</span>
                   {spec.values.map((v, idx) => (
-                    <span 
-                      key={idx} 
+                    <span
+                      key={idx}
                       className={`text-sm ${v.isWinner ? "text-[var(--emerald-accent)] font-semibold" : "text-foreground"}`}
                     >
                       {v.value}
@@ -188,15 +188,15 @@ function DynamicReviewPage() {
                 </div>
               ))}
             </div>
-            
+
             <div className="mt-6 p-6 surface-card-2 rounded-2xl border border-[var(--hairline)]">
               <span className="font-mono-tech text-[9px] uppercase tracking-widest text-[var(--emerald-accent)] font-bold block mb-2">Editor's Verdict</span>
               <p className="text-sm text-muted-foreground leading-relaxed italic">
                 "{comparison.verdict}"
               </p>
               <div className="mt-4">
-                <Link 
-                  to={`/compare/${comparison.slug}`} 
+                <Link
+                  to={`/compare/${comparison.slug}`}
                   className="text-xs font-semibold text-[var(--emerald-accent)] hover:underline inline-flex items-center gap-1"
                 >
                   View full comparison data &rarr;
@@ -217,16 +217,16 @@ function DynamicReviewPage() {
           </p>
           {product && (
             <div className="mt-8 flex flex-wrap justify-center gap-4">
-              <a 
-                href={product.affiliateUrl} 
-                target="_blank" 
+              <a
+                href={product.affiliateUrl}
+                target="_blank"
                 rel="noopener noreferrer"
                 className="btn-accent inline-flex items-center gap-2 rounded-full px-7 py-3.5 text-sm font-semibold"
               >
-                Buy on Amazon <ExternalLink className="size-4" />
+                Buy <ExternalLink className="size-4" />
               </a>
-              <Link 
-                to={`/category/${product.categorySlug}`} 
+              <Link
+                to={`/category/${product.categorySlug}`}
                 className="btn-ghost-glow rounded-full px-7 py-3.5 text-sm font-semibold"
               >
                 Browse Alternative Options
@@ -248,7 +248,7 @@ function DynamicReviewPage() {
               View all reviews &rarr;
             </Link>
           </div>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {relatedReviews.map((r) => (
               <TiltCard key={r.slug} className="surface-card overflow-hidden group flex flex-col h-full relative" max={5}>

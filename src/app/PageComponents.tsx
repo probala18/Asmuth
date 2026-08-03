@@ -146,7 +146,7 @@ export function ProductDetailPage({ params }: { params: Promise<{ slug: string }
                   rel="noopener noreferrer"
                   className="btn-accent rounded-full px-7 py-3.5 text-sm font-semibold inline-flex items-center gap-2 cursor-pointer"
                 >
-                  Buy on Amazon <ExternalLink className="size-4" />
+                  Buy <ExternalLink className="size-4" />
                 </a>
                 {review && (
                   <Link href={`/reviews/${review.slug}`} className="btn-ghost-glow rounded-full px-7 py-3.5 text-sm font-semibold">

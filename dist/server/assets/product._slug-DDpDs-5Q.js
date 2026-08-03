@@ -10,7 +10,8 @@ function ProductDetailPage() {
 	const related = products.filter((p) => p.categorySlug === product.categorySlug && p.slug !== product.slug).slice(0, 3);
 	const fallbackRelated = related.length > 0 ? related : products.filter((p) => p.slug !== product.slug).slice(0, 3);
 	const hasDiscount = product.originalPrice && product.originalPrice > product.price;
-	return /* @__PURE__ */ jsxs(Fragment, { children: [
+	return /* @__PURE__ */ jsxs(Fragment, {
+		children: [
 		/* @__PURE__ */ jsxs("section", {
 			className: "relative pt-40 pb-16 px-6 lg:px-10 overflow-hidden",
 			children: [/* @__PURE__ */ jsx("div", { className: "absolute inset-0 bg-radial-glow opacity-60" }), /* @__PURE__ */ jsxs("div", {
@@ -37,96 +38,96 @@ function ProductDetailPage() {
 						className: "space-y-6",
 						children: [
 							/* @__PURE__ */ jsxs("p", {
-								className: "font-mono-tech text-[10px] uppercase tracking-[0.3em] text-[var(--emerald-accent)]",
-								children: [
-									product.brand,
-									" · ",
-									product.category
-								]
-							}),
+							className: "font-mono-tech text-[10px] uppercase tracking-[0.3em] text-[var(--emerald-accent)]",
+							children: [
+								product.brand,
+								" · ",
+								product.category
+							]
+						}),
 							/* @__PURE__ */ jsx(SplitTextReveal, {
-								text: product.name,
-								className: "font-display text-5xl lg:text-6xl font-bold tracking-tight"
-							}),
+							text: product.name,
+							className: "font-display text-5xl lg:text-6xl font-bold tracking-tight"
+						}),
 							/* @__PURE__ */ jsx("p", {
-								className: "text-muted-foreground text-lg leading-relaxed",
-								children: product.shortDescription
-							}),
+							className: "text-muted-foreground text-lg leading-relaxed",
+							children: product.shortDescription
+						}),
 							/* @__PURE__ */ jsxs("div", {
-								className: "flex items-center gap-3",
-								children: [/* @__PURE__ */ jsx("div", {
-									className: "flex items-center gap-1 text-[var(--emerald-accent)]",
-									children: [...Array(5)].map((_, i) => /* @__PURE__ */ jsx(Star, { className: `size-4 ${i < Math.floor(product.rating) ? "fill-amber-400 text-amber-400" : "text-muted-foreground"}` }, i))
-								}), /* @__PURE__ */ jsxs("span", {
-									className: "text-sm text-muted-foreground",
-									children: [
-										product.rating,
-										" · ",
-										product.reviewCount,
-										" user evaluations"
-									]
-								})]
-							}),
-							/* @__PURE__ */ jsxs("div", {
-								className: "flex items-baseline gap-3 pt-2",
-								children: [/* @__PURE__ */ jsxs("span", {
-									className: "font-display text-5xl font-bold text-accent-gradient",
-									children: ["$", product.price]
-								}), hasDiscount && /* @__PURE__ */ jsxs("span", {
-									className: "text-xl text-muted-foreground line-through",
-									children: ["$", product.originalPrice]
-								})]
-							}),
-							/* @__PURE__ */ jsxs("div", {
-								className: "flex flex-wrap gap-3 pt-2",
+							className: "flex items-center gap-3",
+							children: [/* @__PURE__ */ jsx("div", {
+								className: "flex items-center gap-1 text-[var(--emerald-accent)]",
+								children: [...Array(5)].map((_, i) => /* @__PURE__ */ jsx(Star, { className: `size-4 ${i < Math.floor(product.rating) ? "fill-amber-400 text-amber-400" : "text-muted-foreground"}` }, i))
+							}), /* @__PURE__ */ jsxs("span", {
+								className: "text-sm text-muted-foreground",
 								children: [
-									/* @__PURE__ */ jsxs("a", {
-										href: product.affiliateUrl,
-										target: "_blank",
-										rel: "noopener noreferrer",
-										className: "btn-accent rounded-full px-7 py-3.5 text-sm font-semibold inline-flex items-center gap-2 cursor-pointer",
-										children: ["Buy on Amazon", /* @__PURE__ */ jsx(ExternalLink, { className: "size-4" })]
-									}),
-									review && /* @__PURE__ */ jsxs(Link, {
-										to: `/reviews/${review.slug}`,
-										className: "btn-ghost-glow rounded-full px-7 py-3.5 text-sm font-semibold",
-										children: [
-											"Read Expert Review (",
-											review.overallScore.toFixed(1),
-											")"
-										]
-									}),
-									/* @__PURE__ */ jsx(Link, {
-										to: "/compare",
-										className: "btn-ghost-glow rounded-full px-6 py-3.5 text-sm font-semibold inline-flex items-center justify-center",
-										children: "Compare Tech"
-									})
+									product.rating,
+									" · ",
+									product.reviewCount,
+									" user evaluations"
 								]
+							})]
+						}),
+							/* @__PURE__ */ jsxs("div", {
+							className: "flex items-baseline gap-3 pt-2",
+							children: [/* @__PURE__ */ jsxs("span", {
+								className: "font-display text-5xl font-bold text-accent-gradient",
+								children: ["$", product.price]
+							}), hasDiscount && /* @__PURE__ */ jsxs("span", {
+								className: "text-xl text-muted-foreground line-through",
+								children: ["$", product.originalPrice]
+							})]
+						}),
+							/* @__PURE__ */ jsxs("div", {
+							className: "flex flex-wrap gap-3 pt-2",
+							children: [
+									/* @__PURE__ */ jsxs("a", {
+								href: product.affiliateUrl,
+								target: "_blank",
+								rel: "noopener noreferrer",
+								className: "btn-accent rounded-full px-7 py-3.5 text-sm font-semibold inline-flex items-center gap-2 cursor-pointer",
+								children: ["Buy", /* @__PURE__ */ jsx(ExternalLink, { className: "size-4" })]
 							}),
-							/* @__PURE__ */ jsx("div", {
-								className: "grid grid-cols-3 gap-4 pt-6 border-t border-[var(--hairline)]",
-								children: [
-									{
-										Icon: ShieldCheck,
-										label: "Tested Integrity"
-									},
-									{
-										Icon: Truck,
-										label: "Best Pricing"
-									},
-									{
-										Icon: Check,
-										label: "Editor Approved"
-									}
-								].map((b) => /* @__PURE__ */ jsxs("div", {
-									className: "text-[10px] md:text-xs text-muted-foreground flex items-center gap-1.5 font-medium",
+								review && /* @__PURE__ */ jsxs(Link, {
+									to: `/reviews/${review.slug}`,
+									className: "btn-ghost-glow rounded-full px-7 py-3.5 text-sm font-semibold",
 									children: [
-										/* @__PURE__ */ jsx(b.Icon, { className: "size-4 text-[var(--emerald-accent)] shrink-0" }),
-										" ",
-										b.label
+										"Read Expert Review (",
+										review.overallScore.toFixed(1),
+										")"
 									]
-								}, b.label))
-							})
+								}),
+									/* @__PURE__ */ jsx(Link, {
+									to: "/compare",
+									className: "btn-ghost-glow rounded-full px-6 py-3.5 text-sm font-semibold inline-flex items-center justify-center",
+									children: "Compare Tech"
+								})
+							]
+						}),
+							/* @__PURE__ */ jsx("div", {
+							className: "grid grid-cols-3 gap-4 pt-6 border-t border-[var(--hairline)]",
+							children: [
+								{
+									Icon: ShieldCheck,
+									label: "Tested Integrity"
+								},
+								{
+									Icon: Truck,
+									label: "Best Pricing"
+								},
+								{
+									Icon: Check,
+									label: "Editor Approved"
+								}
+							].map((b) => /* @__PURE__ */ jsxs("div", {
+								className: "text-[10px] md:text-xs text-muted-foreground flex items-center gap-1.5 font-medium",
+								children: [
+										/* @__PURE__ */ jsx(b.Icon, { className: "size-4 text-[var(--emerald-accent)] shrink-0" }),
+									" ",
+									b.label
+								]
+							}, b.label))
+						})
 						]
 					})]
 				})]
@@ -138,26 +139,26 @@ function ProductDetailPage() {
 				className: "max-w-5xl mx-auto surface-card-2 p-10 lg:p-14",
 				children: [
 					/* @__PURE__ */ jsx("p", {
-						className: "font-mono-tech text-[10px] uppercase tracking-[0.3em] text-[var(--cyan-accent)] mb-3",
-						children: "Specifications"
-					}),
+					className: "font-mono-tech text-[10px] uppercase tracking-[0.3em] text-[var(--cyan-accent)] mb-3",
+					children: "Specifications"
+				}),
 					/* @__PURE__ */ jsx("h2", {
-						className: "font-display text-3xl lg:text-4xl font-semibold mb-10 max-w-xl",
-						children: "Technical Specifications & Performance"
-					}),
+					className: "font-display text-3xl lg:text-4xl font-semibold mb-10 max-w-xl",
+					children: "Technical Specifications & Performance"
+				}),
 					/* @__PURE__ */ jsx("div", {
-						className: "grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-6",
-						children: product.specs.map((spec) => /* @__PURE__ */ jsxs("div", {
-							className: "flex justify-between items-center py-3 border-b border-[var(--hairline)]",
-							children: [/* @__PURE__ */ jsx("span", {
-								className: "text-sm font-medium text-muted-foreground",
-								children: spec.label
-							}), /* @__PURE__ */ jsx("span", {
-								className: "text-sm font-semibold text-foreground",
-								children: spec.value
-							})]
-						}, spec.label))
-					})
+					className: "grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-6",
+					children: product.specs.map((spec) => /* @__PURE__ */ jsxs("div", {
+						className: "flex justify-between items-center py-3 border-b border-[var(--hairline)]",
+						children: [/* @__PURE__ */ jsx("span", {
+							className: "text-sm font-medium text-muted-foreground",
+							children: spec.label
+						}), /* @__PURE__ */ jsx("span", {
+							className: "text-sm font-semibold text-foreground",
+							children: spec.value
+						})]
+					}, spec.label))
+				})
 				]
 			})
 		}),
@@ -206,20 +207,20 @@ function ProductDetailPage() {
 				className: "max-w-4xl mx-auto surface-card p-10 lg:p-14 text-center border border-[var(--hairline)]",
 				children: [
 					/* @__PURE__ */ jsx("p", {
-						className: "font-mono-tech text-[10px] uppercase tracking-[0.3em] text-[var(--emerald-accent)] mb-4",
-						children: "The Overview"
-					}),
+					className: "font-mono-tech text-[10px] uppercase tracking-[0.3em] text-[var(--emerald-accent)] mb-4",
+					children: "The Overview"
+				}),
 					/* @__PURE__ */ jsx("p", {
-						className: "text-muted-foreground leading-relaxed text-lg max-w-2xl mx-auto mb-8",
-						children: product.description
-					}),
+					className: "text-muted-foreground leading-relaxed text-lg max-w-2xl mx-auto mb-8",
+					children: product.description
+				}),
 					/* @__PURE__ */ jsxs("a", {
-						href: product.affiliateUrl,
-						target: "_blank",
-						rel: "noopener noreferrer",
-						className: "btn-accent inline-flex items-center gap-2 rounded-full px-7 py-3.5 text-sm font-semibold cursor-pointer",
-						children: ["Check Price on Amazon", /* @__PURE__ */ jsx(ExternalLink, { className: "size-4" })]
-					})
+					href: product.affiliateUrl,
+					target: "_blank",
+					rel: "noopener noreferrer",
+					className: "btn-accent inline-flex items-center gap-2 rounded-full px-7 py-3.5 text-sm font-semibold cursor-pointer",
+					children: ["Check Price on Amazon", /* @__PURE__ */ jsx(ExternalLink, { className: "size-4" })]
+				})
 				]
 			})
 		}),
@@ -246,13 +247,15 @@ function ProductDetailPage() {
 								})
 							}), /* @__PURE__ */ jsxs("div", {
 								className: "p-5 flex justify-between items-center",
-								children: [/* @__PURE__ */ jsxs("div", { children: [/* @__PURE__ */ jsx("span", {
-									className: "font-mono-tech text-[9px] uppercase text-muted-foreground",
-									children: p.brand
-								}), /* @__PURE__ */ jsx("h3", {
-									className: "font-display text-lg font-semibold text-foreground group-hover:text-[var(--emerald-accent)] transition-colors",
-									children: p.name
-								})] }), /* @__PURE__ */ jsxs("span", {
+								children: [/* @__PURE__ */ jsxs("div", {
+									children: [/* @__PURE__ */ jsx("span", {
+										className: "font-mono-tech text-[9px] uppercase text-muted-foreground",
+										children: p.brand
+									}), /* @__PURE__ */ jsx("h3", {
+										className: "font-display text-lg font-semibold text-foreground group-hover:text-[var(--emerald-accent)] transition-colors",
+										children: p.name
+									})]
+								}), /* @__PURE__ */ jsxs("span", {
 									className: "text-[var(--emerald-accent)] font-display font-semibold",
 									children: ["$", p.price]
 								})]
@@ -262,7 +265,8 @@ function ProductDetailPage() {
 				})]
 			})
 		})
-	] });
+		]
+	});
 }
 //#endregion
 export { ProductDetailPage as component };

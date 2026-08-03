@@ -8,47 +8,50 @@ function BestCategoryPage() {
 	const { category, catProducts } = Route.useLoaderData();
 	const winner = catProducts[0];
 	const runners = catProducts.slice(1);
-	return /* @__PURE__ */ jsxs(Fragment, { children: [
+	return /* @__PURE__ */ jsxs(Fragment, {
+		children: [
 		/* @__PURE__ */ jsxs("section", {
 			className: "relative pt-40 pb-16 px-6 lg:px-10 overflow-hidden",
 			children: [/* @__PURE__ */ jsx("div", { className: "absolute inset-0 bg-radial-glow opacity-70" }), /* @__PURE__ */ jsxs("div", {
 				className: "relative max-w-6xl mx-auto",
 				children: [
 					/* @__PURE__ */ jsxs(Link, {
-						to: "/best-products",
-						className: "inline-flex items-center gap-2 text-xs font-mono-tech uppercase tracking-wider text-muted-foreground hover:text-foreground transition-colors mb-8 group",
-						children: [/* @__PURE__ */ jsx(ArrowLeft, { className: "size-3.5 group-hover:-translate-x-1 transition-transform" }), "All Best Picks"]
-					}),
+					to: "/best-products",
+					className: "inline-flex items-center gap-2 text-xs font-mono-tech uppercase tracking-wider text-muted-foreground hover:text-foreground transition-colors mb-8 group",
+					children: [/* @__PURE__ */ jsx(ArrowLeft, { className: "size-3.5 group-hover:-translate-x-1 transition-transform" }), "All Best Picks"]
+				}),
 					/* @__PURE__ */ jsx("span", {
-						className: "font-mono-tech text-[10px] uppercase tracking-[0.3em] text-[var(--emerald-accent)] block mb-3",
-						children: "Category Awards"
-					}),
+					className: "font-mono-tech text-[10px] uppercase tracking-[0.3em] text-[var(--emerald-accent)] block mb-3",
+					children: "Category Awards"
+				}),
 					/* @__PURE__ */ jsx(SplitTextReveal, {
-						text: `Best in ${category.name}`,
-						className: "font-display text-5xl lg:text-7xl font-bold tracking-tight"
-					}),
+					text: `Best in ${category.name}`,
+					className: "font-display text-5xl lg:text-7xl font-bold tracking-tight"
+				}),
 					/* @__PURE__ */ jsxs("p", {
-						className: "mt-6 text-xl text-muted-foreground max-w-xl",
-						children: [
-							"Out of ",
-							category.productCount,
-							" models assessed, ",
-							/* @__PURE__ */ jsxs(HandUnderline, { children: [
+					className: "mt-6 text-xl text-muted-foreground max-w-xl",
+					children: [
+						"Out of ",
+						category.productCount,
+						" models assessed, ",
+							/* @__PURE__ */ jsxs(HandUnderline, {
+							children: [
 								"these ",
 								catProducts.length,
 								" devices"
-							] }),
-							" represent the highest standard of engineering."
-						]
-					})
+							]
+						}),
+						" represent the highest standard of engineering."
+					]
+				})
 				]
 			})]
 		}),
-		winner && /* @__PURE__ */ jsx("section", {
-			className: "px-6 lg:px-10 py-8",
-			children: /* @__PURE__ */ jsxs("div", {
-				className: "max-w-6xl mx-auto surface-card p-8 md:p-12 rounded-3xl border border-[var(--emerald-accent)]/40 relative overflow-hidden grid grid-cols-1 lg:grid-cols-[1fr_1.3fr] gap-12 items-center",
-				children: [
+			winner && /* @__PURE__ */ jsx("section", {
+				className: "px-6 lg:px-10 py-8",
+				children: /* @__PURE__ */ jsxs("div", {
+					className: "max-w-6xl mx-auto surface-card p-8 md:p-12 rounded-3xl border border-[var(--emerald-accent)]/40 relative overflow-hidden grid grid-cols-1 lg:grid-cols-[1fr_1.3fr] gap-12 items-center",
+					children: [
 					/* @__PURE__ */ jsx("div", {
 						className: "absolute -left-12 -top-12 size-64 rounded-full blur-3xl opacity-20",
 						style: { background: "var(--gradient-accent)" }
@@ -65,76 +68,76 @@ function BestCategoryPage() {
 						className: "space-y-6 relative z-10",
 						children: [
 							/* @__PURE__ */ jsxs("div", {
-								className: "flex items-center gap-2",
-								children: [/* @__PURE__ */ jsxs("span", {
-									className: "bg-[var(--emerald-accent)] text-background text-[10px] font-mono-tech font-bold px-3 py-1 rounded-full uppercase tracking-wider flex items-center gap-1 shadow-md",
-									children: [/* @__PURE__ */ jsx(Award, { className: "size-3.5" }), " 2026 Winner"]
-								}), /* @__PURE__ */ jsx("span", {
-									className: "text-xs font-mono-tech text-muted-foreground",
-									children: winner.brand
-								})]
-							}),
+							className: "flex items-center gap-2",
+							children: [/* @__PURE__ */ jsxs("span", {
+								className: "bg-[var(--emerald-accent)] text-background text-[10px] font-mono-tech font-bold px-3 py-1 rounded-full uppercase tracking-wider flex items-center gap-1 shadow-md",
+								children: [/* @__PURE__ */ jsx(Award, { className: "size-3.5" }), " 2026 Winner"]
+							}), /* @__PURE__ */ jsx("span", {
+								className: "text-xs font-mono-tech text-muted-foreground",
+								children: winner.brand
+							})]
+						}),
 							/* @__PURE__ */ jsx("h2", {
-								className: "font-display text-3xl lg:text-5xl font-bold",
-								children: winner.name
-							}),
+							className: "font-display text-3xl lg:text-5xl font-bold",
+							children: winner.name
+						}),
 							/* @__PURE__ */ jsx("p", {
-								className: "text-muted-foreground text-lg leading-relaxed",
-								children: winner.shortDescription
-							}),
+							className: "text-muted-foreground text-lg leading-relaxed",
+							children: winner.shortDescription
+						}),
 							/* @__PURE__ */ jsxs("div", {
-								className: "flex items-center gap-3",
-								children: [/* @__PURE__ */ jsx("div", {
-									className: "flex items-center gap-1 text-[var(--emerald-accent)]",
-									children: [...Array(5)].map((_, i) => /* @__PURE__ */ jsx(Star, { className: `size-4 ${i < Math.floor(winner.rating) ? "fill-amber-400 text-amber-400" : "text-muted"}` }, i))
-								}), /* @__PURE__ */ jsxs("span", {
-									className: "text-xs text-muted-foreground",
-									children: [
-										winner.rating,
-										" / 5 (",
-										winner.reviewCount,
-										" reviews)"
-									]
-								})]
-							}),
+							className: "flex items-center gap-3",
+							children: [/* @__PURE__ */ jsx("div", {
+								className: "flex items-center gap-1 text-[var(--emerald-accent)]",
+								children: [...Array(5)].map((_, i) => /* @__PURE__ */ jsx(Star, { className: `size-4 ${i < Math.floor(winner.rating) ? "fill-amber-400 text-amber-400" : "text-muted"}` }, i))
+							}), /* @__PURE__ */ jsxs("span", {
+								className: "text-xs text-muted-foreground",
+								children: [
+									winner.rating,
+									" / 5 (",
+									winner.reviewCount,
+									" reviews)"
+								]
+							})]
+						}),
 							/* @__PURE__ */ jsx("p", {
-								className: "text-sm text-foreground/80 leading-relaxed font-sans",
-								children: winner.description
-							}),
+							className: "text-sm text-foreground/80 leading-relaxed font-sans",
+							children: winner.description
+						}),
 							/* @__PURE__ */ jsxs("div", {
-								className: "flex flex-wrap gap-3 pt-4 border-t border-[var(--hairline)]/50",
-								children: [/* @__PURE__ */ jsxs("a", {
-									href: winner.affiliateUrl,
-									target: "_blank",
-									rel: "noopener noreferrer",
-									className: "btn-accent rounded-full px-6 py-3 text-sm font-semibold inline-flex items-center gap-1.5",
-									children: ["Buy on Amazon ", /* @__PURE__ */ jsx(Award, { className: "size-3.5" })]
-								}), /* @__PURE__ */ jsx(Link, {
-									to: `/product/${winner.slug}`,
-									className: "btn-ghost-glow rounded-full px-6 py-3 text-sm font-semibold",
-									children: "Full specifications"
-								})]
-							})
+							className: "flex flex-wrap gap-3 pt-4 border-t border-[var(--hairline)]/50",
+							children: [/* @__PURE__ */ jsxs("a", {
+								href: winner.affiliateUrl,
+								target: "_blank",
+								rel: "noopener noreferrer",
+								className: "btn-accent rounded-full px-6 py-3 text-sm font-semibold inline-flex items-center gap-1.5",
+								children: ["Buy ", /* @__PURE__ */ jsx(Award, { className: "size-3.5" })]
+							}), /* @__PURE__ */ jsx(Link, {
+								to: `/product/${winner.slug}`,
+								className: "btn-ghost-glow rounded-full px-6 py-3 text-sm font-semibold",
+								children: "Full specifications"
+							})]
+						})
 						]
 					})
-				]
-			})
-		}),
-		runners.length > 0 && /* @__PURE__ */ jsx("section", {
-			className: "px-6 lg:px-10 py-16",
-			children: /* @__PURE__ */ jsxs("div", {
-				className: "max-w-6xl mx-auto",
-				children: [/* @__PURE__ */ jsx("h3", {
-					className: "font-display text-2xl font-bold mb-8",
-					children: "Honorable Mentions"
-				}), /* @__PURE__ */ jsx("div", {
-					className: "grid grid-cols-1 md:grid-cols-2 gap-8",
-					children: runners.map((p, idx) => /* @__PURE__ */ jsxs(TiltCard, {
-						className: "surface-card p-6 rounded-3xl border border-[var(--hairline)] flex flex-col justify-between h-full relative",
-						max: 3,
-						children: [/* @__PURE__ */ jsxs("div", {
-							className: "space-y-4",
-							children: [
+					]
+				})
+			}),
+			runners.length > 0 && /* @__PURE__ */ jsx("section", {
+				className: "px-6 lg:px-10 py-16",
+				children: /* @__PURE__ */ jsxs("div", {
+					className: "max-w-6xl mx-auto",
+					children: [/* @__PURE__ */ jsx("h3", {
+						className: "font-display text-2xl font-bold mb-8",
+						children: "Honorable Mentions"
+					}), /* @__PURE__ */ jsx("div", {
+						className: "grid grid-cols-1 md:grid-cols-2 gap-8",
+						children: runners.map((p, idx) => /* @__PURE__ */ jsxs(TiltCard, {
+							className: "surface-card p-6 rounded-3xl border border-[var(--hairline)] flex flex-col justify-between h-full relative",
+							max: 3,
+							children: [/* @__PURE__ */ jsxs("div", {
+								className: "space-y-4",
+								children: [
 								/* @__PURE__ */ jsx("div", {
 									className: "aspect-[16/10] rounded-xl overflow-hidden bg-[var(--surface-2)]",
 									children: /* @__PURE__ */ jsx("img", {
@@ -165,23 +168,24 @@ function BestCategoryPage() {
 									className: "text-xs text-muted-foreground leading-relaxed line-clamp-3",
 									children: p.shortDescription
 								})
-							]
-						}), /* @__PURE__ */ jsxs("div", {
-							className: "pt-6 border-t border-[var(--hairline)]/50 mt-6 flex items-center justify-between",
-							children: [/* @__PURE__ */ jsxs("span", {
-								className: "font-display text-lg font-bold",
-								children: ["$", p.price]
-							}), /* @__PURE__ */ jsx(Link, {
-								to: `/product/${p.slug}`,
-								className: "btn-ghost-glow rounded-full px-4 py-2 text-xs font-semibold",
-								children: "Explore Gear"
+								]
+							}), /* @__PURE__ */ jsxs("div", {
+								className: "pt-6 border-t border-[var(--hairline)]/50 mt-6 flex items-center justify-between",
+								children: [/* @__PURE__ */ jsxs("span", {
+									className: "font-display text-lg font-bold",
+									children: ["$", p.price]
+								}), /* @__PURE__ */ jsx(Link, {
+									to: `/product/${p.slug}`,
+									className: "btn-ghost-glow rounded-full px-4 py-2 text-xs font-semibold",
+									children: "Explore Gear"
+								})]
 							})]
-						})]
-					}, p.slug))
-				})]
+						}, p.slug))
+					})]
+				})
 			})
-		})
-	] });
+		]
+	});
 }
 //#endregion
 export { BestCategoryPage as component };
