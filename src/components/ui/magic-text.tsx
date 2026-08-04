@@ -6,6 +6,7 @@ import { useRef } from "react";
 
 export interface MagicTextProps {
   text: string;
+  triggerRef?: React.RefObject<HTMLElement | null>;
 }
 
 interface WordProps {
@@ -25,11 +26,14 @@ const Word: React.FC<WordProps> = ({ children, progress, range }) => {
   );
 };
 
-export const MagicText: React.FC<MagicTextProps> = ({ text }) => {
-  const container = useRef(null);
+export const MagicText: React.FC<MagicTextProps> = ({ text, triggerRef }) => {
+  const container = useRef<HTMLElement | null>(null);
 
+  // If a triggerRef is provided (e.g., a tall wrapper), use it so
+  // scroll progress maps across the whole section while the inner
+  // MagicText remains sticky. Fallback to the local container.
   const { scrollYProgress } = useScroll({
-    target: container,
+    target: triggerRef ?? container,
     // Use viewport-relative offsets so the reveal maps reliably on small screens
     offset: ["start end", "end start"],
   });

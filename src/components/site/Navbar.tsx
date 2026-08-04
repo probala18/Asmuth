@@ -69,20 +69,18 @@ export function Navbar() {
         }`}
         onMouseLeave={() => setMega(false)}
       >
-        <div className="mx-auto flex min-h-20 max-w-7xl flex-nowrap items-center justify-between gap-3 px-6 py-3 lg:px-10 lg:py-0">
+        <div className="mx-auto flex min-h-16 sm:min-h-20 max-w-7xl flex-nowrap items-center justify-between gap-2 sm:gap-3 px-4 sm:px-6 lg:px-10 py-2 sm:py-3 lg:py-0 overflow-hidden">
           {/* Logo */}
           <Link
             href="/"
-            className="z-50 flex flex-shrink-0 items-center gap-3 group"
+            className="z-50 flex flex-shrink-0 items-center gap-2 sm:gap-3 group"
             onClick={() => setMobileMenuOpen(false)}
           >
-            <img
-              src="https://chatgpt.com/s/m_6a70a9607fa081918c3e305985694c68"
-              alt="genCART logo"
-              className="h-9 w-9 rounded-full border border-hairline bg-surface object-cover"
-            />
-            <span className="font-display text-xl font-semibold tracking-tight">
-              genCART<span className="text-emerald-accent text-xs align-top ml-0.5">®</span>
+            <div className="size-8 sm:size-9 rounded-full border border-hairline bg-surface flex items-center justify-center overflow-hidden flex-shrink-0">
+              <span className="font-display font-bold text-xs sm:text-sm text-foreground">gC</span>
+            </div>
+            <span className="font-display text-lg sm:text-xl font-semibold tracking-tight whitespace-nowrap">
+              genCART<span className="text-[var(--emerald-accent)] text-[10px] sm:text-xs align-top ml-0.5">®</span>
             </span>
           </Link>
 
@@ -114,8 +112,8 @@ export function Navbar() {
           </nav>
 
           {/* Action Bar */}
-          <div className="z-50 ml-auto flex min-w-0 items-center justify-end gap-2 lg:gap-3">
-            <GlobalSearch className="flex-1 min-w-0 max-w-[520px] sm:max-w-[420px]" />
+          <div className="z-50 ml-auto flex flex-shrink-0 items-center justify-end gap-1.5 sm:gap-2 lg:gap-3">
+            <GlobalSearch className="min-w-0" />
 
             <ThemeToggle />
 
@@ -138,7 +136,7 @@ export function Navbar() {
             {/* Mobile Hamburger menu */}
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="cursor-pointer rounded-full p-2.5 text-muted-foreground transition-colors hover:bg-[var(--surface-2)] hover:text-foreground lg:hidden"
+              className="cursor-pointer rounded-full p-2 text-muted-foreground transition-colors hover:bg-[var(--surface-2)] hover:text-foreground lg:hidden"
               aria-label="Toggle menu"
             >
               {mobileMenuOpen ? <X className="size-5" /> : <Menu className="size-5" />}

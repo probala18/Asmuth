@@ -298,21 +298,21 @@ export function CinematicHero() {
           />
         ))}
 
-        {/* Dynamic Light/Dark Theme Ambient Lighting & Mask Overlays */}
-        <div className="absolute inset-0 bg-gradient-to-t from-background via-background/60 to-background/30 dark:from-background dark:via-background/70 dark:to-background/40 pointer-events-none" />
-        <div className="absolute inset-0 bg-radial-glow opacity-60 dark:opacity-80 pointer-events-none" />
+        {/* Dynamic Light/Dark Theme Ambient Lighting & Mask Overlays - Stronger dark gradient on mobile for text contrast */}
+        <div className="absolute inset-0 bg-gradient-to-t from-background via-background/80 sm:via-background/60 to-background/50 sm:to-background/30 dark:from-background dark:via-background/85 dark:to-background/60 pointer-events-none" />
+        <div className="absolute inset-0 bg-radial-glow opacity-70 dark:opacity-80 pointer-events-none" />
         <div className="absolute inset-0 bg-grid opacity-30 dark:opacity-40 pointer-events-none" />
       </div>
 
       {/* 2. HUD TOP EYEBROW & HERO NAV CONTAINER */}
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-10 pt-20 sm:pt-28 pb-6 sm:pb-8 flex flex-col justify-between h-full pointer-events-none">
-        <div className="flex items-center justify-between gap-3 sm:gap-4 pt-4 pointer-events-auto">
-          <div className="inline-flex items-center gap-2 rounded-full px-3 py-1.5 sm:px-3.5 sm:py-1.5 surface-card text-[10px] sm:text-xs font-mono-tech uppercase tracking-[0.25em] text-[var(--emerald-accent)] border border-[var(--hairline)]">
-            <span className="relative flex size-2">
+        <div className="flex items-center justify-between gap-3 sm:gap-4 pt-2 sm:pt-4 pointer-events-auto max-w-full">
+          <div className="inline-flex max-w-full items-center gap-2 rounded-full px-3 py-1.5 sm:px-3.5 sm:py-1.5 surface-card text-[9px] min-[375px]:text-[10px] sm:text-xs font-mono-tech uppercase tracking-normal min-[375px]:tracking-[0.15em] sm:tracking-[0.25em] text-[var(--emerald-accent)] border border-[var(--hairline)] leading-normal truncate">
+            <span className="relative flex size-2 shrink-0">
               <span className="absolute inline-flex h-full w-full rounded-full bg-[var(--emerald-accent)] opacity-75 sm:animate-ping" />
               <span className="relative inline-flex rounded-full size-2 bg-[var(--emerald-accent)]" />
             </span>
-            THE FUTURE OF PRODUCT DISCOVERY
+            <span className="truncate">THE FUTURE OF PRODUCT DISCOVERY</span>
           </div>
 
           <div className="hidden sm:flex items-center gap-2 rounded-full px-4 py-1.5 surface-card border border-[var(--hairline)]">
@@ -323,41 +323,41 @@ export function CinematicHero() {
           </div>
         </div>
 
-        <div className="my-auto py-6 sm:py-8 max-w-3xl relative min-h-[260px] sm:min-h-[300px] flex items-center">
+        <div className="my-auto py-4 sm:py-8 max-w-3xl relative min-h-[280px] sm:min-h-[300px] flex items-center">
           {heroScenes.map((scene, index) => (
             <div
               key={scene.id}
               ref={(el) => {
                 textRefs.current[index] = el;
               }}
-              className="absolute inset-x-0 space-y-5 sm:space-y-6 pointer-events-auto"
+              className="absolute inset-x-0 space-y-4 sm:space-y-6 pointer-events-auto"
               style={{
                 opacity: index === 0 ? 1 : 0,
                 visibility: index === 0 ? "visible" : "hidden",
               }}
             >
-              <div className="inline-block font-mono-tech text-[10px] sm:text-xs uppercase tracking-[0.3em] text-[var(--emerald-accent)]">
+              <div className="inline-block font-mono-tech text-[10px] sm:text-xs uppercase tracking-[0.2em] sm:tracking-[0.3em] text-[var(--emerald-accent)]">
                 {scene.category} · {scene.product}
               </div>
 
-              <h1 className="font-display text-3xl sm:text-5xl md:text-7xl font-bold leading-[0.98] tracking-tight whitespace-pre-line text-foreground">
+              <h1 className="font-display text-[clamp(1.85rem,7vw,4.5rem)] font-bold leading-[1.05] sm:leading-[0.98] tracking-tight whitespace-pre-line text-foreground">
                 {scene.headline}
               </h1>
 
-              <p className="text-muted-foreground text-sm sm:text-base md:text-lg leading-relaxed max-w-xl">
+              <p className="text-muted-foreground text-xs min-[375px]:text-sm sm:text-base md:text-lg leading-relaxed max-w-xl">
                 {scene.description}
               </p>
 
-              <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4 pt-2">
-                <Link href={scene.ctaLink}>
-                  <ShimmerButton className="btn-accent">
+              <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4 pt-2">
+                <Link href={scene.ctaLink} className="w-full sm:w-auto">
+                  <ShimmerButton className="btn-accent w-full sm:w-auto min-h-[48px] justify-center text-sm font-semibold">
                     {scene.ctaText}
-                    <ArrowRight className="size-4" />
+                    <ArrowRight className="size-4 ml-1" />
                   </ShimmerButton>
                 </Link>
                 <Link
                   href="/guides"
-                  className="btn-ghost-glow rounded-full px-6 py-3 text-sm font-semibold inline-flex items-center gap-2"
+                  className="btn-ghost-glow rounded-full px-6 py-3 min-h-[48px] text-sm font-semibold inline-flex items-center justify-center gap-2 w-full sm:w-auto border border-[var(--hairline)]"
                 >
                   Explore Guides
                 </Link>
@@ -367,32 +367,32 @@ export function CinematicHero() {
 
           <div
             ref={outroRef}
-            className="absolute inset-x-0 space-y-5 sm:space-y-6 pointer-events-auto"
+            className="absolute inset-x-0 space-y-4 sm:space-y-6 pointer-events-auto"
             style={{
               opacity: 0,
               visibility: "hidden",
             }}
           >
-            <div className="inline-block font-mono-tech text-[10px] sm:text-xs uppercase tracking-[0.3em] text-[var(--cyan-accent)]">
+            <div className="inline-block font-mono-tech text-[10px] sm:text-xs uppercase tracking-[0.2em] sm:tracking-[0.3em] text-[var(--cyan-accent)]">
               CHOICE CONFIDENCE GUARANTEED
             </div>
-            <h1 className="font-display text-3xl sm:text-5xl md:text-7xl font-bold leading-tight text-foreground">
+            <h1 className="font-display text-[clamp(1.85rem,7vw,4.5rem)] font-bold leading-tight text-foreground">
               Ready to Find Your <br />
               <span className="text-accent-gradient">Next Favorite</span>?
             </h1>
-            <p className="text-muted-foreground text-sm sm:text-base md:text-lg leading-relaxed max-w-lg">
+            <p className="text-muted-foreground text-xs min-[375px]:text-sm sm:text-base md:text-lg leading-relaxed max-w-lg">
               Explore our editorially curated rankings, comparison matrices, and signal-graded reviews.
             </p>
-            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4 pt-2">
-              <Link href="/collections">
-                <ShimmerButton className="btn-accent">
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4 pt-2">
+              <Link href="/collections" className="w-full sm:w-auto">
+                <ShimmerButton className="btn-accent w-full sm:w-auto min-h-[48px] justify-center text-sm font-semibold">
                   Explore All Products
-                  <ArrowRight className="size-4" />
+                  <ArrowRight className="size-4 ml-1" />
                 </ShimmerButton>
               </Link>
               <Link
                 href="/best-of-2026"
-                className="btn-ghost-glow rounded-full px-6 py-3 text-sm font-semibold inline-flex items-center gap-2"
+                className="btn-ghost-glow rounded-full px-6 py-3 min-h-[48px] text-sm font-semibold inline-flex items-center justify-center gap-2 w-full sm:w-auto border border-[var(--hairline)]"
               >
                 View Editor's Picks
               </Link>

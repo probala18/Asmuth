@@ -62,6 +62,7 @@ export default function IndexPage() {
   const bestSellers = products.filter((p) => p.isBestSeller).slice(0, 3);
   const latestReviews = reviews.slice(0, 3);
   const buyingGuides = guides.slice(0, 2);
+  const disclosureRef = useRef<HTMLDivElement | null>(null);
 
   return (
     <>
@@ -87,11 +88,17 @@ export default function IndexPage() {
           <div className="mb-6 text-center">
             <p className="font-mono-tech text-[10px] uppercase tracking-[0.3em] text-[var(--emerald-accent)]">Affiliate Disclosure</p>
           </div>
-          <MagicText
-            text={
-              '"As an Amazon Associate, we earn from qualifying purchases. Some links on this website are affiliate links, which means that we may receive a commission if you make a purchase through those links. This comes at no additional cost to you. Our goal is to provide honest recommendations and help you discover products that best suit your needs."'
-            }
-          />
+
+          <div className="relative min-h-[140vh] lg:min-h-[200vh]" ref={disclosureRef}>
+            <div className="sticky top-28 lg:top-32">
+              <MagicText
+                triggerRef={disclosureRef}
+                text={
+                  '"As an Amazon Associate, we earn from qualifying purchases. Some links on this website are affiliate links, which means that we may receive a commission if you make a purchase through those links. This comes at no additional cost to you. Our goal is to provide honest recommendations and help you discover products that best suit your needs."'
+                }
+              />
+            </div>
+          </div>
         </div>
       </section>
 

@@ -70,6 +70,16 @@
    LIGHT THEME — refreshed
    Editorial ivory + ink + indigo / amber
    ========================= */
+html, body {
+  overflow-x: hidden;
+  max-width: 100vw;
+  width: 100%;
+}
+
+*, ::before, ::after {
+  box-sizing: border-box;
+}
+
 :root {
   --radius: 0.875rem;
   color-scheme: light;

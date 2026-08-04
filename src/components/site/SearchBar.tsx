@@ -129,10 +129,11 @@ export function GlobalSearch({
           setOpen(true);
           setTimeout(() => inputRef.current?.focus(), 50);
         }}
-        className="inline-flex items-center gap-2 rounded-full border border-[var(--hairline)] bg-[var(--surface)]/80 px-3 py-2 text-sm text-muted-foreground shadow-sm transition-all hover:border-[var(--emerald-accent)] hover:text-foreground lg:hidden"
+        className="inline-flex items-center justify-center size-9 sm:w-auto sm:h-auto sm:px-3 sm:py-2 rounded-full border border-[var(--hairline)] bg-[var(--surface)]/80 text-sm text-muted-foreground shadow-sm transition-all hover:border-[var(--emerald-accent)] hover:text-foreground lg:hidden"
+        aria-label="Search"
       >
         <Search className="size-4" />
-        Search
+        <span className="hidden sm:inline sm:ml-2">Search</span>
       </button>
 
       <form onSubmit={handleSubmit} className="hidden lg:flex relative flex-1 min-w-0 max-w-[360px]">
