@@ -5,13 +5,15 @@ import { User, Bookmark, Scale, Sparkles, Settings, LogOut, SlidersHorizontal } 
 import { dashboardData } from "@/data/personalizedDashboardData";
 import { supabase } from "@/supabase";
 import { resetOnboardingPreferences } from "@/lib/preferences";
+import type { UserProfile } from "@/lib/user-profile";
 
 interface ProfileDropdownProps {
   isOpen: boolean;
   onClose: () => void;
+  profile: UserProfile | null;
 }
 
-export function ProfileDropdown({ isOpen, onClose }: ProfileDropdownProps) {
+export function ProfileDropdown({ isOpen, onClose, profile }: ProfileDropdownProps) {
   const router = useRouter();
 
   const handleSignOut = async () => {
@@ -51,10 +53,10 @@ export function ProfileDropdown({ isOpen, onClose }: ProfileDropdownProps) {
             {/* Header info */}
             <div className="p-3 border-b border-[var(--hairline)] mb-1">
               <p className="font-display text-sm font-semibold text-foreground">
-                {dashboardData.user.name}
+                {profile?.name ?? dashboardData.user.name}
               </p>
               <p className="font-mono-tech text-[11px] text-muted-foreground truncate">
-                {dashboardData.user.email}
+                {profile?.email ?? dashboardData.user.email}
               </p>
             </div>
 

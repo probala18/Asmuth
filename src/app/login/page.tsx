@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { FormEvent, useState } from "react";
 import { supabase } from "@/supabase";
+import { getPublicOrigin } from "@/lib/public-url";
 import { Mail, Lock, User, Eye, EyeOff, ArrowRight, CheckCircle2, XCircle } from "lucide-react";
 
 export default function LoginPage() {
@@ -35,9 +36,9 @@ export default function LoginPage() {
       return;
     }
 
-    setAuthMessage("Signed in successfully. Redirecting to workspace...");
+    setAuthMessage("Signed in successfully. Opening your profile...");
     setTimeout(() => {
-      router.push("/dashboard");
+      router.push("/profile");
     }, 500);
   };
 

@@ -1,6 +1,7 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { FormEvent, useState } from "react";
 import { supabase } from "@/supabase";
+import { getPublicOrigin } from "@/lib/public-url";
 import { Mail, Lock, User, Eye, EyeOff, ArrowRight, CheckCircle2, XCircle } from "lucide-react";
 
 export const Route = createFileRoute("/login")({

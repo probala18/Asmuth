@@ -9,6 +9,7 @@ import { NotificationPanel } from "./NotificationPanel";
 import { ProfileDropdown } from "./ProfileDropdown";
 import { dashboardData } from "@/data/personalizedDashboardData";
 import { useSavedProducts } from "@/lib/saved-products";
+import { getInitials, useUserProfile } from "@/lib/user-profile";
 
 const loggedInNavItems = [
   { label: "Discover", href: "/dashboard", active: true },
@@ -26,6 +27,7 @@ export function LoggedInNavbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const currentPath = usePathname();
   const savedProducts = useSavedProducts();
+  const { profile } = useUserProfile();
 
   // GSAP ScrollTrigger for smooth navbar height & blur compression on scroll
   useEffect(() => {
@@ -179,18 +181,18 @@ export function LoggedInNavbar() {
                 className="flex items-center gap-2 p-1 pl-1.5 pr-2.5 rounded-full bg-[var(--surface)] border border-[var(--hairline)] hover:border-[var(--emerald-accent)] transition-all"
               >
                 <div className="size-6 rounded-full overflow-hidden bg-[var(--surface-2)] border border-[var(--hairline)] shrink-0 flex items-center justify-center">
-                  <img
-                    src={dashboardData.user.avatar}
-                    alt={dashboardData.user.name}
-                    className="size-full object-cover"
-                  />
+                  {profile?.avatarUrl ? (
+                    <img src={profile.avatarUrl} alt="" className="size-full object-cover" />
+                  ) : (
+                    <span className="text-[9px] font-bold text-[var(--emerald-accent)]">{getInitials(profile?.name ?? dashboardData.user.name)}</span>
+                  )}
                 </div>
                 <span className="text-xs font-semibold text-foreground hidden sm:inline">
-                  {dashboardData.user.firstName}
+                  {profile?.firstName ?? dashboardData.user.firstName}
                 </span>
                 <ChevronDown className="size-3 text-muted-foreground" />
               </motion.button>
-              <ProfileDropdown isOpen={profileOpen} onClose={() => setProfileOpen(false)} />
+              <ProfileDropdown isOpen={profileOpen} onClose={() => setProfileOpen(false)} profile={profile} />
             </div>
 
             <ThemeToggle />
@@ -217,15 +219,15 @@ export function LoggedInNavbar() {
           >
             <div className="flex items-center gap-3 pb-3 border-b border-[var(--hairline)]">
               <div className="size-10 rounded-full overflow-hidden bg-[var(--surface-2)]">
-                <img
-                  src={dashboardData.user.avatar}
-                  alt={dashboardData.user.name}
-                  className="size-full object-cover"
-                />
+                {profile?.avatarUrl ? (
+                  <img src={profile.avatarUrl} alt="" className="size-full object-cover" />
+                ) : (
+                  <span className="text-sm font-bold text-[var(--emerald-accent)]">{getInitials(profile?.name ?? dashboardData.user.name)}</span>
+                )}
               </div>
               <div>
-                <p className="text-sm font-semibold">{dashboardData.user.name}</p>
-                <p className="text-xs text-muted-foreground">{dashboardData.user.email}</p>
+                <p className="text-sm font-semibold">{profile?.name ?? dashboardData.user.name}</p>
+                <p className="text-xs text-muted-foreground">{profile?.email ?? dashboardData.user.email}</p>
               </div>
             </div>
 

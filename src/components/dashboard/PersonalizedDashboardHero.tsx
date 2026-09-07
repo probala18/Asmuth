@@ -21,8 +21,8 @@ import {
 } from "lucide-react";
 import { ShimmerButton } from "@/components/ui/shimmer-button";
 import { products, categories, getDealsProducts } from "@/data";
-import { dashboardData } from "@/data/personalizedDashboardData";
 import { useSavedProducts } from "@/lib/saved-products";
+import { getInitials, useUserProfile } from "@/lib/user-profile";
 import type { Product } from "@/types";
 
 /* ───────────────────────────────────────────────────────────
@@ -49,6 +49,7 @@ const categoryIcons: Record<string, any> = {
 
 /* ─── Section 1: Hero (Sidebar + Banner + User Card) ──── */
 export function DashboardHeroSection() {
+  const { profile } = useUserProfile();
   const getGreeting = () => {
     const h = new Date().getHours();
     if (h < 12) return "Good morning";
@@ -159,37 +160,38 @@ export function DashboardHeroSection() {
         {/* RIGHT — User Card + Promo Cards */}
         <div className="lg:col-span-3 flex flex-col gap-4">
           {/* User Welcome Card */}
-          <div className="surface-card-2 rounded-2xl border border-[var(--hairline)] p-5 space-y-4">
-            <div className="flex items-center gap-3">
-              <div className="size-10 rounded-full overflow-hidden border border-[var(--hairline)] bg-[var(--surface-2)]">
-                <img
-                  src={dashboardData.user.avatar}
-                  alt={dashboardData.user.name}
-                  className="size-full object-cover"
-                />
+          {profile && (
+            <div className="surface-card-2 rounded-2xl border border-[var(--hairline)] p-5 space-y-4">
+              <div className="flex items-center gap-3">
+                <div className="grid size-10 shrink-0 place-items-center overflow-hidden rounded-full border border-[var(--hairline)] bg-[var(--surface-2)]">
+                  {profile.avatarUrl ? (
+                    <img src={profile.avatarUrl} alt="" className="size-full object-cover" />
+                  ) : (
+                    <span className="text-xs font-bold text-[var(--emerald-accent)]">{getInitials(profile.name)}</span>
+                  )}
+                </div>
+                <div className="min-w-0">
+                  <p className="text-xs text-muted-foreground">{getGreeting()},</p>
+                  <p className="truncate font-display text-sm font-bold text-foreground">{profile.name}</p>
+                  <p className="truncate text-[11px] text-muted-foreground">{profile.email}</p>
+                </div>
               </div>
-              <div>
-                <p className="text-xs text-muted-foreground">{getGreeting()},</p>
-                <p className="font-display text-sm font-bold text-foreground">
-                  {dashboardData.user.firstName}
-                </p>
+              <div className="flex flex-col gap-2">
+                <Link
+                  href="/dashboard"
+                  className="btn-accent flex items-center justify-center gap-2 rounded-xl py-2.5 text-xs font-semibold w-full"
+                >
+                  My Workspace
+                </Link>
+                <Link
+                  href="/profile"
+                  className="flex items-center justify-center gap-2 rounded-xl py-2.5 text-xs font-medium w-full border border-[var(--hairline)] text-foreground hover:bg-[var(--surface)] transition-all"
+                >
+                  View Profile
+                </Link>
               </div>
             </div>
-            <div className="flex flex-col gap-2">
-              <Link
-                href="/dashboard"
-                className="btn-accent flex items-center justify-center gap-2 rounded-xl py-2.5 text-xs font-semibold w-full"
-              >
-                My Workspace
-              </Link>
-              <Link
-                href="/login"
-                className="flex items-center justify-center gap-2 rounded-xl py-2.5 text-xs font-medium w-full border border-[var(--hairline)] text-foreground hover:bg-[var(--surface)] transition-all"
-              >
-                Manage Account
-              </Link>
-            </div>
-          </div>
+          )}
 
           {/* Promo Cards */}
           <div className="surface-card-2 rounded-2xl border border-[var(--hairline)] p-4 space-y-2 bg-[var(--surface)]">
